@@ -7,9 +7,7 @@ module.exports = (db) => {
             console.log(result)
             if (!result.exists) {
                 db.users.signUp(request.body,(error,result)=>{
-                    if(error){
-                        console.log(error)
-                    }
+
                     if(result){
                         console.log("SIGN UP SUCCESS")
                         response.send(true)
