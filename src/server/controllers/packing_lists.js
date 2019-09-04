@@ -23,12 +23,26 @@ module.exports = (db) => {
         let trip = requst.body.trip;
         let packList = request.body.packing_list;
         let trip_id = null;
+        let packing_list_id = null;
 
         db.trips.createTrip(trip,(error,result)=>{
             if(result){
                 trip_id = result.id;
 
                 db.trips.createDestination(trip,trip_id,(error,result)=>{
+                    if(result){
+
+                        db.packList.createPackingList(trip_id,(error,result)=>{
+                            if(result){
+                                packing_list_id = result.id;
+
+                                db.packList.createPackingListItems(packingList,packing_list_id,(error,result)=>{
+
+                                })
+
+                            }
+                        })
+                    }
 
                 })
             }

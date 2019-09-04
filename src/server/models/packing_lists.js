@@ -59,10 +59,32 @@ module.exports = (dbPoolInstance) => {
 
     }
 
+    let createPackingList = (trip_id,callback) =>{
+        let user_id = request.cookies["user_id"];
+        let query = 'INSERT INTO packing_lists (user_id,trip_id) VALUES ($1,$2) RETURNING *'
+
+        dbPoolInstance.query(query,arr,(error,queryResult)=>{
+            if(error){
+                console.log("CREATE PACKING LIST ERROR")
+                console.log(error)
+                callback(error,null);
+            }else{
+                if(queryResult.rows.length>0){
+                    console.log("CREATE PACKING LIST SUCCESS");
+                    callback(null,queryResult.rows[0]);
+                }else{
+                    console.log("CREATE PACKING LIST RETURNS NULL");
+                    callback(null,null);
+                }
+            }
+        })
+    }
 
 
     return {
         generateTempList,
+        createPackingList,
+        createPackingListItems
 
     };
 };

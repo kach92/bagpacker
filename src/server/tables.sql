@@ -25,7 +25,6 @@ CREATE TABLE IF NOT EXISTS packing_lists (
     id SERIAL PRIMARY KEY,
     user_id INTEGER,
     group_id INTEGER,
-    quantity INTEGER,
     trip_id INTEGER,
     FOREIGN KEY (user_id) REFERENCES users (id),
     FOREIGN KEY (group_id) REFERENCES groups (id),
