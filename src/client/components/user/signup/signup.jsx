@@ -32,9 +32,8 @@ class Signup extends React.Component {
 		if (formInputs['password'] != formInputs['confirmPassword'])
 			validated = false;
 
-		console.log(validated);
-
 		if (validated) {
+			delete formInputs.confirmPassword;
 			this.createUser(formInputs);
 		}
 
@@ -101,11 +100,11 @@ class Signup extends React.Component {
 				<div className={styles.formField}>
 					<label>Gender</label>
 					<label>
-						<input type="radio" value="female" checked={this.state.formInputs.gender === 'female'} onChange={this.updateGender}/>
+						<input type="radio" value="F" checked={this.state.formInputs.gender === 'F'} onChange={this.updateGender}/>
 						Female
 					</label>
 					<label>
-						<input type="radio" value="male" checked={this.state.formInputs.gender === 'male'} onChange={this.updateGender}/>
+						<input type="radio" value="M" checked={this.state.formInputs.gender === 'M'} onChange={this.updateGender}/>
 						Male
 					</label>
 				</div>

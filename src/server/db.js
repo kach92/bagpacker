@@ -1,4 +1,6 @@
 const pg = require('pg');
+const users = require('./models/users');
+const packingList = require('./models/packing_lists');
 const url = require('url');
 const dbconfig = require("../../config.json");
 
@@ -35,6 +37,8 @@ module.exports = {
    * ADD APP MODELS HERE
    */
 
+  users:users(pool),
+  packingList:packingList(pool),
   //make queries directly from here
   queryInterface: (text, params, callback) => {
     return pool.query(text, params, callback);
