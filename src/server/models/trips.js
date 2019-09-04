@@ -7,17 +7,22 @@ module.exports = (dbPoolInstance) => {
 
     // `dbPoolInstance` is accessible within this function scope
 
-    let add = (tripInfo,callback)=>{
-        let query = 'INSERT INTO trips (name) VALUES ($1,$2)'
-        let arr = []
+    let createTrip = (tripInfo,callback)=>{
+        let user_id = request.cookies["user_id"]
+
+        let query = 'INSERT INTO trips (name,user_id) VALUES ($1,$2) RETURNING *'
+        let arr = [`Trip to ${tripInfo.destination}`,user_id]
 
         dbPoolInstance.query(query,arr,(error,queryResult)=>{
             if (error) {
+                console.log("ERROR CREATING TRIP")
                 callback(error, null);
             } else {
                 if (queryResult.rows.length > 0) {
-                    callback(null, true);
+                    console.log("CREATE TRIP SUCCESS")
+                    callback(null, queryResult.rows[0]);
                 } else {
+                    console.log("CREATE TRIP RETURN NULL")
                     callback(null, null);
                 }
             }
@@ -29,7 +34,7 @@ module.exports = (dbPoolInstance) => {
 
 
     return {
-        add,
+        createTrip,
 
     };
 };

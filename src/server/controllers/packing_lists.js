@@ -21,7 +21,18 @@ module.exports = (db) => {
 
     let nonUserListSave = (request,response)=>{
         let trip = requst.body.trip;
-        let packList = request.body.packing_list
+        let packList = request.body.packing_list;
+        let trip_id = null;
+
+        db.trips.createTrip(trip,(error,result)=>{
+            if(result){
+                trip_id = result.id;
+
+                db.trips.createDestination(trip,trip_id,(error,result)=>{
+
+                })
+            }
+        })
     }
 
     return {

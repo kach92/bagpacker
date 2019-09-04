@@ -69,11 +69,7 @@ CREATE TABLE IF NOT EXISTS destinations (
     start_date TIMESTAMPTZ,
     end_date TIMESTAMPTZ,
     duration INT,
-    weather_id INT,
-    activity_id INT,
     trip_id INT,
-    FOREIGN KEY (weather_id) REFERENCES weathers(id),
-    FOREIGN KEY (activity_id) REFERENCES activities(id),
     FOREIGN KEY (trip_id) REFERENCES trips(id)
 );
 
