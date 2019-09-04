@@ -69,8 +69,28 @@ class Signup extends React.Component {
 		formInputs.confirmPassword = e.target.value;
 		this.setState({formInputs: formInputs});
 	};
+	submit = (e) => {
+		e.preventDefault();
+		let formInputs = this.state.formInputs;
+		let validated = true;
+		Object.keys(formInputs).forEach(function (item) {
+			console.log(formInputs[item]);
+			if (formInputs[item] === "")
+				validated = false;
+		});
 
-	createUser = (data) => {
+		if (formInputs['password'] != formInputs['confirmPassword'])
+			validated = false;
+
+		if (validated) {
+			delete formInputs.confirmPassword;
+			this.signupUser(formInputs);
+		}
+
+
+	};
+	signupUser = (data) => {
+
 		let url = '/signup';
 
 		fetch(url, {
