@@ -2,7 +2,6 @@ import React from 'react';
 import {Link} from "react-router-dom";
 import styles from "./style.scss";
 
-
 class Login extends React.Component {
 	constructor(){
 		super();
