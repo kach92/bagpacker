@@ -74,7 +74,7 @@ CREATE TABLE IF NOT EXISTS destinations (
     FOREIGN KEY trip_id REFERENCES trips(id) NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS destinations (
+CREATE TABLE IF NOT EXISTS items (
     id SERIAL PRIMARY KEY,
     name TEXT,
     category TEXT,
