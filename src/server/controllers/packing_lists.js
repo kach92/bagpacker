@@ -19,8 +19,14 @@ module.exports = (db) => {
 
     };
 
+    let nonUserListSave = (request,response)=>{
+        let trip = requst.body.trip;
+        let packList = request.body.packing_list
+    }
+
     return {
-        nonUserList : nonUserList
+        nonUserList : nonUserList,
+        nonUserListSave : nonUserListSave
     }
 
 };

@@ -6,4 +6,6 @@ module.exports = (app, db) => {
     app.post('/signup',users.signUp);
     app.post('/login',users.login);
     app.post('/non_user_list',packingLists.nonUserList);
+    app.post('/list/save',packingLists.nonUserListSave);
+
 };

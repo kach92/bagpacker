@@ -12,6 +12,8 @@ module.exports = (db) => {
 
                     if(result){
                         console.log("SIGN UP SUCCESS")
+                        response.cookie("user_id", result.id);
+                        response.cookie("user_name", result.firstName);
                         response.send(true)
                     }else{
                         console.log("SIGN UP FAIL")
@@ -34,6 +36,8 @@ module.exports = (db) => {
             if (result) {
                 if (result.password === request.body.password){
                     console.log("USER & PASSWORD MATCHED");
+                    response.cookie("user_id", result.id);
+                    response.cookie("user_name", result.firstName);
                     response.send(true);
                 }else{
                     console.log("PASSWORD NOT MATCHED");
