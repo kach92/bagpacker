@@ -3,7 +3,6 @@ CREATE TABLE IF NOT EXISTS users (
     firstName Text,
     lastName Text,
     email TEXT,
-    contact TEXT,
     password TEXT,
     gender TEXT,
     image TEXT

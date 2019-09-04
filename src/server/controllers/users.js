@@ -4,9 +4,14 @@ module.exports = (db) => {
     let signUp = (request, response) => {
 
         db.users.isUserExist(request.body,(error,result)=>{
-            if (result.exists) {
+            console.log(result)
+            if (!result.exists) {
                 db.users.signUp(request.body,(error,result)=>{
+                    if(error){
+                        console.log(error)
+                    }
                     if(result){
+                        console.log("SIGN UP SUCCESS")
                         response.send(true)
                     }else{
                         console.log("SIGN UP FAIL")
