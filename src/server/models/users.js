@@ -8,8 +8,8 @@ module.exports = (dbPoolInstance) => {
     // `dbPoolInstance` is accessible within this function scope
 
     let signUp = (userInfo,callback)=>{
-        let query = 'INSERT INTO users (name,email,contact,password,gender) VALUES ($1,$2,$3,$4,$5) RETURNING *'
-        let arr = [userInfo.name,userInfo.email,userInfo.contact,userInfo.password,userInfo.gender]
+        let query = 'INSERT INTO users (firstName,lastName,email,contact,password,gender) VALUES ($1,$2,$3,$4,$5,$6) RETURNING *'
+        let arr = [userInfo.firstName,userInfo.lastName,userInfo.email,userInfo.contact,userInfo.password,userInfo.gender]
 
         dbPoolInstance.query(query,arr,(error,queryResult)=>{
             if (error) {
