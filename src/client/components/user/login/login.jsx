@@ -67,28 +67,10 @@ class Login extends React.Component {
 				<br/>
 				<div className="error">
 				</div>
-
-
-
-class Login extends React.Component {
-	render() {
-		return (
-			<form>
-				<h2>Sign Up</h2>
-
-				<input type="email"></input>
-				<input type="password"></input>
-
-				<button type="submit">Login</button>
-
-				<p>Don’t have an account?</p>
-				<Link to="/signup/">Create one now!</Link>
-			</form>
-
-		);
-	}
+            </form>
+        )
+    }
 }
-// Login.propTypes ={
-// };
+
 
 export default Login;
