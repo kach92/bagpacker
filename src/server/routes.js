@@ -4,5 +4,6 @@ module.exports = (app, db) => {
     const packingLists = require('./controllers/packing_lists')(db);
 
     app.post('/signup',users.signUp);
-    app.get('/non_user_list',packingLists.nonUserList);
+    app.post('/login',users.login);
+    app.post('/non_user_list',packingLists.nonUserList);
 };
