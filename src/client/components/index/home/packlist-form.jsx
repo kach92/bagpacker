@@ -105,7 +105,7 @@ class PacklistForm extends React.Component {
 				'Content-Type': 'application/json'
 			}
 		}).then(res => res.json())
-			.then(response => console.log('Success:', JSON.stringify(response)))
+			.then(response => console.log('Success:', JSON.parse(JSON.stringify(response))))
 			.catch(error => console.error('Error:', error));
 	};
 	render() {
