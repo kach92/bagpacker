@@ -17,6 +17,5 @@ INSERT INTO items (name,category,activity_id,weather_id,gender,daily,quantity,sh
 INSERT INTO items (name,category,activity_id,weather_id,gender,daily,quantity,shared) VALUES ('Swimming Goggles','Equipments',4,null,null,false,1,false);
 INSERT INTO items (name,category,activity_id,weather_id,gender,daily,quantity,shared) VALUES ('Sun Block','Essentials',4,null,null,false,1,true);
 INSERT INTO items (name,category,activity_id,weather_id,gender,daily,quantity,shared) VALUES ('Eye Liner','Beauty',null,null,'F',false,1,false);
-INSERT INTO items (name,category,activity_id,weather_id,gender,daily,quantity,shared) VALUES ('Eye Liner','Beauty',null,null,'F',false,1,false);
 INSERT INTO items (name,category,activity_id,weather_id,gender,daily,quantity,shared) VALUES ('Medications','Essentials',null,null,null,false,1,false);
 INSERT INTO items (name,category,activity_id,weather_id,gender,daily,quantity,shared) VALUES ('Towel','Toiletries',null,null,null,false,1,false);
