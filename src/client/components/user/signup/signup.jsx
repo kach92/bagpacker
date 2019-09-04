@@ -34,7 +34,7 @@ class Signup extends React.Component {
 
 		if (validated) {
 			delete formInputs.confirmPassword;
-			this.createUser(formInputs);
+			this.signupUser(formInputs);
 		}
 
 
