@@ -19,6 +19,26 @@ class Signup extends React.Component {
 		};
 	}
 
+	signup = (e) => {
+		e.preventDefault();
+		let formInputs = this.state.formInputs;
+		let validated = true;
+		Object.keys(formInputs).forEach(function (item) {
+			console.log(formInputs[item]);
+			if (formInputs[item] === "")
+				validated = false;
+		});
+
+		if (formInputs['password'] != formInputs['confirmPassword'])
+			validated = false;
+
+		if (validated) {
+			delete formInputs.confirmPassword;
+			this.createUser(formInputs);
+		}
+
+
+	};
 	updateFirstName = (e) => {
 		let formInputs = this.state.formInputs;
 		formInputs.firstName = e.target.value;
@@ -70,6 +90,7 @@ class Signup extends React.Component {
 
 	};
 	signupUser = (data) => {
+
 		let url = '/signup';
 
 		fetch(url, {
@@ -121,7 +142,7 @@ class Signup extends React.Component {
 					<input type="password" value={this.state.formInputs.confirmPassword} onChange={this.updateConfirmPassword}></input>
 				</div>
 
-				<button type="submit" onClick={this.submit}>Sign Up</button>
+				<button type="submit" onClick={this.signup}>Sign Up</button>
 				<br/>
 				<div className="error">
 				</div>
