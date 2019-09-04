@@ -1,7 +1,8 @@
 const pg = require('pg');
-const pokemon = require('./models/pokemon');
+const users = require('./models/users');
+const packingList = require('./models/packing_lists');
 const url = require('url');
-const dbconfig = require("../config.json");
+const dbconfig = require("../../config.json");
 
 var configs;
 
@@ -35,7 +36,8 @@ module.exports = {
   /*
    * ADD APP MODELS HERE
    */
-  pokemon: pokemon(pool),
+  users:users(pool),
+  packingList:packingList(pool),
 
   //make queries directly from here
   queryInterface: (text, params, callback) => {

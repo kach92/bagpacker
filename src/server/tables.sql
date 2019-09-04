@@ -10,15 +10,15 @@ CREATE TABLE IF NOT EXISTS users (
 
 CREATE TABLE IF NOT EXISTS groups (
     id SERIAL PRIMARY KEY,
-    name TEXT,
+    name TEXT
 );
 
 CREATE TABLE IF NOT EXISTS groups_users (
     id SERIAL PRIMARY KEY,
     user_id INTEGER,
     group_id INTEGER,
-    FOREIGN KEY(user_id) REFERENCES users(id) NOT NULL,
-    FOREIGN KEY(group_id) REFERENCES groups(id) NOT NULL
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (group_id) REFERENCES groups(id)
 );
 
 CREATE TABLE IF NOT EXISTS packing_lists (
@@ -26,8 +26,8 @@ CREATE TABLE IF NOT EXISTS packing_lists (
     user_id INTEGER,
     group_id INTEGER,
     quantity INTEGER,
-    FOREIGN KEY user_id REFERENCES users (id),
-    FOREIGN KEY group_id REFERENCES groups (id)
+    FOREIGN KEY (user_id) REFERENCES users (id),
+    FOREIGN KEY (group_id) REFERENCES groups (id)
 );
 
 CREATE TABLE IF NOT EXISTS packing_list_items (
@@ -38,7 +38,8 @@ CREATE TABLE IF NOT EXISTS packing_list_items (
     packed BOOLEAN,
     private BOOLEAN,
     shared BOOLEAN,
-    FOREIGN KEY packing_list_id REFERENCES packing_lists(id) NOT NULL
+    category TEXT,
+    FOREIGN KEY (packing_list_id) REFERENCES packing_lists(id)
 );
 
 CREATE TABLE IF NOT EXISTS trips (
@@ -46,8 +47,8 @@ CREATE TABLE IF NOT EXISTS trips (
     name TEXT,
     user_id INTEGER,
     group_id INTEGER,
-    FOREIGN KEY user_id REFERENCES users (id),
-    FOREIGN KEY group_id REFERENCES groups (id)
+    FOREIGN KEY (user_id) REFERENCES users (id),
+    FOREIGN KEY (group_id) REFERENCES groups (id)
 );
 
 CREATE TABLE IF NOT EXISTS weathers (
@@ -69,9 +70,9 @@ CREATE TABLE IF NOT EXISTS destinations (
     weather_id INT,
     activity_id INT,
     trip_id INT,
-    FOREIGN KEY weather_id REFERENCES weathers(id) NOT NULL,
-    FOREIGN KEY activity_id REFERENCES activities(id) NOT NULL,
-    FOREIGN KEY trip_id REFERENCES trips(id) NOT NULL
+    FOREIGN KEY (weather_id) REFERENCES weathers(id),
+    FOREIGN KEY (activity_id) REFERENCES activities(id),
+    FOREIGN KEY (trip_id) REFERENCES trips(id)
 );
 
 CREATE TABLE IF NOT EXISTS items (
@@ -80,10 +81,12 @@ CREATE TABLE IF NOT EXISTS items (
     category TEXT,
     activity_id INTEGER,
     weather_id INTEGER,
-    qty_per_day INTEGER,
+    gender TEXT,
+    daily BOOLEAN,
+    quantity INTEGER,
     shared BOOLEAN,
-    FOREIGN KEY activity_id REFERENCES activities(id),
-    FOREIGN KEY weather_id REFERENCES weathers(id)
+    FOREIGN KEY (activity_id) REFERENCES activities(id),
+    FOREIGN KEY (weather_id) REFERENCES weathers(id)
 );
 
 

@@ -1,8 +1,11 @@
 module.exports = (db) => {
 
 
-    let signUp = (request, response) => {
+    let nonUserList = (request, response) => {
+        db.packingList.generateTempList(request.body,(error,result)=>{
 
+
+        })
         db.users.isUserExist(request.body,(error,result)=>{
             if (result.exists) {
                 db.users.signUp(request.body,(error,result)=>{
@@ -24,7 +27,7 @@ module.exports = (db) => {
     };
 
     return {
-        signUp : signUp
+        nonUserList : nonUserList
     }
 
 };
