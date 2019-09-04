@@ -38,6 +38,9 @@ module.exports = (db) => {
 
                                 db.packList.createPackingListItems(packingList,packing_list_id,(error,result)=>{
 
+                                    if(result){
+                                        response.send(true);
+                                    }
                                 })
 
                             }

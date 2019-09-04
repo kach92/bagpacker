@@ -3,6 +3,8 @@
  * Export model functions as a module
  * ===========================================
  */
+var format = require('pg-format');
+
 module.exports = (dbPoolInstance) => {
 
     // `dbPoolInstance` is accessible within this function scope
@@ -80,6 +82,33 @@ module.exports = (dbPoolInstance) => {
         })
     }
 
+    let createPackingListItems = (packList,packing_list_id,callback)=>{
+        let finalList = []
+        for (var key in packList) {
+            finalList.concat(packList[key]);
+        }
+
+        finalList = finalList.map(x=>[packing_list_id,x.name,x.quantity,x.category])
+
+
+        let query = format('INSERT INTO packing_list_items (packing_list_id,name,quantity,category) VALUES %L RETURNING *',finalList);
+
+        dbPoolInstance.query(query,(error,queryResult)=>{
+            if(error){
+                console.log("CREATE PACKING LIST ITEMS ERROR")
+                console.log(error)
+                callback(error,null);
+            }else{
+                if(queryResult.rows.length>0){
+                    console.log("CREATE PACKING LIST ITEMS SUCCESS");
+                    callback(null,queryResult.rows);
+                }else{
+                    console.log("CREATE PACKING LIST ITEMS RETURNS NULL");
+                    callback(null,null);
+                }
+            }
+        })
+    }
 
     return {
         generateTempList,
