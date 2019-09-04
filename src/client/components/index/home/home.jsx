@@ -1,13 +1,12 @@
 import React from 'react';
 
+import PacklistForm from './packlist-form';
+
 class Home extends React.Component {
 	render() {
 		return (
-			<h2>Home</h2>
-
+			<PacklistForm/>
 		);
 	}
 }
-// Login.propTypes ={
-// };
 export default Home;
