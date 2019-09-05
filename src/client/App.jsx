@@ -2,7 +2,7 @@ import React from 'react';
 import {hot} from 'react-hot-loader';
 import {BrowserRouter as Router, Route, Redirect} from "react-router-dom";
 
-import Nav from './components/nav/nav';
+import Navigation from './components/nav/nav';
 
 import Home from './components/index/home/home';
 import Dashboard from './components/index/dashboard/dashboard';
@@ -13,6 +13,8 @@ import NonUserList from './components/packlist/non-users/packlist';
 import { sha256, sha224 } from 'js-sha256';
 
 const SALT = "Jarpy Bear"
+
+import {Container} from 'react-bootstrap';
 
 class App extends React.Component {
 	constructor() {
@@ -47,8 +49,8 @@ class App extends React.Component {
 	render() {
 		return (
 			<Router>
-				<Nav authed={this.state.authed}/>
-				<div>
+				<Navigation authed={this.state.authed}/>
+				<Container>
 					<Route exact path="/" render={props => (
 						this.state.authed
 						? <Dashboard/>
@@ -61,7 +63,7 @@ class App extends React.Component {
 						? <NonUserList packlist={this.state.packlist} {...props}/>
 						: <Redirect to='/' />
 					)}/>
-				</div>
+				</Container>
 			</Router>
 		);
 	}
