@@ -216,7 +216,7 @@ module.exports = (dbPoolInstance) => {
             if (queryResult.rows.length > 0) {
                 console.log("GET GROUP PACKING LIST IDS BY TRIP ID SUCCESS");
                 let result = queryResult.rows.map(x=>x.id)
-                return queryResult.rows;
+                return result;
             } else {
                 return Promise.reject(new Error("group packing list returns null"));
             }
