@@ -5,6 +5,7 @@ module.exports = (db) => {
 
     let signUp = (request, response) => {
         request.body.password = sha256(request.body.password);
+        request.body.email = request.body.email.toLowerCase();
         db.users.isUserExist(request.body,(error,result)=>{
             if (!result.exists) {
 
@@ -32,6 +33,8 @@ module.exports = (db) => {
 
     let login = (request, response) =>{
         request.body.password = sha256(request.body.password);
+
+        request.body.email = request.body.email.toLowerCase();
         db.users.getUserByEmail(request.body,(error,result)=>{
             if (result) {
                 if (result.password === request.body.password){
@@ -52,9 +55,14 @@ module.exports = (db) => {
         })
     }
 
+    let signOut = (request, response) =>{
+        response.cookie("user_id", null)
+    }
+
     return {
         signUp : signUp,
-        login : login
+        login : login,
+        signOut : signOut
     }
 
 };

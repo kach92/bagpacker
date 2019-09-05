@@ -15,7 +15,7 @@ module.exports = (db) => {
     let nonUserListSave = async function (request,response){
 
         try {
-            let user_id = request.cookies["user_id"];
+            let user_id = parseInt(request.cookies["user_id"]);
             let tripInfo = requst.body.trip;
             let finalList = request.body.packing_list;
 
@@ -33,7 +33,7 @@ module.exports = (db) => {
     let userListSave = async function (request,response){
         try{
             let tripInfo = request.body;
-            let user_id = request.cookies["user_id"];
+            let user_id = parseInt(request.cookies["user_id"]);
 
             if (tripInfo.group.length > 0){
                 console.log("PROCEED TO SAVING GROUP TRIP")
@@ -64,7 +64,7 @@ module.exports = (db) => {
                 response.send(true)
 
             }else{
-                let user_id = request.cookies["user_id"];
+                let user_id = parseInt(request.cookies["user_id"]);
                 console.log("PROCEED TO SAVING SOLO TRIP")
                 let user_gender = await db.users.getUserGender(user_id);
                 let trip_id = await db.trips.createTrip(tripInfo,user_id);

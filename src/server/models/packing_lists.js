@@ -48,10 +48,18 @@ module.exports = (dbPoolInstance) => {
                     return arr.map(mapObj => mapObj["name"]).indexOf(obj["name"]) === pos;
                 });
 
+                //for items with daily boolean true, multiply item quantity by duration
+                filterList.forEach(x=>{
+                    if(x.daily){
+                        x.quantity *= parseInt(tripInfo.duration)
+                    }
+
+                })
+                //if shared is true, filter out shared items
                 if(shared){
                     filterList = filterList.filter(x=>x.shared === false)
                 }
-
+                //check available category and put into an array, then seperate all items according to category
                 availableCategory = [...new Set(filterList.map(x => x.category))];
                 for(let i=0;i<availableCategory.length;i++){
                     finalList[availableCategory[i]] = filterList.filter(x=>x.category === availableCategory[i])
@@ -147,9 +155,12 @@ module.exports = (dbPoolInstance) => {
                     return arr.map(mapObj => mapObj["name"]).indexOf(obj["name"]) === pos;
                 });
 
-                if(shared){
-                    filterList = filterList.filter(x=>x.shared === false)
-                }
+                filterList.forEach(x=>{
+                    if(x.daily){
+                        x.quantity *= parseInt(tripInfo.duration)
+                    }
+
+                })
 
                 availableCategory = [...new Set(filterList.map(x => x.category))];
                 for(let i=0;i<availableCategory.length;i++){

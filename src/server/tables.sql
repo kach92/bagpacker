@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS users (
     id SERIAL PRIMARY KEY,
-    firstName Text,
-    lastName Text,
+    firstname Text,
+    lastname Text,
     email TEXT,
     password TEXT,
     gender TEXT,
