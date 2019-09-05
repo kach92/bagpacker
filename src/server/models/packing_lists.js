@@ -15,7 +15,10 @@ module.exports = (dbPoolInstance) => {
         let activity_ids = tripInfo.activities.map(x=>parseInt(x));
         let gender = tripInfo.gender
         let duration = tripInfo.duration
-        let filterList = null;
+        let filterList = [];
+        let leftOverList_uncommon = [];
+        let leftOverList_weather = [];
+        let leftOverList_activity = []
         let finalList = {};
         let availableCategory = null;
 
@@ -33,17 +36,31 @@ module.exports = (dbPoolInstance) => {
                     console.log(activity_ids)
                     console.log("////////////////////////////////")
                     //filter out common items
-                    filterList = queryResult.rows.filter(x=>x.weather_id === null && x.activity_id === null)
+                    queryResult.rows.forEach(x=>{
+                        x.weather_id === null && x.activity_id === null ? filterList.push(x) : leftOverList_uncommon.push(x);
+                    })
+
                     //add items with same weather
-                    filterList = filterList.concat(queryResult.rows.filter(x=>x.weather_id === weather_id))
+                    leftOverList_uncommon.forEach(x=>{
+                        x.weather_id === weather_id ? filterList.push(x) : leftOverList_weather.push(x);
+                    })
+
                     //add items with same activities
-                    filterList = filterList.concat(queryResult.rows.filter(x=>activity_ids.includes(x.activity_id)))
+                    leftOverList_weather.forEach(x=>{
+                        activity_ids.includes(x.activity_id) ? filterList.push(x) : leftOverList_activity.push(x);
+                    })
+
+                    // filterList = queryResult.rows.filter(x=>x.weather_id === null && x.activity_id === null)
+                    // filterList = filterList.concat(queryResult.rows.filter(x=>x.weather_id === weather_id))
+                    // filterList = filterList.concat(queryResult.rows.filter(x=>activity_ids.includes(x.activity_id)))
+
                     filterList = filterList.filter(x=>x.gender === null || x.gender === gender)
 
                     //remove duplicates
                     filterList = filterList.filter((obj, pos, arr) => {
                         return arr.map(mapObj => mapObj["name"]).indexOf(obj["name"]) === pos;
                     });
+
                     availableCategory = [...new Set(filterList.map(x => x.category))];
                     for(let i=0;i<availableCategory.length;i++){
                         finalList[availableCategory[i]] = filterList.filter(x=>x.category === availableCategory[i])
