@@ -90,21 +90,19 @@ class PacklistForm extends React.Component {
 		}
 	};
 	getPacklist = (data) => {
-
-		let url = '/non_user_list';
-		fetch(url, {
+		fetch('/non_user_list', {
 			method: 'POST',
 			body: JSON.stringify(data),
 			headers: {
 				'Content-Type': 'application/json'
 			}
 		}).then(res => res.json())
-			.then(response => {
+			.then(res => {
 				let packlist = {
 					location: data.location,
 					startDate: data.startDate,
 					endDate: data.endDate,
-					items: response
+					items: res
 				};
 				this.props.updatePacklist(packlist);
 			})

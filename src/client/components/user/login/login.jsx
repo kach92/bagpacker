@@ -1,6 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {Link} from "react-router-dom";
 import styles from "./style.scss";
+import Signup from "../signup/signup";
 
 class Login extends React.Component {
 	constructor(){
@@ -37,16 +39,14 @@ class Login extends React.Component {
 		}
 	};
 	loginUser = (data) => {
-		let url = '/login';
-
-		fetch(url, {
-			method: 'POST', // or 'PUT'
-			body: JSON.stringify(data), // data can be `string` or {object}!
+		fetch('/login', {
+			method: 'POST',
+			body: JSON.stringify(data),
 			headers:{
 				'Content-Type': 'application/json'
 			}
 		}).then(res => res.json())
-			.then(response => console.log('Success:', JSON.stringify(response)))
+			.then(res => this.props.history.push('/'))
 			.catch(error => console.error('Error:', error));
 	};
 	render() {
@@ -75,5 +75,7 @@ class Login extends React.Component {
     }
 }
 
-
+Login.propTypes ={
+	history: PropTypes.object
+};
 export default Login;
