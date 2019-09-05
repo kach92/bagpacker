@@ -9,122 +9,101 @@ module.exports = (dbPoolInstance) => {
 
     // `dbPoolInstance` is accessible within this function scope
 
-    let generateTempList = (tripInfo,callback)=>{
+    let generateTempList = async function (tripInfo,callback){
 
-        let weather_id = parseInt(tripInfo.weather);
-        let activity_ids = tripInfo.activities.map(x=>parseInt(x));
-        let gender = tripInfo.gender
-        let duration = tripInfo.duration
-        let filterList = [];
-        let leftOverList_uncommon = [];
-        let leftOverList_weather = [];
-        let leftOverList_activity = []
-        let finalList = {};
-        let availableCategory = null;
+        try {
+            let weather_id = parseInt(tripInfo.weather);
+            let activity_ids = tripInfo.activities.map(x=>parseInt(x));
+            let gender = tripInfo.gender
+            let duration = tripInfo.duration
+            let filterList = [];
+            let leftOverList_uncommon = [];
+            let leftOverList_weather = [];
+            let leftOverList_activity = []
+            let finalList = {};
+            let availableCategory = null;
 
-        let query = 'SELECT * FROM items';
+            let query = 'SELECT * FROM items';
+            let queryResult = await dbPoolInstance.query(query);
+            if(queryResult.rows.length>0){
+                // filter out common items
+                queryResult.rows.forEach(x=>{
+                    x.weather_id === null && x.activity_id === null ? filterList.push(x) : leftOverList_uncommon.push(x);
+                })
 
-        dbPoolInstance.query(query,(error,queryResult)=>{
-            if (error) {
-                console.log("SELECT ALL ITEMS FAIL")
-                callback(error, null);
-            } else {
+                //add items with same weather
+                leftOverList_uncommon.forEach(x=>{
+                    x.weather_id === weather_id ? filterList.push(x) : leftOverList_weather.push(x);
+                })
 
-                if(queryResult.rows.length>0){
-                    console.log("////////////////////////////////")
-                    console.log(weather_id)
-                    console.log(activity_ids)
-                    console.log("////////////////////////////////")
-                    //filter out common items
-                    queryResult.rows.forEach(x=>{
-                        x.weather_id === null && x.activity_id === null ? filterList.push(x) : leftOverList_uncommon.push(x);
-                    })
+                //add items with same activities
+                leftOverList_weather.forEach(x=>{
+                    activity_ids.includes(x.activity_id) ? filterList.push(x) : leftOverList_activity.push(x);
+                })
 
-                    //add items with same weather
-                    leftOverList_uncommon.forEach(x=>{
-                        x.weather_id === weather_id ? filterList.push(x) : leftOverList_weather.push(x);
-                    })
 
-                    //add items with same activities
-                    leftOverList_weather.forEach(x=>{
-                        activity_ids.includes(x.activity_id) ? filterList.push(x) : leftOverList_activity.push(x);
-                    })
+                filterList = filterList.filter(x=>x.gender === null || x.gender === gender)
 
-                    // filterList = queryResult.rows.filter(x=>x.weather_id === null && x.activity_id === null)
-                    // filterList = filterList.concat(queryResult.rows.filter(x=>x.weather_id === weather_id))
-                    // filterList = filterList.concat(queryResult.rows.filter(x=>activity_ids.includes(x.activity_id)))
+                //remove duplicates
+                filterList = filterList.filter((obj, pos, arr) => {
+                    return arr.map(mapObj => mapObj["name"]).indexOf(obj["name"]) === pos;
+                });
 
-                    filterList = filterList.filter(x=>x.gender === null || x.gender === gender)
-
-                    //remove duplicates
-                    filterList = filterList.filter((obj, pos, arr) => {
-                        return arr.map(mapObj => mapObj["name"]).indexOf(obj["name"]) === pos;
-                    });
-
-                    availableCategory = [...new Set(filterList.map(x => x.category))];
-                    for(let i=0;i<availableCategory.length;i++){
-                        finalList[availableCategory[i]] = filterList.filter(x=>x.category === availableCategory[i])
-                    }
-
-                    callback(null,finalList)
-
-                }else{
-                    console.log("SELECT ALL ITEMS NOTHING")
-                    callback(null, null);
+                availableCategory = [...new Set(filterList.map(x => x.category))];
+                for(let i=0;i<availableCategory.length;i++){
+                    finalList[availableCategory[i]] = filterList.filter(x=>x.category === availableCategory[i])
                 }
-
-            }
-        })
-
-    }
-
-    let createPackingList = (trip_id,callback) =>{
-        let user_id = request.cookies["user_id"];
-        let query = 'INSERT INTO packing_lists (user_id,trip_id) VALUES ($1,$2) RETURNING *'
-
-        dbPoolInstance.query(query,arr,(error,queryResult)=>{
-            if(error){
-                console.log("CREATE PACKING LIST ERROR")
-                console.log(error)
-                callback(error,null);
+                return finalList
             }else{
-                if(queryResult.rows.length>0){
-                    console.log("CREATE PACKING LIST SUCCESS");
-                    callback(null,queryResult.rows[0]);
-                }else{
-                    console.log("CREATE PACKING LIST RETURNS NULL");
-                    callback(null,null);
-                }
+                return Promise.reject(new Error("query all items returns null"));
             }
-        })
-    }
 
-    let createPackingListItems = (packList,packing_list_id,callback)=>{
-        let finalList = []
-        for (var key in packList) {
-            finalList.concat(packList[key]);
+        }catch (error){
+            console.log("generate temp list model " + error)
         }
 
-        finalList = finalList.map(x=>[packing_list_id,x.name,x.quantity,x.category])
 
+    }
 
-        let query = format('INSERT INTO packing_list_items (packing_list_id,name,quantity,category) VALUES %L RETURNING *',finalList);
-
-        dbPoolInstance.query(query,(error,queryResult)=>{
-            if(error){
-                console.log("CREATE PACKING LIST ITEMS ERROR")
-                console.log(error)
-                callback(error,null);
+    let createPackingList = async function (trip_id) {
+        try{
+            let user_id = request.cookies["user_id"];
+            let query = 'INSERT INTO packing_lists (user_id,trip_id) VALUES ($1,$2) RETURNING *';
+            let arr = [user_id,trip_id];
+            let queryResult = await dbPoolInstance.query(query,arr);
+            if(queryResult.rows.length>0){
+                console.log("CREATE PACKING LIST SUCCESS");
+                return queryResult.rows[0].id
             }else{
-                if(queryResult.rows.length>0){
-                    console.log("CREATE PACKING LIST ITEMS SUCCESS");
-                    callback(null,queryResult.rows);
-                }else{
-                    console.log("CREATE PACKING LIST ITEMS RETURNS NULL");
-                    callback(null,null);
-                }
+                return Promise.reject(new Error("create packing list return null"));
             }
-        })
+        } catch(error){
+            console.log("create packing list " + error)
+        }
+    }
+
+    let createPackingListItems = async function (packList,packing_list_id) {
+
+        try {
+            let finalList = []
+            for (var key in packList) {
+                finalList.concat(packList[key]);
+            }
+
+            finalList = finalList.map(x=>[packing_list_id,x.name,x.quantity,x.category])
+            let query = format('INSERT INTO packing_list_items (packing_list_id,name,quantity,category) VALUES %L RETURNING *',finalList);
+
+            let queryResult = await dbPoolInstance.query(query);
+            if(queryResult.rows.length>0){
+                console.log("CREATE PACKING LIST ITEMS SUCCESS");
+                return queryResult.rows;
+            }else{
+                return Promise.reject(new Error("create packing list items return null"));
+            }
+
+        } catch (error) {
+            console.log ("create packing list items controller" + error);
+        }
     }
 
     return {

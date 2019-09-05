@@ -63,11 +63,24 @@ module.exports = (dbPoolInstance) => {
         });
     }
 
+    let getUserGender = async function (user_id){
+        try{
+            let query = "SELECT * FROM users WHERE id = $1";
+            let arr = [user_id]
+            let result = await dbPoolInstance.query(query,arr)
+            return result.rows.length > 0 ? result.rows[0].gender : null;
+
+        } catch (error){
+            console.log("get user gender" + error);
+        }
+    }
+
 
     return {
         signUp,
         isUserExist,
-        getUserByEmail
+        getUserByEmail,
+        getUserGender
 
     };
 };
