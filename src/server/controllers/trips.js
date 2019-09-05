@@ -29,12 +29,24 @@ module.exports = (db) => {
 
     };
 
+    let getSingleTrip = async function (request, response) {
+        try{
+            let trip_id = request.params.id;
+            let trip_details = await db.trips.getTripById(trip_id);
+            let destination_details = await db.trips.getDestinationsByTrip(trip_id);
+            trip_details["destinations"] = destination_details
+        } catch (error){
+            console.log("get single trip controller " + error)
+        }
+    }
+
 
 
 
 
     return {
-        getAllTrips : getAllTrips
+        getAllTrips : getAllTrips,
+        getSingleTrip : getSingleTrip
     }
 
 };
