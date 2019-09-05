@@ -4,6 +4,9 @@ import {NavLink} from "react-router-dom";
 import {Navbar,Nav} from 'react-bootstrap';
 
 class Navigation extends React.Component {
+	constructor() {
+		super();
+	}
 	signOut = () => {
 		console.log("sign out");
 		fetch('/signout', {
