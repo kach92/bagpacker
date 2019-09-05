@@ -53,11 +53,11 @@ module.exports = {
             },
             {
               loader: 'sass-loader',
-              options: {sourceMap: IS_DEV}
+              // options: {sourceMap: IS_DEV}
             },
             {
               loader: 'postcss-loader',
-              options: {sourceMap: IS_DEV}
+              // options: {sourceMap: IS_DEV}
             }
           ]
         })

@@ -57,7 +57,7 @@ class App extends React.Component {
 		return (
 			<Router>
 				<Route path="/" render={props => (
-					<Navigation authed={this.state.authed} {...props}/>
+					<Navigation authed={this.state.authed} checkUser={this.checkUser} {...props}/>
 				)}/>
 				<Container>
 					<Route exact path="/" render={props => (

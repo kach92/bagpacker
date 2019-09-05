@@ -15,7 +15,10 @@ class Navigation extends React.Component {
 				'Content-Type': 'application/json'
 			}
 		}).then(res => res.json())
-			.then(res => this.props.history.push('/'))
+			.then(res => {
+                console.log(this.props);
+                window.location.reload();
+            })
 			.catch(error => console.error('Error:', error));
 	};
 	render() {
