@@ -8,21 +8,29 @@ import Home from './components/index/home/home';
 import Login from './components/user/login/login';
 import Signup from './components/user/signup/signup';
 
+import NonUserList from './components/packlist/non-users/packlist';
+
 class App extends React.Component {
 	constructor() {
 		super();
-		this.state = {};
+		this.state = {
+			packlist : null
+		};
 	}
+
+	updatePacklist = (packlist) => {
+		this.setState({packlist: packlist});
+	};
 
 	render() {
 		return (
 			<Router>
 				<Nav/>
-
 				<div>
-					<Route exact path="/" component={Home}/>
+					<Route exact path="/" render={props => (<Home updatePacklist={this.updatePacklist} {...props}/>)}/>
 					<Route path="/login/" component={Login}/>
 					<Route path="/signup/" component={Signup}/>
+					<Route path="/list/" render={props => (<NonUserList packlist={this.state.packlist}/>)}/>
 				</div>
 			</Router>
 		);

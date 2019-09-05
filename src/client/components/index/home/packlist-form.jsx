@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styles from "./style.scss";
 
 import Multiselect from 'multiselect-dropdown-react';
@@ -6,37 +7,33 @@ import Multiselect from 'multiselect-dropdown-react';
 const data = [{
 	name: 'Hiking',
 	value: '1'
-},
-{
-	name: 'Leisure',
-	value: '2'
-},
-{
-	name: 'Business',
-	value: '3'
-},
-{
-	name: 'Beach',
-	value: '4'
-},
-{
-	name: 'Snow Sports',
-	value: '5'
-},
-{
-	name: 'Camping',
-	value: '6'
-}];
+	},{
+		name: 'Leisure',
+		value: '2'
+	},{
+		name: 'Business',
+		value: '3'
+	},{
+		name: 'Beach',
+		value: '4'
+	},{
+		name: 'Snow Sports',
+		value: '5'
+	},{
+		name: 'Camping',
+		value: '6'
+	}];
+
 class PacklistForm extends React.Component {
-	constructor(){
-		super();
+	constructor(props) {
+		super(props);
 		this.state = {
 			formInputs: {
 				location: "",
 				startDate: "",
 				endDate: "",
 				gender: "",
-				weather: "",
+				weather: "1",
 				activities: []
 			},
 			errorMessage: ""
@@ -80,34 +77,38 @@ class PacklistForm extends React.Component {
 		e.preventDefault();
 		let formInputs = this.state.formInputs;
 		let validated = true;
-		// Object.keys(formInputs).forEach(function (item) {
-		// 	console.log(formInputs[item]);
-		// 	if (formInputs[item] === "")
-		// 		validated = false;
-		// });
-		//
-		// if (formInputs['password'] != formInputs['confirmPassword'])
-		// 	validated = false;
 
+		Object.keys(formInputs).forEach(function (item) {
+			if (item !== "activities") {
+				if (formInputs[item] === "")
+					validated = false;
+			}
+		});
 		if (validated) {
-			delete formInputs.confirmPassword;
+			formInputs["duration"] = this.calcDuration(formInputs["startDate"], formInputs["endDate"]);
 			this.getPacklist(formInputs);
 		}
 	};
 	getPacklist = (data) => {
 
 		let url = '/non_user_list';
-
 		fetch(url, {
-			method: 'POST', // or 'PUT'
-			body: JSON.stringify(data), // data can be `string` or {object}!
-			headers:{
+			method: 'POST',
+			body: JSON.stringify(data),
+			headers: {
 				'Content-Type': 'application/json'
 			}
 		}).then(res => res.json())
-			.then(response => console.log('Success:', JSON.parse(JSON.stringify(response))))
+			.then(response => this.props.updatePacklist(JSON.stringify(response)))
+			.then( () => this.props.history.push('/list'))
 			.catch(error => console.error('Error:', error));
 	};
+	calcDuration = (start, end) => {
+		let duration = (new Date(end).getTime() - new Date(start).getTime());
+		duration = Math.ceil(duration / (1000 * 60 * 60 * 24));
+		return duration + 1;
+	};
+
 	render() {
 		return (
 			<form className={styles.packlistForm}>
@@ -149,7 +150,7 @@ class PacklistForm extends React.Component {
 					</select>
 				</div>
 				<div className={styles.formField}>
-					<Multiselect options={data} onSelectOptions={this.updateActivities} />
+					<Multiselect options={data} onSelectOptions={this.updateActivities}/>
 				</div>
 				<button type="submit" onClick={this.submit}>Create Packing List</button>
 				<br/>
@@ -159,6 +160,9 @@ class PacklistForm extends React.Component {
 		);
 	}
 }
-// Login.propTypes ={
-// };
+
+PacklistForm.propTypes ={
+	updatePacklist: PropTypes.func,
+	history: PropTypes.object
+};
 export default PacklistForm;
