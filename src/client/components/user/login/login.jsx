@@ -66,6 +66,10 @@ class Login extends React.Component {
 				<br/>
 				<div className="error">
 				</div>
+				<div>
+					<p>Don't have an account?</p>
+					<Link to="/signup/">Create one now!</Link>
+				</div>
             </form>
         )
     }
