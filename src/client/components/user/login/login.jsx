@@ -39,6 +39,7 @@ class Login extends React.Component {
 			this.loginUser(formInputs);
 		}
 	};
+
 	loginUser = (data) => {
 		fetch('/login', {
 			method: 'POST',
