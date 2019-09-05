@@ -99,7 +99,15 @@ class PacklistForm extends React.Component {
 				'Content-Type': 'application/json'
 			}
 		}).then(res => res.json())
-			.then(response => this.props.updatePacklist(JSON.stringify(response)))
+			.then(response => {
+				let packlist = {
+					location: data.location,
+					startDate: data.startDate,
+					endDate: data.endDate,
+					items: response
+				};
+				this.props.updatePacklist(packlist);
+			})
 			.then( () => this.props.history.push('/list'))
 			.catch(error => console.error('Error:', error));
 	};

@@ -30,7 +30,7 @@ class App extends React.Component {
 					<Route exact path="/" render={props => (<Home updatePacklist={this.updatePacklist} {...props}/>)}/>
 					<Route path="/login/" component={Login}/>
 					<Route path="/signup/" component={Signup}/>
-					<Route path="/list/" render={props => (<NonUserList packlist={this.state.packlist}/>)}/>
+					<Route path="/list/" render={props => (<NonUserList packlist={this.state.packlist} {...props}/>)}/>
 				</div>
 			</Router>
 		);
