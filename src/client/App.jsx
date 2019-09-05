@@ -1,6 +1,6 @@
 import React from 'react';
 import {hot} from 'react-hot-loader';
-import {BrowserRouter as Router, Route} from "react-router-dom";
+import {BrowserRouter as Router, Route, Redirect} from "react-router-dom";
 
 import Nav from './components/nav/nav';
 
@@ -30,7 +30,11 @@ class App extends React.Component {
 					<Route exact path="/" render={props => (<Home updatePacklist={this.updatePacklist} {...props}/>)}/>
 					<Route path="/login/" component={Login}/>
 					<Route path="/signup/" component={Signup}/>
-					<Route path="/list/" render={props => (<NonUserList packlist={this.state.packlist} {...props}/>)}/>
+					<Route path="/list/" render={props => (
+						this.state.packlist != null
+						? <NonUserList packlist={this.state.packlist} {...props}/>
+						: <Redirect to='/' />
+					)}/>
 				</div>
 			</Router>
 		);
