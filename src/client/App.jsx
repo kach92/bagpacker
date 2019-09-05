@@ -24,6 +24,7 @@ class App extends React.Component {
 			authed : false,
 			userId : null
 		};
+        this.checkUser = this.checkUser.bind(this);
 	}
 
 	updatePacklist = (packlist) => {
@@ -31,12 +32,16 @@ class App extends React.Component {
 	};
 
 	componentDidMount() {
+        console.log("APP mounted")
+        this.checkUser();
+	}
 
-		let cookies = {}
+    checkUser() {
+        let cookies = {}
         document.cookie.split("; ").forEach( value => {
-			let val = value.split("=")
+            let val = value.split("=")
             cookies[val[0]] = val[1]
-		});
+        });
         console.log(cookies)
         if(cookies.session === sha256(cookies.user_id + "logged_in" + SALT)){
             this.setState({
@@ -44,7 +49,9 @@ class App extends React.Component {
                 userId: parseInt(cookies.user_id)
             });
         }
-	}
+    }
+
+
 
 	render() {
 		return (
@@ -56,10 +63,10 @@ class App extends React.Component {
 					<Route exact path="/" render={props => (
 						this.state.authed
 						? <Dashboard/>
-						: <Home updatePacklist={this.updatePacklist} {...props}/>
+						: <Home updatePacklist={this.updatePacklist} checkUser={this.checkUser} {...props}/>
 					)}/>
-					<Route path="/login/" component={Login}/>
-					<Route path="/signup/" component={Signup}/>
+					<Route path="/login/" render={props => (this.state.authed ? <Redirect to='/' /> : <Login {...props}/>)}/>
+					<Route path="/signup/" render={props => (this.state.authed ? <Redirect to='/' /> : <Signup {...props}/>)}/>
 					<Route path="/list/" render={props => (
 						this.state.packlist != null
 						? <NonUserList packlist={this.state.packlist} {...props}/>
