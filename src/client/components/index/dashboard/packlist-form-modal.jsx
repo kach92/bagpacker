@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import ActivitiesForm from "../packlist-activities-form";
 import mainStyles from "../../../style.scss";
 import {Form} from 'react-bootstrap';
+import Category from "../../packlist/category";
 
 class PacklistForm extends React.Component {
 	constructor(props) {
@@ -39,7 +40,13 @@ class PacklistForm extends React.Component {
 	};
 
 	updateGroupPax = (e) => {
-		this.setState({groupPax: e.target.value});
+		let formInputs = this.state.formInputs;
+		let group = this.state.formInputs.group.slice(0, e.target.value);
+		formInputs.group = group;
+		this.setState({
+			groupPax: parseInt(e.target.value),
+			formInputs: formInputs
+		});
 	};
 	updateWeather = (e) => {
 		let formInputs = this.state.formInputs;
@@ -52,21 +59,38 @@ class PacklistForm extends React.Component {
 		formInputs.activities = params;
 		this.setState({formInputs: formInputs});
 	};
+	updateTripmate = (e,index) => {
+		let formInputs = this.state.formInputs;
+		formInputs.group[index] = e.target.value;
+		this.setState({formInputs: formInputs});
+	};
 	submit = (e) => {
 		e.preventDefault();
-		console.log("submited");
 		let formInputs = this.state.formInputs;
 		let validated = true;
-
+		let groupPax = this.state.groupPax;
 		Object.keys(formInputs).forEach(function (item) {
-			if (item !== "activities" && item !== "group") {
-				if (formInputs[item] === "")
-					validated = false;
+			if (item !== "activities") {
+				if (item === "group") {
+					if (groupPax > 1) {
+						if (groupPax != formInputs[item].length) {
+							validated = false;
+						} else {
+							formInputs[item].forEach(function (email) {
+								if (email.trim() === "")
+									validated = false;
+							})
+						}
+					}
+				}
+				else {
+					if (formInputs[item] === "")
+						validated = false;
+				}
 			}
 		});
 		if (validated) {
 			formInputs["duration"] = this.calcDuration(formInputs["startDate"], formInputs["endDate"]);
-			console.log(formInputs);
 			this.createTrip(formInputs);
 		}
 	};
@@ -96,19 +120,25 @@ class PacklistForm extends React.Component {
 		return duration + 1;
 	};
 
-	render() {
-		let groupInputs = null;
 
-		// if (this.state.groupPax > 1) {
-		// 	for (let i=0;i<this.state.groupPax; i++){
-		// 		groupInputs = <p>test</p>
-		// 	}
-		// }
+	render() {
+		let groupInputs = [];
+
+		if (this.state.groupPax > 1) {
+			groupInputs.push(<label>Trip Mates</label>);
+			for (let i=0;i<this.state.groupPax; i++){
+				groupInputs.push(
+					<Form.Group key={i}>
+						<Form.Control type="email" value={this.state.formInputs.group[i]} onChange={(e)=>{this.updateTripmate(e,i)}}/>
+					</Form.Group>
+				)
+			}
+		}
 		return (
 			<Form className={mainStyles.packlistForm}>
 				<Form.Group>
 					<Form.Label>Location</Form.Label>
-					<Form.Control type="text" placeholder="Location" value={this.state.formInputs.location} onChange={this.updateLocation}/>
+					<Form.Control type="text" placeholder="Location" value={this.state.formInputs.location} onChange={this.updateLocation} />
 				</Form.Group>
 
 				<Form.Group>
