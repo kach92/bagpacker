@@ -5,6 +5,14 @@ import PacklistForm from './packlist-form';
 import {Col,Row} from 'react-bootstrap';
 
 class Home extends React.Component {
+    constructor(){
+        super()
+    }
+
+    componentDidMount(){
+        this.props.checkUser();
+    }
+
 	render() {
 		return (
 			<Row>
