@@ -24,7 +24,6 @@ class Signup extends React.Component {
 		let formInputs = this.state.formInputs;
 		let validated = true;
 		Object.keys(formInputs).forEach(function (item) {
-			console.log(formInputs[item]);
 			if (formInputs[item] === "")
 				validated = false;
 		});
@@ -74,7 +73,6 @@ class Signup extends React.Component {
 		let formInputs = this.state.formInputs;
 		let validated = true;
 		Object.keys(formInputs).forEach(function (item) {
-			console.log(formInputs[item]);
 			if (formInputs[item] === "")
 				validated = false;
 		});
@@ -147,8 +145,10 @@ class Signup extends React.Component {
 				<div className="error">
 				</div>
 
-				<p>Existing user?</p>
-				<Link to="/login/">Log in now!</Link>
+				<div>
+					<p>Existing user?</p>
+					<Link to="/login/">Log in now!</Link>
+				</div>
 			</form>
 
 		);
