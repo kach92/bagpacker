@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {NavLink} from "react-router-dom";
 import {Navbar,Nav} from 'react-bootstrap';
+import mainStyles from '../../style.scss';
 
 class Navigation extends React.Component {
 	constructor() {
@@ -41,7 +42,7 @@ class Navigation extends React.Component {
 			);
 		}
 		return (
-			<Navbar collapseOnSelect expand="lg" bg="light">
+			<Navbar collapseOnSelect expand="md" fixed="top" className={mainStyles.navbar}>
 				<Navbar.Brand href="/">Bagpacker</Navbar.Brand>
 				<Navbar.Toggle aria-controls="responsive-navbar-nav" />
 				<Navbar.Collapse id="responsive-navbar-nav">
