@@ -1,4 +1,5 @@
 var sha256 = require('js-sha256');
+const SALT = "Jarpy Bear"
 
 module.exports = (db) => {
 
@@ -15,6 +16,7 @@ module.exports = (db) => {
                         console.log("SIGN UP SUCCESS")
                         response.cookie("user_id", result.id);
                         response.cookie("user_name", result.firstname);
+                        response.cookie("session", sha256(result.id + "logged_in" + SALT));
                         response.send(true)
                     }else{
                         console.log("SIGN UP FAIL")
@@ -33,7 +35,6 @@ module.exports = (db) => {
 
     let login = (request, response) =>{
         request.body.password = sha256(request.body.password);
-
         request.body.email = request.body.email.toLowerCase();
         db.users.getUserByEmail(request.body,(error,result)=>{
             if (result) {
@@ -41,6 +42,7 @@ module.exports = (db) => {
                     console.log("USER & PASSWORD MATCHED");
                     response.cookie("user_id", result.id);
                     response.cookie("user_name", result.firstname);
+                    response.cookie("session", sha256(result.id + "logged_in" + SALT));
                     response.send(true);
                 }else{
                     console.log("PASSWORD NOT MATCHED");
@@ -57,6 +59,7 @@ module.exports = (db) => {
 
     let signOut = (request, response) =>{
         response.cookie("user_id", null)
+        response.cookie("session", sha256(SALT))
     }
 
     return {

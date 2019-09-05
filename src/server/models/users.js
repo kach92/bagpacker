@@ -47,13 +47,12 @@ module.exports = (dbPoolInstance) => {
     }
 
     let getUserByEmail = (userInfo,callback) =>{
-        let query = "SELECT * FROM users WHERE name = $1"
+        let query = "SELECT * FROM users WHERE email = $1"
         let arr = [userInfo.email]
 
         dbPoolInstance.query(query, arr, (error, queryResult) => {
             if (error) {
                 callback(error, null);
-
             } else {
                 if (queryResult.rows.length > 0) {
 

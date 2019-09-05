@@ -10,6 +10,9 @@ import Login from './components/user/login/login';
 import Signup from './components/user/signup/signup';
 
 import NonUserList from './components/packlist/non-users/packlist';
+import { sha256, sha224 } from 'js-sha256';
+
+const SALT = "Jarpy Bear"
 
 class App extends React.Component {
 	constructor() {
@@ -26,21 +29,19 @@ class App extends React.Component {
 	};
 
 	componentDidMount() {
-		let cookies = document.cookie.split(";").map( value => {
+
+		let cookies = {}
+        document.cookie.split("; ").forEach( value => {
 			let val = value.split("=")
-			let obj = { "key" : val[0], "value" : val[1] }
-			return obj;
+            cookies[val[0]] = val[1]
 		});
-		cookies.forEach(cookie => {
-			if( cookie.key.trim()==="user_id"){
-				if (cookie.value != null) {
-					this.setState({
-						authed: true,
-						userId: parseInt(cookie.value)
-					});
-				}
-			}
-		});
+        console.log(cookies)
+        if(cookies.session === sha256(cookies.user_id + "logged_in" + SALT)){
+            this.setState({
+                authed: true,
+                userId: parseInt(cookies.user_id)
+            });
+        }
 	}
 
 	render() {
