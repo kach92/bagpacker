@@ -12,11 +12,12 @@ class PacklistForm extends React.Component {
 				location: "",
 				startDate: "",
 				endDate: "",
-				gender: "",
 				weather: "1",
-				activities: []
+				activities: [],
+				group: []
 			},
-			errorMessage: ""
+			errorMessage: "",
+			groupPax: 1
 		};
 	}
 
@@ -37,10 +38,8 @@ class PacklistForm extends React.Component {
 		this.setState({formInputs: formInputs});
 	};
 
-	updateGender = (e) => {
-		let formInputs = this.state.formInputs;
-		formInputs.gender = e.target.value;
-		this.setState({formInputs: formInputs});
+	updateGroupPax = (e) => {
+		this.setState({groupPax: e.target.value});
 	};
 	updateWeather = (e) => {
 		let formInputs = this.state.formInputs;
@@ -55,22 +54,24 @@ class PacklistForm extends React.Component {
 	};
 	submit = (e) => {
 		e.preventDefault();
+		console.log("submited");
 		let formInputs = this.state.formInputs;
 		let validated = true;
 
 		Object.keys(formInputs).forEach(function (item) {
-			if (item !== "activities") {
+			if (item !== "activities" && item !== "group") {
 				if (formInputs[item] === "")
 					validated = false;
 			}
 		});
 		if (validated) {
 			formInputs["duration"] = this.calcDuration(formInputs["startDate"], formInputs["endDate"]);
-			this.getPacklist(formInputs);
+			console.log(formInputs);
+			this.createTrip(formInputs);
 		}
 	};
-	getPacklist = (data) => {
-		fetch('/non_user_list', {
+	createTrip = (data) => {
+		fetch('/trips', {
 			method: 'POST',
 			body: JSON.stringify(data),
 			headers: {
@@ -96,12 +97,18 @@ class PacklistForm extends React.Component {
 	};
 
 	render() {
+		let groupInputs = null;
+
+		// if (this.state.groupPax > 1) {
+		// 	for (let i=0;i<this.state.groupPax; i++){
+		// 		groupInputs = <p>test</p>
+		// 	}
+		// }
 		return (
 			<Form className={mainStyles.packlistForm}>
-				<h2>Create Packing List</h2>
 				<Form.Group>
 					<Form.Label>Location</Form.Label>
-					<Form.Control type="text" placeholder="Enter email" value={this.state.formInputs.location} onChange={this.updateLocation}/>
+					<Form.Control type="text" placeholder="Location" value={this.state.formInputs.location} onChange={this.updateLocation}/>
 				</Form.Group>
 
 				<Form.Group>
@@ -115,10 +122,11 @@ class PacklistForm extends React.Component {
 				</Form.Group>
 
 				<Form.Group>
-					<label>Gender</label>
-					<Form.Check inline type='radio' label={`Female`} value="F" checked={this.state.formInputs.gender === 'F'} onChange={this.updateGender}/>
-					<Form.Check inline type='radio' label={`Male`} value="M" checked={this.state.formInputs.gender === 'M'} onChange={this.updateGender}/>
+					<label>Number of people</label>
+					<Form.Control type="number" value={this.state.groupPax} min="1" max="10" onChange={this.updateGroupPax}/>
 				</Form.Group>
+
+				{groupInputs}
 
 				<Form.Group>
 					<label>Weather</label>
