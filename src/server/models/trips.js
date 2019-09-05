@@ -3,6 +3,7 @@
  * Export model functions as a module
  * ===========================================
  */
+var format = require('pg-format');
 module.exports = (dbPoolInstance) => {
 
     // `dbPoolInstance` is accessible within this function scope
@@ -49,11 +50,43 @@ module.exports = (dbPoolInstance) => {
     }
 
 
+    let getTripsOfUser = async function(user_id,group_ids){
+        try{
+            let query = format('SELECT * FROM trips WHERE user_id = %L OR group_id IN %L',user_id,group_ids);
+            let queryResult = dbPoolInstance.query(query);
+            if (queryResult.rows.length > 0) {
+                console.log("GET TRIPS OF USERS SUCCESS")
+                return queryResult.rows;
+            } else {
+                return [];
+            }
+        } catch (error) {
+            console.log("get trips of users "+ error);
+        }
+    }
+
+    let getDestinationsByTrip = async function (trip_id){
+        try {
+            let query = 'SELECT * FROM destinations WHERE id = $1'
+            let arr = [trip_id];
+            let queryResult = dbPoolInstance.query(query,arr);
+            if (queryResult.rows.length > 0) {
+                console.log("GET TRIPS OF USERS SUCCESS")
+                return queryResult.rows;
+            } else {
+                return [];
+            }
+        } catch (error) {
+            console.log('get destinations by trip' + error)
+        }
+    }
 
 
     return {
         createTrip,
-        createDestination
+        createDestination,
+        getTripsOfUser,
+        getDestinationsByTrip
 
     };
 };
