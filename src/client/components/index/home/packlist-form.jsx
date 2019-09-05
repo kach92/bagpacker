@@ -1,28 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styles from "./style.scss";
-
-import Multiselect from 'multiselect-dropdown-react';
-
-const data = [{
-	name: 'Hiking',
-	value: '1'
-	},{
-		name: 'Leisure',
-		value: '2'
-	},{
-		name: 'Business',
-		value: '3'
-	},{
-		name: 'Beach',
-		value: '4'
-	},{
-		name: 'Snow Sports',
-		value: '5'
-	},{
-		name: 'Camping',
-		value: '6'
-	}];
+import ActivitiesForm from "./packlist-activities-form";
+import mainStyles from "../../../style.scss";
+import {Form} from 'react-bootstrap';
 
 class PacklistForm extends React.Component {
 	constructor(props) {
@@ -117,52 +97,45 @@ class PacklistForm extends React.Component {
 
 	render() {
 		return (
-			<form className={styles.packlistForm}>
+			<Form className={mainStyles.packlistForm}>
 				<h2>Create Packing List</h2>
-				<div className={styles.formField}>
-					<label>Location</label>
-					<input type="text" value={this.state.formInputs.location} onChange={this.updateLocation}></input>
-				</div>
+				<Form.Group>
+					<Form.Label>Location</Form.Label>
+					<Form.Control type="text" placeholder="Enter email" value={this.state.formInputs.location} onChange={this.updateLocation}/>
+				</Form.Group>
 
-				<div className={styles.formField}>
+				<Form.Group>
 					<label>Start Date</label>
-					<input type="date" value={this.state.formInputs.startDate} onChange={this.updateStartDate}></input>
-				</div>
+					<Form.Control type="date" value={this.state.formInputs.startDate} onChange={this.updateStartDate}/>
+				</Form.Group>
 
-
-				<div className={styles.formField}>
+				<Form.Group>
 					<label>End Date</label>
-					<input type="date" value={this.state.formInputs.endDate} onChange={this.updateEndDate}></input>
-				</div>
+					<Form.Control type="date" value={this.state.formInputs.endDate} onChange={this.updateEndDate}/>
+				</Form.Group>
 
-				<div className={styles.formField}>
+				<Form.Group>
 					<label>Gender</label>
-					<label>
-						<input type="radio" value="F" checked={this.state.formInputs.gender === 'F'} onChange={this.updateGender}/>
-						Female
-					</label>
-					<label>
-						<input type="radio" value="M" checked={this.state.formInputs.gender === 'M'} onChange={this.updateGender}/>
-						Male
-					</label>
-				</div>
+					<Form.Check inline type='radio' label={`Female`} value="F" checked={this.state.formInputs.gender === 'F'} onChange={this.updateGender}/>
+					<Form.Check inline type='radio' label={`Male`} value="M" checked={this.state.formInputs.gender === 'M'} onChange={this.updateGender}/>
+				</Form.Group>
 
-				<div className={styles.formField}>
+				<Form.Group>
 					<label>Weather</label>
 					<select value={this.state.formInputs.weather} onChange={this.updateWeather}>
 						<option value="1">Sunny</option>
 						<option value="2">Snowy</option>
 						<option value="3">Rainy</option>
 					</select>
+				</Form.Group>
+				<div className={mainStyles.multiSelectWrapper}>
+					<ActivitiesForm updateActivities={this.updateActivities}/>
 				</div>
-				<div className={styles.formField}>
-					<Multiselect options={data} onSelectOptions={this.updateActivities}/>
-				</div>
-				<button type="submit" onClick={this.submit}>Create Packing List</button>
+				<button type="submit" onClick={this.submit} className={mainStyles.btn}>Create Packing List</button>
 				<br/>
 				<div className="error">
 				</div>
-			</form>
+			</Form>
 		);
 	}
 }

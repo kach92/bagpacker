@@ -67,7 +67,6 @@ module.exports = (db) => {
                 let user_id = request.cookies["user_id"];
                 console.log("PROCEED TO SAVING SOLO TRIP")
                 let user_gender = await db.users.getUserGender(user_id);
-                let finalList = await db.packingList.generateTempList(tripInfo,user_gender);
                 let trip_id = await db.trips.createTrip(tripInfo,user_id);
                 let destination_id = await db.trips.createDestination(tripInfo,trip_id);
                 let packing_list_id = await db.packList.createPackingList(trip_id,user_id);

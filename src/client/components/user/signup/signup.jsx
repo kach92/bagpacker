@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import mainStyles from "../../../style.scss";
 import {Link} from "react-router-dom";
-
-import styles from './style.scss';
+import {Form} from 'react-bootstrap';
 
 class Signup extends React.Component {
 	constructor(){
@@ -83,18 +83,18 @@ class Signup extends React.Component {
 
 	render() {
 		return (
-			<form className={styles.signupForm}>
+			<Form className={mainStyles.signupForm}>
 				<h2>Sign Up</h2>
-				<div className={styles.formField}>
+				<Form.Group>
 					<label>First Name</label>
-					<input type="text" value={this.state.formInputs.firstName} onChange={this.updateFirstName}></input>
-				</div>
-				<div className={styles.formField}>
+					<Form.Control type="text" value={this.state.formInputs.firstName} onChange={this.updateFirstName}></Form.Control>
+				</Form.Group>
+				<Form.Group>
 					<label>Last Name</label>
-					<input type="text" value={this.state.formInputs.lastName} onChange={this.updateLastName}></input>
-				</div>
+					<Form.Control type="text" value={this.state.formInputs.lastName} onChange={this.updateLastName}></Form.Control>
+				</Form.Group>
 
-				<div className={styles.formField}>
+				<Form.Group>
 					<label>Gender</label>
 					<label>
 						<input type="radio" value="F" checked={this.state.formInputs.gender === 'F'} onChange={this.updateGender}/>
@@ -104,22 +104,22 @@ class Signup extends React.Component {
 						<input type="radio" value="M" checked={this.state.formInputs.gender === 'M'} onChange={this.updateGender}/>
 						Male
 					</label>
-				</div>
+				</Form.Group>
 
-				<div className={styles.formField}>
+				<Form.Group>
 					<label>Email</label>
-					<input type="email" value={this.state.formInputs.email} onChange={this.updateEmail}></input>
-				</div>
-				<div className={styles.formField}>
+					<Form.Control type="email" value={this.state.formInputs.email} onChange={this.updateEmail}></Form.Control>
+				</Form.Group>
+				<Form.Group>
 					<label>Password</label>
-					<input type="password" value={this.state.formInputs.password} onChange={this.updatePassword}></input>
-				</div>
-				<div className={styles.formField}>
+					<Form.Control type="password" value={this.state.formInputs.password} onChange={this.updatePassword}></Form.Control>
+				</Form.Group>
+				<Form.Group>
 					<label>Confirm Password</label>
-					<input type="password" value={this.state.formInputs.confirmPassword} onChange={this.updateConfirmPassword}></input>
-				</div>
+					<Form.Control type="password" value={this.state.formInputs.confirmPassword} onChange={this.updateConfirmPassword}></Form.Control>
+				</Form.Group>
 
-				<button type="submit" onClick={this.submit}>Sign Up</button>
+				<button type="submit" onClick={this.submit} className={mainStyles.btn}>Sign Up</button>
 				<br/>
 				<div className="error">
 				</div>
@@ -128,7 +128,7 @@ class Signup extends React.Component {
 					<p>Existing user?</p>
 					<Link to="/login/">Log in now!</Link>
 				</div>
-			</form>
+			</Form>
 
 		);
 	}

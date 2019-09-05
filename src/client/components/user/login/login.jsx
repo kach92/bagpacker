@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import mainStyles from "../../../style.scss";
 import {Link} from "react-router-dom";
-import styles from "./style.scss";
-import Signup from "../signup/signup";
+import {Form} from 'react-bootstrap';
 
 class Login extends React.Component {
 	constructor(){
@@ -51,18 +51,18 @@ class Login extends React.Component {
 	};
 	render() {
 		return (
-			<form className={styles.loginForm}>
+			<Form className={mainStyles.loginForm}>
 				<h2>Login</h2>
-				<div className={styles.formField}>
+				<Form.Group>
 					<label>Email</label>
-					<input type="email" value={this.state.formInputs.email} onChange={this.updateEmail}></input>
-				</div>
-				<div className={styles.formField}>
+					<Form.Control type="email" value={this.state.formInputs.email} onChange={this.updateEmail}></Form.Control>
+				</Form.Group>
+				<Form.Group>
 					<label>Password</label>
-					<input type="password" value={this.state.formInputs.password} onChange={this.updatePassword}></input>
-				</div>
+					<Form.Control type="password" value={this.state.formInputs.password} onChange={this.updatePassword}></Form.Control>
+				</Form.Group>
 
-				<button type="submit" onClick={this.submit}>Login</button>
+				<button type="submit" onClick={this.submit} className={mainStyles.btn}>Login</button>
 				<br/>
 				<div className="error">
 				</div>
@@ -70,7 +70,7 @@ class Login extends React.Component {
 					<p>Don't have an account?</p>
 					<Link to="/signup/">Create one now!</Link>
 				</div>
-            </form>
+            </Form>
         )
     }
 }
