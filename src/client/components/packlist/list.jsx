@@ -7,12 +7,11 @@ class List extends React.Component {
 		let list = this.props.list;
 		let categories = Object.keys(list).map(function(category,index) {
 			return <Category key={index} category={category} items={list[category]}/>;
-			// return (category)
 		});
 		return (
-			<div>
+			<React.Fragment>
 				{categories}
-			</div>
+			</React.Fragment>
 
 		);
 	}

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ActivitiesForm from "../packlist-activities-form";
 import mainStyles from "../../../style.scss";
-import {Form} from 'react-bootstrap';
+import {Form, Row, Col} from 'react-bootstrap';
 
 class PacklistForm extends React.Component {
 	constructor(props) {
@@ -98,37 +98,47 @@ class PacklistForm extends React.Component {
 	render() {
 		return (
 			<Form className={mainStyles.packlistForm}>
-				<h2>Create Packing List</h2>
 				<Form.Group>
 					<Form.Label>Location</Form.Label>
-					<Form.Control type="text" placeholder="Enter email" value={this.state.formInputs.location} onChange={this.updateLocation}/>
+					<Form.Control type="text" value={this.state.formInputs.location} onChange={this.updateLocation}/>
 				</Form.Group>
+				<Row>
+					<Col>
+						<Form.Group>
+							<label>Start Date</label>
+							<Form.Control type="date" value={this.state.formInputs.startDate} onChange={this.updateStartDate}/>
+						</Form.Group>
+					</Col>
 
-				<Form.Group>
-					<label>Start Date</label>
-					<Form.Control type="date" value={this.state.formInputs.startDate} onChange={this.updateStartDate}/>
-				</Form.Group>
+					<Col>
+						<Form.Group>
+							<label>End Date</label>
+							<Form.Control type="date" value={this.state.formInputs.endDate} onChange={this.updateEndDate}/>
+						</Form.Group>
+					</Col>
+				</Row>
 
-				<Form.Group>
-					<label>End Date</label>
-					<Form.Control type="date" value={this.state.formInputs.endDate} onChange={this.updateEndDate}/>
-				</Form.Group>
-
-				<Form.Group>
-					<label>Gender</label>
-					<Form.Check inline type='radio' label={`Female`} value="F" checked={this.state.formInputs.gender === 'F'} onChange={this.updateGender}/>
-					<Form.Check inline type='radio' label={`Male`} value="M" checked={this.state.formInputs.gender === 'M'} onChange={this.updateGender}/>
-				</Form.Group>
-
-				<Form.Group>
-					<label>Weather</label>
-					<select value={this.state.formInputs.weather} onChange={this.updateWeather}>
-						<option value="1">Sunny</option>
-						<option value="2">Snowy</option>
-						<option value="3">Rainy</option>
-					</select>
-				</Form.Group>
+				<Row>
+					<Col>
+						<Form.Group>
+							<label>Gender</label><br/>
+							<Form.Check inline type='radio' label={`Female`} value="F" checked={this.state.formInputs.gender === 'F'} onChange={this.updateGender}/>
+							<Form.Check inline type='radio' label={`Male`} value="M" checked={this.state.formInputs.gender === 'M'} onChange={this.updateGender}/>
+						</Form.Group>
+					</Col>
+					<Col>
+						<Form.Group>
+							<label>Weather</label><br/>
+							<Form.Control as="select" value={this.state.formInputs.weather} onChange={this.updateWeather}>
+								<option value="1">Sunny</option>
+								<option value="2">Snowy</option>
+								<option value="3">Rainy</option>
+							</Form.Control>
+						</Form.Group>
+					</Col>
+				</Row>
 				<div className={mainStyles.multiSelectWrapper}>
+					<label>Activities</label>
 					<ActivitiesForm updateActivities={this.updateActivities}/>
 				</div>
 				<button type="submit" onClick={this.submit} className={mainStyles.btn}>Create Packing List</button>
