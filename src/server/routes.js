@@ -8,4 +8,5 @@ module.exports = (app, db) => {
     app.post('/non_user_list', packingLists.nonUserList);
     app.post('/list/save', packingLists.nonUserListSave);
     app.post('/trips', packingLists.userListSave);
+    app.get('/singout',users.singOut);
 };
