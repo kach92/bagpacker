@@ -47,13 +47,12 @@ module.exports = (dbPoolInstance) => {
     }
 
     let getUserByEmail = (userInfo,callback) =>{
-        let query = "SELECT * FROM users WHERE name = $1"
+        let query = "SELECT * FROM users WHERE email = $1"
         let arr = [userInfo.email]
 
         dbPoolInstance.query(query, arr, (error, queryResult) => {
             if (error) {
                 callback(error, null);
-
             } else {
                 if (queryResult.rows.length > 0) {
 
@@ -84,8 +83,8 @@ module.exports = (dbPoolInstance) => {
 
     let getUserIdsByEmails = async function (email_arr){
         try{
-            let query = "SELECT id FROM users WHERE email IN $1"
-            let queryResult = await dbPoolInstance.query(query,email_arr);
+            let query = format("SELECT id FROM users WHERE email IN %L",email_arr);
+            let queryResult = await dbPoolInstance.query(query);
             if(queryResult.rows.length>0){
                 console.log("GET USER IDS SUCCESS");
                 let idArr = queryResult.rows.map(obj => obj.id)
@@ -146,6 +145,23 @@ module.exports = (dbPoolInstance) => {
         }
     }
 
+    let getUserGroups = async function (user_id){
+        try{
+            let query = 'SELECT group_id FROM groups_users WHERE user_id = $1';
+            let arr = [user_id];
+            let queryResult = await dbPoolInstance.query(query,arr);
+            if(queryResult.rows.length>0){
+                console.log("GET USER GROUPS SUCCESS");
+                let result = queryResult.rows.map(x=>{x.group_id});
+                return result;
+            }else{
+                return Promise.reject(new Error("get user groups return null"));
+            }
+        } catch (error) {
+            console.log("get user groups model " + error)
+        }
+    }
+
     return {
         signUp,
         isUserExist,
@@ -154,7 +170,8 @@ module.exports = (dbPoolInstance) => {
         getUserIdsByEmails,
         createGroup,
         insertUserIntoGroups,
-        getUserIdAndGender
+        getUserIdAndGender,
+        getUserGroups
 
     };
 };
