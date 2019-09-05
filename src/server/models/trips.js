@@ -7,11 +7,16 @@ module.exports = (dbPoolInstance) => {
 
     // `dbPoolInstance` is accessible within this function scope
 
-    let createTrip = async function (tripInfo){
+    let createTrip = async function (tripInfo,user_id,group_id = null){
         try{
-            let user_id = request.cookies["user_id"];
-            let query = 'INSERT INTO trips (name,user_id) VALUES ($1,$2) RETURNING *';
-            let arr = [`Trip to ${tripInfo.destination}`,user_id];
+
+            if(group_id){
+                let query = 'INSERT INTO trips (name,group_id) VALUES ($1,$2) RETURNING *';
+                let arr = [`Trip to ${tripInfo.destination}`,group_id];
+            }else{
+                let query = 'INSERT INTO trips (name,user_id) VALUES ($1,$2) RETURNING *';
+                let arr = [`Trip to ${tripInfo.destination}`,user_id];
+            }
             let queryResult = await dbPoolInstance.query(query,arr);
             if (queryResult.rows.length > 0) {
                 console.log("CREATE TRIP SUCCESS")
