@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {Link} from "react-router-dom";
 
 import styles from './style.scss';
@@ -19,7 +20,7 @@ class Signup extends React.Component {
 		};
 	}
 
-	signup = (e) => {
+	submit = (e) => {
 		e.preventDefault();
 		let formInputs = this.state.formInputs;
 		let validated = true;
@@ -35,8 +36,6 @@ class Signup extends React.Component {
 			delete formInputs.confirmPassword;
 			this.signupUser(formInputs);
 		}
-
-
 	};
 	updateFirstName = (e) => {
 		let formInputs = this.state.formInputs;
@@ -68,37 +67,17 @@ class Signup extends React.Component {
 		formInputs.confirmPassword = e.target.value;
 		this.setState({formInputs: formInputs});
 	};
-	submit = (e) => {
-		e.preventDefault();
-		let formInputs = this.state.formInputs;
-		let validated = true;
-		Object.keys(formInputs).forEach(function (item) {
-			if (formInputs[item] === "")
-				validated = false;
-		});
-
-		if (formInputs['password'] != formInputs['confirmPassword'])
-			validated = false;
-
-		if (validated) {
-			delete formInputs.confirmPassword;
-			this.signupUser(formInputs);
-		}
-
-
-	};
 	signupUser = (data) => {
-
-		let url = '/signup';
-
-		fetch(url, {
+		fetch('/signup', {
 			method: 'POST', // or 'PUT'
 			body: JSON.stringify(data), // data can be `string` or {object}!
 			headers:{
 				'Content-Type': 'application/json'
 			}
 		}).then(res => res.json())
-			.then(response => console.log('Success:', JSON.stringify(response)))
+			.then(res => {
+				this.props.history.push('/')
+			})
 			.catch(error => console.error('Error:', error));
 	};
 
@@ -140,7 +119,7 @@ class Signup extends React.Component {
 					<input type="password" value={this.state.formInputs.confirmPassword} onChange={this.updateConfirmPassword}></input>
 				</div>
 
-				<button type="submit" onClick={this.signup}>Sign Up</button>
+				<button type="submit" onClick={this.submit}>Sign Up</button>
 				<br/>
 				<div className="error">
 				</div>
@@ -154,6 +133,7 @@ class Signup extends React.Component {
 		);
 	}
 }
-// Login.propTypes ={
-// };
+Signup.propTypes ={
+	history: PropTypes.object
+};
 export default Signup;
