@@ -33,6 +33,7 @@ module.exports = (db) => {
 
     let login = (request, response) =>{
         request.body.password = sha256(request.body.password);
+
         request.body.email = request.body.email.toLowerCase();
         db.users.getUserByEmail(request.body,(error,result)=>{
             if (result) {
