@@ -25,9 +25,10 @@ CREATE TABLE IF NOT EXISTS packing_lists (
     id SERIAL PRIMARY KEY,
     user_id INTEGER,
     group_id INTEGER,
-    quantity INTEGER,
+    trip_id INTEGER,
     FOREIGN KEY (user_id) REFERENCES users (id),
-    FOREIGN KEY (group_id) REFERENCES groups (id)
+    FOREIGN KEY (group_id) REFERENCES groups (id),
+    FOREIGN KEY (trip_id) REFERENCES trips (id)
 );
 
 CREATE TABLE IF NOT EXISTS packing_list_items (
@@ -67,11 +68,7 @@ CREATE TABLE IF NOT EXISTS destinations (
     start_date TIMESTAMPTZ,
     end_date TIMESTAMPTZ,
     duration INT,
-    weather_id INT,
-    activity_id INT,
     trip_id INT,
-    FOREIGN KEY (weather_id) REFERENCES weathers(id),
-    FOREIGN KEY (activity_id) REFERENCES activities(id),
     FOREIGN KEY (trip_id) REFERENCES trips(id)
 );
 
@@ -88,15 +85,5 @@ CREATE TABLE IF NOT EXISTS items (
     FOREIGN KEY (activity_id) REFERENCES activities(id),
     FOREIGN KEY (weather_id) REFERENCES weathers(id)
 );
-
-
-
-
-
-
-
-
-
-
 
 
