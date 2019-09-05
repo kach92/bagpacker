@@ -37,7 +37,31 @@ module.exports = (db) => {
             trip_details["destinations"] = destination_details;
             if(trip_details.group_id){
                 console.log("GET GROUP TRIP");
-                let packing_list_ids = await db.packingList.getGroupPackingListIdsByTripId(trip_id);
+                let packingList = await db.packingList.getGroupPackingListByTripId(trip_id);
+                //take out packing list for shared items
+                let shared_packing_list = null
+                packingList.forEach((x,index)=>{
+                    if(x.user_id === null){
+                        shared_packing_list = packingList.splice(index,1);
+                    }
+                })
+
+                let individualList = {};
+                for(let i=0; i<packingList.length;i++){
+                    let listItems = await db.packingList.getPackingListItemsByPackingListId(packingList[i].id);
+                    individualList[packingList[i].user_id] = listItems;
+                }
+
+                let sharedListItems = await db.packingList.getPackingListItemsByPackingListId(shared_packing_list.id)
+
+                response.send({
+                    trip:trip_details,
+                    individual:individualList,
+                    shared:sharedListItems
+                })
+
+
+
             } else{
                 console.log("GET SOLO TRIP");
                 let packing_list_id = await db.packingList.getPackingListIdByTripId(trip_id);
