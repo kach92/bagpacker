@@ -248,12 +248,46 @@ module.exports = (dbPoolInstance) => {
             let queryResult = await dbPoolInstance.query(query,arr);
             if(queryResult.rows.length>0){
                 console.log("UPDATE ITEM QUANTITY SUCCESS");
-                return true;
+                return queryResult.rows[0];
             }else{
                 return Promise.reject(new Error("update item quantity return null"));
             }
         }catch (error){
             console.log("update item quantity model "+error)
+
+        }
+    }
+
+    let updateItemName = async function (item_id,name){
+        try{
+            let query = 'UPDATE INTO packing_list_items SET name = $1 WHERE id = $2 RETURNING *'
+            let arr = [name,item_id]
+            let queryResult = await dbPoolInstance.query(query,arr);
+            if(queryResult.rows.length>0){
+                console.log("UPDATE ITEM name SUCCESS");
+                return queryResult.rows[0];
+            }else{
+                return Promise.reject(new Error("update item name return null"));
+            }
+        }catch (error){
+            console.log("update item name model "+error)
+
+        }
+    }
+
+    let updateItemPacked = async function (item_id,packed){
+        try{
+            let query = 'UPDATE INTO packing_list_items SET packed = $1 WHERE id = $2 RETURNING *'
+            let arr = [packed,item_id]
+            let queryResult = await dbPoolInstance.query(query,arr);
+            if(queryResult.rows.length>0){
+                console.log("UPDATE ITEM PACKED SUCCESS");
+                return queryResult.rows[0];
+            }else{
+                return Promise.reject(new Error("update item packed return null"));
+            }
+        }catch (error){
+            console.log("update item packed model "+error)
 
         }
     }
@@ -267,7 +301,9 @@ module.exports = (dbPoolInstance) => {
         getItemsByPackingListId,
         getGroupPackingListByTripId,
         getPackingListItemsByPackingListId,
-        updateItemQuantity
+        updateItemQuantity,
+        updateItemName,
+        updateItemPacked
 
     };
 };
