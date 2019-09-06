@@ -56,7 +56,7 @@ module.exports = (db) => {
 
                 response.send({
                     trip:trip_details,
-                    individual:individualList,
+                    list:individualList,
                     shared:sharedListItems
                 })
 
