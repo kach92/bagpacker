@@ -61,7 +61,7 @@ module.exports = (db) => {
                     let packing_list_items = await db.packingList.createPackingListItems(finalList,packing_list_id);
                 }
                 //send a true response to tell cliend side save ok, need to redirect to group/invidiaul trip page
-                response.send(true)
+                response.send(trip_id.toString())
 
             }else{
                 let user_id = parseInt(request.cookies["user_id"]);
