@@ -196,7 +196,7 @@ class PacklistForm extends React.Component {
 
 
 	render() {
-        let countryDropdownContainer = <div>{this.state.countryDropdown.map(x=><div onClick={this.pushToInput}>{x}</div>)}</div>;
+        let countryDropdownContainer = <div className={mainStyles["drop-down-container"]}>{this.state.countryDropdown.map(x=><div onClick={this.pushToInput}>{x}</div>)}</div>;
 		let groupInputs = [];
 		if (this.state.groupPax > 1) {
 			groupInputs.push(<label>Trip Mates</label>);
