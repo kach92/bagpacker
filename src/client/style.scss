@@ -11,6 +11,14 @@ html, body {
   color: $black;
   letter-spacing: 0.5px;
 }
+a {
+  color: $blue;
+  &:hover {
+    text-decoration: none;
+    opacity: 0.5;
+    transition: 0.3s;
+  }
+}
 
 .wrapper {
   min-height:100vh;
@@ -93,7 +101,7 @@ html, body {
 
 .packlistForm{
   & > div {
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
   }
   input:focus {
     outline: none;
@@ -164,6 +172,13 @@ html, body {
     cursor: default;
     height: auto;
     width: 100%;
+    border: none;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+    border-bottom: 1px solid $gray;
+    padding: .375rem 0;
+    font-weight: 300;
   }
   input[type="radio"]{
     display: inline-block;
@@ -172,6 +187,17 @@ html, body {
     cursor: default;
     height: auto;
     width: auto;
+  }
+  input:focus {
+    outline: none;
+    box-shadow: none;
+  }
+  & > div {
+    margin-bottom: 1rem;
+  }
+  input:-webkit-autofill {
+    -webkit-animation-name: autofill;
+    -webkit-animation-fill-mode: both;
   }
 }
 
@@ -185,6 +211,13 @@ html, body {
     cursor: default;
     height: auto;
     width: 100%;
+    border: none;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+    border-bottom: 1px solid $gray;
+    padding: .375rem 0;
+    font-weight: 300;
   }
   input[type="radio"]{
     display: inline-block;
@@ -193,5 +226,20 @@ html, body {
     cursor: default;
     height: auto;
     width: auto;
+  }
+  input:focus {
+    outline: none;
+    box-shadow: none;
+  }
+
+  & > div {
+    margin-bottom: 1rem;
+  }
+}
+
+@-webkit-keyframes autofill {
+  to {
+    color: #666;
+    background: transparent;
   }
 }
