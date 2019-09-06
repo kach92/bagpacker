@@ -12,7 +12,7 @@ import Signup from './components/user/signup/signup';
 import NonUserList from './components/packlist/non-users/packlist';
 import { sha256, sha224 } from 'js-sha256';
 
-const SALT = "Jarpy Bear"
+const SALT = "Jarpy Bear";
 
 import {Container} from 'react-bootstrap';
 import mainStyles from './style.scss';
@@ -43,7 +43,6 @@ class App extends React.Component {
             let val = value.split("=");
             cookies[val[0]] = val[1];
         });
-        console.log(cookies);
         if(cookies.session === sha256(cookies.user_id + "logged_in" + SALT)){
             this.setState({
                 authed: true,

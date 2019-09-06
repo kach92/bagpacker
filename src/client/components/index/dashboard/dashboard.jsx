@@ -24,7 +24,7 @@ function Dashboard() {
 
 	return (
 		<Row>
-			<Col>
+			<Col md={4}>
 				<ButtonToolbar>
 					<Button variant="primary" onClick={() => setModalShow(true)}>
 						Create New Trip
@@ -36,7 +36,7 @@ function Dashboard() {
 					/>
 				</ButtonToolbar>
 			</Col>
-			<Col>
+			<Col md={{span:8}}>
 				<Trips/>
 			</Col>
 		</Row>
