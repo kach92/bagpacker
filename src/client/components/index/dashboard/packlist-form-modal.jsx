@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import ActivitiesForm from "../packlist-activities-form";
 import mainStyles from "../../../style.scss";
 import {Form} from 'react-bootstrap';
-import Category from "../../packlist/category";
 
 class PacklistForm extends React.Component {
 	constructor(props) {
@@ -103,8 +102,8 @@ class PacklistForm extends React.Component {
 			}
 		}).then(res => res.json())
 			.then(res => {
-                let url = "/trips/"+res
-                this.props.history.push(url)
+                let url = "/trips/"+res;
+                this.props.history.push(url);
 			})
 			.catch(error => console.error('Error:', error));
 	};
@@ -173,7 +172,6 @@ class PacklistForm extends React.Component {
 }
 
 PacklistForm.propTypes ={
-	updatePacklist: PropTypes.func,
 	history: PropTypes.object
 };
 export default PacklistForm;
