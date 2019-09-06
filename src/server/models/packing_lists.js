@@ -259,7 +259,7 @@ module.exports = (dbPoolInstance) => {
 
     let updateItemQuantity = async function (item_id,quantity){
         try{
-            let query = 'UPDATE INTO packing_list_items SET quantity = $1 WHERE id = $2 RETURNING *'
+            let query = 'UPDATE packing_list_items SET quantity = $1 WHERE id = $2 RETURNING *'
             let arr = [quantity,item_id]
             let queryResult = await dbPoolInstance.query(query,arr);
             if(queryResult.rows.length>0){
@@ -276,7 +276,7 @@ module.exports = (dbPoolInstance) => {
 
     let updateItemName = async function (item_id,name){
         try{
-            let query = 'UPDATE INTO packing_list_items SET name = $1 WHERE id = $2 RETURNING *'
+            let query = 'UPDATE packing_list_items SET name = $1 WHERE id = $2 RETURNING *'
             let arr = [name,item_id]
             let queryResult = await dbPoolInstance.query(query,arr);
             if(queryResult.rows.length>0){
@@ -293,7 +293,7 @@ module.exports = (dbPoolInstance) => {
 
     let updateItemPacked = async function (item_id,packed){
         try{
-            let query = 'UPDATE INTO packing_list_items SET packed = $1 WHERE id = $2 RETURNING *'
+            let query = 'UPDATE packing_list_items SET packed = $1 WHERE id = $2 RETURNING *'
             let arr = [packed,item_id]
             let queryResult = await dbPoolInstance.query(query,arr);
             if(queryResult.rows.length>0){
