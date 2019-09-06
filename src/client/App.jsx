@@ -32,17 +32,17 @@ class App extends React.Component {
 	};
 
 	componentDidMount() {
-        console.log("APP mounted")
+        console.log("APP mounted");
         this.checkUser();
 	}
 
     checkUser() {
-        let cookies = {}
+        let cookies = {};
         document.cookie.split("; ").forEach( value => {
-            let val = value.split("=")
-            cookies[val[0]] = val[1]
+            let val = value.split("=");
+            cookies[val[0]] = val[1];
         });
-        console.log(cookies)
+        console.log(cookies);
         if(cookies.session === sha256(cookies.user_id + "logged_in" + SALT)){
             this.setState({
                 authed: true,
