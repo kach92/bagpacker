@@ -21,6 +21,16 @@ CREATE TABLE IF NOT EXISTS groups_users (
     FOREIGN KEY (group_id) REFERENCES groups(id)
 );
 
+CREATE TABLE IF NOT EXISTS trips (
+    id SERIAL PRIMARY KEY,
+    name TEXT,
+    user_id INTEGER,
+    group_id INTEGER,
+    FOREIGN KEY (user_id) REFERENCES users (id),
+    FOREIGN KEY (group_id) REFERENCES groups (id)
+);
+
+
 CREATE TABLE IF NOT EXISTS packing_lists (
     id SERIAL PRIMARY KEY,
     user_id INTEGER,
@@ -43,14 +53,7 @@ CREATE TABLE IF NOT EXISTS packing_list_items (
     FOREIGN KEY (packing_list_id) REFERENCES packing_lists(id)
 );
 
-CREATE TABLE IF NOT EXISTS trips (
-    id SERIAL PRIMARY KEY,
-    name TEXT,
-    user_id INTEGER,
-    group_id INTEGER,
-    FOREIGN KEY (user_id) REFERENCES users (id),
-    FOREIGN KEY (group_id) REFERENCES groups (id)
-);
+
 
 CREATE TABLE IF NOT EXISTS weathers (
     id SERIAL PRIMARY KEY,

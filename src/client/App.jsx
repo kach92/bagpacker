@@ -9,12 +9,14 @@ import Dashboard from './components/index/dashboard/dashboard';
 import Login from './components/user/login/login';
 import Signup from './components/user/signup/signup';
 
-import NonUserList from './components/packlist/non-users/packlist';
+import Trip from './components/trip/trip';
+
 import { sha256, sha224 } from 'js-sha256';
 
-const SALT = "Jarpy Bear"
+const SALT = "Jarpy Bear";
 
 import {Container} from 'react-bootstrap';
+import mainStyles from './style.scss';
 
 class App extends React.Component {
 	constructor() {
@@ -32,17 +34,16 @@ class App extends React.Component {
 	};
 
 	componentDidMount() {
-        console.log("APP mounted")
+        console.log("APP mounted");
         this.checkUser();
 	}
 
     checkUser() {
-        let cookies = {}
+        let cookies = {};
         document.cookie.split("; ").forEach( value => {
-            let val = value.split("=")
-            cookies[val[0]] = val[1]
+            let val = value.split("=");
+            cookies[val[0]] = val[1];
         });
-        console.log(cookies)
         if(cookies.session === sha256(cookies.user_id + "logged_in" + SALT)){
             this.setState({
                 authed: true,
@@ -51,27 +52,26 @@ class App extends React.Component {
         }
     }
 
-
-
 	render() {
 		return (
 			<Router>
 				<Route path="/" render={props => (
 					<Navigation authed={this.state.authed} checkUser={this.checkUser} {...props}/>
 				)}/>
-				<Container>
+				<Container className={mainStyles.wrapper}  fluid>
 					<Route exact path="/" render={props => (
 						this.state.authed
-						? <Dashboard/>
+						? <Dashboard {...props}/>
 						: <Home updatePacklist={this.updatePacklist} checkUser={this.checkUser} {...props}/>
 					)}/>
 					<Route path="/login/" render={props => (this.state.authed ? <Redirect to='/' /> : <Login {...props}/>)}/>
 					<Route path="/signup/" render={props => (this.state.authed ? <Redirect to='/' /> : <Signup {...props}/>)}/>
-					<Route path="/list/" render={props => (
-						this.state.packlist != null
-						? <NonUserList packlist={this.state.packlist} {...props}/>
-						: <Redirect to='/' />
+					<Route path="/trips/:id" render={props => (
+						this.state.authed
+						? <Trip {...props}/>
+						: <Home updatePacklist={this.updatePacklist} checkUser={this.checkUser} {...props}/>
 					)}/>
+
 				</Container>
 			</Router>
 		);

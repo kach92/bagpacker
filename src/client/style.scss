@@ -1,12 +1,67 @@
-@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
-
+@import url('https://fonts.googleapis.com/css?family=Roboto:100,300,400&display=swap');
+$white: #fff;
+$black: #333;
+$gray: #ccc;
 $blue: #2359D9;
+
 html, body {
-  background-color: white;
-  min-width: 700px;
   font-family: 'Roboto', "Helvetica Neue", Helvetica, Arial, sans-serif;
   margin: 0;
   padding:0;
+  color: $black;
+  letter-spacing: 0.5px;
+}
+
+.wrapper {
+  min-height:100vh;
+  padding: 8rem 3rem 0;
+  h2 {
+    font-weight: 300;
+    letter-spacing: 1px;
+  }
+}
+
+.navbar {
+  padding: .5rem 3rem 0;
+
+}
+
+.sidePanel {
+  color: $white;
+  &:before {
+    content: "";
+    background-image: url("./images/bg.jpg");
+    background-size: cover;
+    background-position: 20% 0%;
+    display: block;
+    width: 33.333333%;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: -1;
+  }
+  &:after {
+    content: "";
+    background-color: #fff;
+    display: block;
+    width: 5%;
+    height: 100vh;
+    position: fixed;
+    left: 30%;
+    top: 0;
+    transform: skew(-3deg);
+    z-index: -1;
+  }
+  .sidePanelOverlay {
+    background-image: linear-gradient(to right, rgba(0,0,0,0.2) , rgba(0,0,0,0.7));
+    width: 33.333333%;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: -1;
+  }
 }
 
 .btn {
@@ -16,7 +71,16 @@ html, body {
   padding: 0;
   color:$blue;
   &::after {
-    content: ">";
+    content: "";
+    display: inline-block;
+    top: 50%;
+    left: 0;
+    right: 0;
+    width: 12px;
+    height: 12px;
+    border-top: 2px solid $blue;
+    border-right: 2px solid $blue;
+    transform: rotate(45deg);
   }
   &:hover {
     opacity: 0.5;
@@ -28,6 +92,13 @@ html, body {
 }
 
 .packlistForm{
+  & > div {
+    margin-bottom: 2rem;
+  }
+  input:focus {
+    outline: none;
+    box-shadow: none;
+  }
   input[type="text"],
   input[type="date"]{
     display:block;
@@ -36,6 +107,12 @@ html, body {
     cursor: default;
     height: auto;
     width: 100%;
+    border: none;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+    border-bottom: 1px solid $gray;
+    padding: .375rem 0;
   }
   input[type="radio"]{
     display: inline-block;
@@ -47,6 +124,33 @@ html, body {
   }
   .multiSelectWrapper {
     display: block;
+
+    & > div {
+      margin: 0;
+    }
+  }
+  .multiSelectWrapper div:nth-child(1) {
+    div {
+      height: auto;
+      background-color: $blue;
+      border-radius: 0;
+      margin-left: 0;
+      margin-right: 8px;
+      margin-bottom: 8px;
+    }
+  }
+  .multiSelectWrapper div:nth-child(3) {
+    span {
+      border-radius: 50%;
+    }
+    span::after {
+      top: 50%;
+      left: 50%;
+      width: 5px;
+      height: 10px;
+      border-width: 0 2px 2px 0;
+      transform: translate(-50%, -50%) rotate(45deg);
+    }
   }
 }
 

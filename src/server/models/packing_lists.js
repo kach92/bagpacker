@@ -96,11 +96,10 @@ module.exports = (dbPoolInstance) => {
     let createPackingListItems = async function (packList,packing_list_id,shared=false) {
 
         try {
-            let finalList = []
+            let finalList = [];
             for (var key in packList) {
-                finalList.concat(packList[key]);
+                finalList = finalList.concat(packList[key]);
             }
-
             finalList = finalList.map(x=>[packing_list_id,x.name,x.quantity,x.category,shared])
             let query = format('INSERT INTO packing_list_items (packing_list_id,name,quantity,category,shared) VALUES %L RETURNING *',finalList);
 
@@ -176,6 +175,7 @@ module.exports = (dbPoolInstance) => {
         }
     }
 
+
     let getPackingListIdByTripId = async function (trip_id) {
         try {
             let query = 'SELECT * FROM packing_lists WHERE trip_id = $1';
@@ -238,6 +238,21 @@ module.exports = (dbPoolInstance) => {
             }
         } catch (error) {
             console.log("get packing list items by packing list id" + error)
+
+    let updateItemQuantity = async function (item_id,quantity){
+        try{
+            let query = 'UPDATE INTO packing_list_items SET quantity = $1 WHERE id = $2 RETURNING *'
+            let arr = [quantity,item_id]
+            let queryResult = await dbPoolInstance.query(query,arr);
+            if(queryResult.rows.length>0){
+                console.log("UPDATE ITEM QUANTITY SUCCESS");
+                return true;
+            }else{
+                return Promise.reject(new Error("update item quantity return null"));
+            }
+        }catch (error){
+            console.log("update item quantity model "+error)
+
         }
     }
 
@@ -250,6 +265,8 @@ module.exports = (dbPoolInstance) => {
         getItemsByPackingListId,
         getGroupPackingListIdsByTripId,
         getPackingListItemsByPackingListId
+        updateItemQuantity
+
 
     };
 };
