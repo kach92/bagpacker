@@ -9,7 +9,8 @@ import Dashboard from './components/index/dashboard/dashboard';
 import Login from './components/user/login/login';
 import Signup from './components/user/signup/signup';
 
-import NonUserList from './components/packlist/non-users/packlist';
+import Trip from './components/trip/trip';
+
 import { sha256, sha224 } from 'js-sha256';
 
 const SALT = "Jarpy Bear";
@@ -51,15 +52,13 @@ class App extends React.Component {
         }
     }
 
-
-
 	render() {
 		return (
 			<Router>
 				<Route path="/" render={props => (
 					<Navigation authed={this.state.authed} checkUser={this.checkUser} {...props}/>
 				)}/>
-				<Container className={mainStyles.wrapper} fluid>
+				<Container className={mainStyles.wrapper}  fluid>
 					<Route exact path="/" render={props => (
 						this.state.authed
 						? <Dashboard {...props}/>
@@ -67,11 +66,12 @@ class App extends React.Component {
 					)}/>
 					<Route path="/login/" render={props => (this.state.authed ? <Redirect to='/' /> : <Login {...props}/>)}/>
 					<Route path="/signup/" render={props => (this.state.authed ? <Redirect to='/' /> : <Signup {...props}/>)}/>
-					<Route path="/list/" render={props => (
-						this.state.packlist != null
-						? <NonUserList packlist={this.state.packlist} {...props}/>
-						: <Redirect to='/' />
+					<Route path="/trips/:id" render={props => (
+						this.state.authed
+						? <Trip {...props}/>
+						: <Home updatePacklist={this.updatePacklist} checkUser={this.checkUser} {...props}/>
 					)}/>
+
 				</Container>
 			</Router>
 		);

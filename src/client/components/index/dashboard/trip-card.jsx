@@ -17,10 +17,10 @@ class TripCard extends React.Component {
 				<Card className="mb-3">
 					{/*<Card.Img variant="top" src="holder.js/100px180" />*/}
 					<Card.Body>
-						<Card.Title>{trip.name}</Card.Title>
+						<Card.Title className="mb-5">{trip.name}</Card.Title>
 						<Card.Text>
-							<p>{startDateDisplay} — {endDateDisplay}</p>
-							<p>{trip.destinations[0].name}</p>
+							<span className="d-block mb-3">{startDateDisplay} — {endDateDisplay}</span>
+							<span className="d-block">{trip.destinations[0].name}</span>
 						</Card.Text>
 					</Card.Body>
 				</Card>

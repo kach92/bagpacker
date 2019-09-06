@@ -11,6 +11,7 @@ class SidePanel extends React.Component {
 		return (
 			<div className={mainStyles.sidePanel}>
 				{this.props.children}
+				<div className={mainStyles.sidePanelOverlay}></div>
 			</div>
 		);
 	}
