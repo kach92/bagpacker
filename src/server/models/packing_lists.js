@@ -208,7 +208,7 @@ module.exports = (dbPoolInstance) => {
         }
     }
 
-    let getGroupPackingListByTripId = async function (trip_id) {
+    let getGroupPackingListIdsByTripId = async function (trip_id) {
         try{
             let query = 'SELECT * FROM packing_lists WHERE trip_id = $1';
             let arr = [trip_id];
@@ -238,6 +238,8 @@ module.exports = (dbPoolInstance) => {
             }
         } catch (error) {
             console.log("get packing list items by packing list id" + error)
+        }
+    }
 
     let updateItemQuantity = async function (item_id,quantity){
         try{
@@ -264,9 +266,8 @@ module.exports = (dbPoolInstance) => {
         getPackingListIdByTripId,
         getItemsByPackingListId,
         getGroupPackingListIdsByTripId,
-        getPackingListItemsByPackingListId
+        getPackingListItemsByPackingListId,
         updateItemQuantity
-
 
     };
 };
