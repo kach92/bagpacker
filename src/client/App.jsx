@@ -10,6 +10,7 @@ import Login from './components/user/login/login';
 import Signup from './components/user/signup/signup';
 
 import Trip from './components/trip/trip';
+import NonUserList from './components/packlist/non-users/packlist';
 
 import { sha256, sha224 } from 'js-sha256';
 
@@ -70,6 +71,11 @@ class App extends React.Component {
 						this.state.authed
 						? <Trip {...props}/>
 						: <Home updatePacklist={this.updatePacklist} checkUser={this.checkUser} {...props}/>
+					)}/>
+					<Route path="/list/" render={props => (
+						this.state.packlist != null
+							? <NonUserList packlist={this.state.packlist} {...props}/>
+							: <Redirect to='/' />
 					)}/>
 
 				</Container>

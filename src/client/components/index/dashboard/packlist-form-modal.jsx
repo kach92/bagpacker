@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import ActivitiesForm from "../packlist-activities-form";
 import mainStyles from "../../../style.scss";
 import {Form} from 'react-bootstrap';
-import Category from "../../packlist/category";
 import Countries from "../../../countries.js"
 
 
