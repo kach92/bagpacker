@@ -13,7 +13,7 @@ class Trip extends React.Component {
 		this.getTripInfo(this.props.match.params.id);
 	}
 	getTripInfo(id) {
-		let fetchUrl = '/trips/'+id;
+		let fetchUrl = '/getTrip/'+id;
 		console.log(fetchUrl);
 		fetch(fetchUrl, {
 			method: 'GET',
