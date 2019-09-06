@@ -152,10 +152,12 @@ module.exports = (dbPoolInstance) => {
             let queryResult = await dbPoolInstance.query(query,arr);
             if(queryResult.rows.length>0){
                 console.log("GET USER GROUPS SUCCESS");
-                let result = queryResult.rows.map(x=>{x.group_id});
+                console.log(queryResult.rows)
+                let result = queryResult.rows.map(x=>x.group_id);
                 return result;
             }else{
-                return Promise.reject(new Error("get user groups return null"));
+                console.log("USER NO GROUPS")
+                return []
             }
         } catch (error) {
             console.log("get user groups model " + error)
