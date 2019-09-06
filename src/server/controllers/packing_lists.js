@@ -96,11 +96,35 @@ module.exports = (db) => {
         }
     }
 
+    let updateItemName = async function(request,response){
+        try {
+            let item_id = parseInt(request.body.item_id);
+            let name = request.body.name;
+            let getResponse = await db.packingList.updateItemName(item_id,name);
+            response.send(getResponse);
+        } catch (error) {
+            console.log('update item name controller '+error)
+        }
+    }
+
+    let updateItemPacked = async function(request,response){
+        try {
+            let item_id = parseInt(request.body.item_id);
+            let packed = request.body.packed;
+            let getResponse = await db.packingList.updateItemPacked(item_id,packed);
+            response.send(getResponse);
+        } catch (error) {
+            console.log('update item packed controller '+error)
+        }
+    }
+
     return {
         nonUserList : nonUserList,
         nonUserListSave : nonUserListSave,
         userListSave : userListSave,
-        updateItemQuantity : updateItemQuantity
+        updateItemQuantity : updateItemQuantity,
+        updateItemName : updateItemName,
+        updateItemPacked : updateItemPacked
     }
 
 };
