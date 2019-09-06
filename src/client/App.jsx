@@ -62,7 +62,7 @@ class App extends React.Component {
 				<Container className={mainStyles.wrapper} fluid>
 					<Route exact path="/" render={props => (
 						this.state.authed
-						? <Dashboard/>
+						? <Dashboard {...props}/>
 						: <Home updatePacklist={this.updatePacklist} checkUser={this.checkUser} {...props}/>
 					)}/>
 					<Route path="/login/" render={props => (this.state.authed ? <Redirect to='/' /> : <Login {...props}/>)}/>

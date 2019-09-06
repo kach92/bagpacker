@@ -7,7 +7,6 @@ class TripCard extends React.Component {
 	render() {
 		let months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
 		let trip = this.props.trip;
-		console.log(trip);
 		let tripLink = "/trips/"+trip.id;
 		let startDate = new Date(trip.destinations[0].start_date);
 		let endDate = new Date(trip.destinations[0].end_date);
