@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {Col,Row} from 'react-bootstrap';
 import SidePanel from '../../side-panel/side-panel';
 import mainStyles from "../../../style.scss";
-import Trip from '../trip';
+import Trip from '../trip-details';
 import List from '../list';
 
 class Packlist extends React.Component {
