@@ -230,17 +230,28 @@ module.exports = (dbPoolInstance) => {
         }
     }
 
-    let getPackingListItemsByPackingListId = async function (packing_list_id){
+    let getPackingListItemsByPackingListId = async function (packing_list_id,group_id = null){
         try{
-            let query = 'SELECT * FROM packing_list_items WHERE packing_list_id = $1'
-            let arr = [packing_list_id];
+            let query = null;
+            let arr = null;
+            if(group_id){
+                query = 'SELECT * FROM packing_list_items WHERE group_id = $1 AND shared = true'
+                arr = [group_id];
+            }else{
+                query = 'SELECT * FROM packing_list_items WHERE packing_list_id = $1'
+                arr = [packing_list_id];
+            }
+
             let queryResult = await dbPoolInstance.query(query,arr);
             if (queryResult.rows.length > 0) {
                 console.log("GET PACKINGN LIST ITEMS PACKING LIST ID SUCCESS");
                 return queryResult.rows;
             } else {
-                return Promise.reject(new Error("get packing list items by packing list id returns null"));
+                console.log("GET PACKING LIST ITEMS BY PACKINIG LIST ID RETURNS NULL")
+                return [];
             }
+
+
         } catch (error) {
             console.log("get packing list items by packing list id" + error)
         }

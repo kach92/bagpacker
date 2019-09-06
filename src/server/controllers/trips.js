@@ -58,7 +58,7 @@ module.exports = (db) => {
                     individualList.push(user);
                 }
 
-                let sharedListItems = await db.packingList.getPackingListItemsByPackingListId(shared_packing_list[0].id)
+                let sharedListItems = await db.packingList.getPackingListItemsByPackingListId(shared_packing_list[0].id,trip_details.group_id)
 
                 response.send({
                     trip:trip_details,
