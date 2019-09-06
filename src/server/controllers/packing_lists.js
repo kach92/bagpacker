@@ -90,9 +90,10 @@ module.exports = (db) => {
             let item_id = parseInt(request.body.item_id);
             let quantity = parseInt(request.body.quantity);
             let getResponse = await db.packingList.updateItemQuantity(item_id,quantity);
-            response.send(getResponse);
+            response.send(true);
         }catch (error){
-            console.log("update item quantity controller"+ error)
+            console.log("update item quantity controller"+ error);
+            response.send(false);
         }
     }
 
@@ -101,9 +102,10 @@ module.exports = (db) => {
             let item_id = parseInt(request.body.item_id);
             let name = request.body.name;
             let getResponse = await db.packingList.updateItemName(item_id,name);
-            response.send(getResponse);
+            response.send(true);
         } catch (error) {
-            console.log('update item name controller '+error)
+            console.log('update item name controller '+error);
+            response.send(false);
         }
     }
 
@@ -112,9 +114,10 @@ module.exports = (db) => {
             let item_id = parseInt(request.body.item_id);
             let packed = request.body.packed;
             let getResponse = await db.packingList.updateItemPacked(item_id,packed);
-            response.send(getResponse);
+            response.send(true);
         } catch (error) {
-            console.log('update item packed controller '+error)
+            console.log('update item packed controller '+error);
+            response.send(false);
         }
     }
 
