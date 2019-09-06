@@ -11,7 +11,7 @@ module.exports = (app, db) => {
     app.post('/trips', packingLists.userListSave);
     app.get('/signout',users.signOut);
     app.get('/trips',trips.getAllTrips);
-    app.get('/trips/:id',trips.getSingleTrip);
+    app.get('/get_trip/:id',trips.getSingleTrip);
     app.post('/update_item_quantity',packingLists.updateItemQuantity)
 
 };

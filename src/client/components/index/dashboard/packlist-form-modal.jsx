@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import ActivitiesForm from "../packlist-activities-form";
 import mainStyles from "../../../style.scss";
 import {Form} from 'react-bootstrap';
-import Category from "../../packlist/category";
 import Countries from "./countries.js"
 
 
@@ -44,7 +43,6 @@ class PacklistForm extends React.Component {
 		formInputs.location = e.target.value;
         let locationInput = e.target.value;
         if(locationInput.length>0){
-            console.log(locationInput.length)
             this.state.countryDropdown = this.state.allCountries.filter(x=>{
                 return x.toLowerCase().startsWith(e.target.value.toLowerCase())
             });
@@ -153,7 +151,6 @@ class PacklistForm extends React.Component {
 
 
 	render() {
-        console.log(this.state.countryDropdown)
         let countryDropdownContainer = <div>{this.state.countryDropdown.map(x=><div onClick={this.pushToInput}>{x}</div>)}</div>;
 		let groupInputs = [];
 		if (this.state.groupPax > 1) {

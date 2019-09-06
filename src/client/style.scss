@@ -178,7 +178,7 @@ a {
     border-radius: 0;
     border-bottom: 1px solid $gray;
     padding: .375rem 0;
-    font-weight: 300;
+    //font-weight: 300;
   }
   input[type="radio"]{
     display: inline-block;
@@ -217,7 +217,7 @@ a {
     border-radius: 0;
     border-bottom: 1px solid $gray;
     padding: .375rem 0;
-    font-weight: 300;
+    //font-weight: 300;
   }
   input[type="radio"]{
     display: inline-block;
@@ -241,5 +241,31 @@ a {
   to {
     color: #666;
     background: transparent;
+  }
+}
+
+.packlist {
+  p {
+    border-bottom: 1px solid transparent;
+  }
+  input[type="text"],
+  input[type="number"]{
+    height: auto;
+    width: 100%;
+    border: none;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+    border-bottom: 1px solid $gray;
+    padding: 0;
+    letter-spacing: 0.5px;
+    margin-bottom: 1rem;
+  }
+  input[type="number"] {
+    width: 1.5rem;
+  }
+  input:focus {
+    outline: none;
+    box-shadow: none;
   }
 }
