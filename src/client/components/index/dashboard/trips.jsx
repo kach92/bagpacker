@@ -6,7 +6,9 @@ import TripCard from "./trip-card";
 class Trips extends React.Component {
 	constructor() {
 		super();
-		this.trips = null;
+		this.state = {
+			trips:null
+		}
 	}
 
 	componentDidMount() {
@@ -15,7 +17,6 @@ class Trips extends React.Component {
 	}
 
 	getTrips() {
-		console.log("fetching");
 		fetch('/trips', {
 			method: 'GET',
 			headers: {
@@ -23,34 +24,42 @@ class Trips extends React.Component {
 			}
 		}).then(res => res.json())
 			.then(res => {
-				console.log(res);
+				this.setState({trips : res});
 			})
 			.catch(error => console.error('Error:', error));
 	}
 	render() {
+		let trips = this.state.trips;
 		let soloTrips = (
-			<React.Fragment>
-				<Col md={4}>
-					<TripCard/>
-				</Col>
-				<Col md={4}>
-					<TripCard/>
-				</Col>
-				<Col md={4}>
-					<TripCard/>
-				</Col>
-				<Col md={4}>
-					<TripCard/>
-				</Col>
-				<Col md={4}>
-					<TripCard/>
-				</Col>
-				<Col md={4}>
-					<TripCard/>
-				</Col>
-			</React.Fragment>
-
+			<Col>
+				No trips found. Create one now!
+			</Col>
 		);
+		let groupTrips = (
+			<Col>
+				No trips found. Create one now!
+			</Col>
+		);
+		if (trips) {
+			if (trips.solo.length > 0) {
+				soloTrips = trips.solo.map((trip, index) => {
+					return (
+						<Col key={index} md={4}>
+							<TripCard trip={trip}/>
+						</Col>
+					)
+				})
+			}
+			if (trips.group.length > 0) {
+				groupTrips = trips.group.map((trip, index) => {
+					return (
+						<Col key={index} md={4}>
+							<TripCard trip={trip}/>
+						</Col>
+					)
+				})
+			}
+		}
 		return (
 			<React.Fragment>
 				<Row className="mb-5">
@@ -74,9 +83,7 @@ class Trips extends React.Component {
 							</Col>
 						</Row>
 						<Row>
-							<Col>
-								Group trips here
-							</Col>
+							{groupTrips}
 						</Row>
 
 					</Col>

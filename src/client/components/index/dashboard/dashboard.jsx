@@ -13,15 +13,14 @@ function PacklistFormModal(props) {
 		>
 			<Modal.Body>
 				<h4>Create New Trip</h4>
-				<PacklistForm/>
+				<PacklistForm history={props.history}/>
 			</Modal.Body>
 		</Modal>
 	);
 }
 
-function Dashboard() {
+function Dashboard(props) {
 	const [modalShow, setModalShow] = React.useState(false);
-
 	return (
 		<Row>
 			<Col md={4}>
@@ -33,6 +32,7 @@ function Dashboard() {
 					<PacklistFormModal
 						show={modalShow}
 						onHide={() => setModalShow(false)}
+						history={props.history}
 					/>
 				</ButtonToolbar>
 			</Col>
@@ -42,5 +42,7 @@ function Dashboard() {
 		</Row>
 	);
 }
-
+Dashboard.propTypes ={
+	history: PropTypes.object
+};
 export default Dashboard;

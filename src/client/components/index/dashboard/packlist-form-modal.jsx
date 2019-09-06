@@ -6,6 +6,7 @@ import {Form} from 'react-bootstrap';
 import Category from "../../packlist/category";
 import Countries from "./countries.js"
 
+
 class PacklistForm extends React.Component {
 	constructor(props) {
 		super(props);
@@ -101,7 +102,7 @@ class PacklistForm extends React.Component {
 			if (item !== "activities") {
 				if (item === "group") {
 					if (groupPax > 1) {
-						if (groupPax != formInputs[item].length) {
+						if (groupPax-1 != formInputs[item].length) {
 							validated = false;
 						} else {
 							formInputs[item].forEach(function (email) {
@@ -131,8 +132,8 @@ class PacklistForm extends React.Component {
 			}
 		}).then(res => res.json())
 			.then(res => {
-                let url = "/trips/"+res
-                this.props.history.push(url)
+                let url = "/trips/"+res;
+                this.props.history.push(url);
 			})
 			.catch(error => console.error('Error:', error));
 	};
@@ -157,7 +158,7 @@ class PacklistForm extends React.Component {
 		let groupInputs = [];
 		if (this.state.groupPax > 1) {
 			groupInputs.push(<label>Trip Mates</label>);
-			for (let i=0;i<this.state.groupPax; i++){
+			for (let i=0;i<this.state.groupPax-1; i++){
 				groupInputs.push(
 					<Form.Group key={i}>
 						<Form.Control type="email" value={this.state.formInputs.group[i]} onChange={(e)=>{this.updateTripmate(e,i)}}/>
@@ -211,7 +212,6 @@ class PacklistForm extends React.Component {
 }
 
 PacklistForm.propTypes ={
-	updatePacklist: PropTypes.func,
 	history: PropTypes.object
 };
 export default PacklistForm;
