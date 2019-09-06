@@ -38,13 +38,15 @@ module.exports = (db) => {
             if (tripInfo.group.length > 0){
                 console.log("PROCEED TO SAVING GROUP TRIP")
                 //get all users id
-                let user_ids_arr = db.users.getUserIdsByEmails(tripInfo.group);
+                let user_ids_arr = await db.users.getUserIdsByEmails(tripInfo.group);
+                //include user id into array of user ids
+                user_ids_arr.push(user_id);
                 //get obj of user id and gender
-                let user_gender_arrObj = db.users.getUserIdAndGender(user_ids_arr);
+                let user_gender_arrObj = await db.users.getUserIdAndGender(user_ids_arr);
                 //create group
-                let group_id = db.users.createGroup(tripInfo);
+                let group_id = await db.users.createGroup(tripInfo);
                 //insert users into group
-                let insertUsers = db.users.insertUserIntoGroups(group_id,user_ids_arr);
+                let insertUsers = await db.users.insertUserIntoGroups(group_id,user_ids_arr);
                 //create trip
                 let trip_id = await db.trips.createTrip(tripInfo,null,group_id);
                 //create destination

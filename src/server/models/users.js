@@ -83,7 +83,8 @@ module.exports = (dbPoolInstance) => {
 
     let getUserIdsByEmails = async function (email_arr){
         try{
-            let query = format("SELECT id FROM users WHERE email IN %L",email_arr);
+            let arr = [email_arr]
+            let query = format("SELECT id FROM users WHERE email IN %L",arr);
             let queryResult = await dbPoolInstance.query(query);
             if(queryResult.rows.length>0){
                 console.log("GET USER IDS SUCCESS");
@@ -116,7 +117,7 @@ module.exports = (dbPoolInstance) => {
     let insertUserIntoGroups = async function (group_id,user_ids_arr){
         try{
             let user_ids_arrOfarr = user_ids_arr.map(x=>[x,group_id])
-            let query = format('INSERT INTO users_groups (user_id,group_id) VALUES %L RETURNING *',user_ids_arrOfarr);
+            let query = format('INSERT INTO groups_users (user_id,group_id) VALUES %L RETURNING *',user_ids_arrOfarr);
             let queryResult = await dbPoolInstance.query(query);
             if(queryResult.rows.length>0){
                 console.log("INSERT USER INTO GROUP SUCCESS");
@@ -131,9 +132,9 @@ module.exports = (dbPoolInstance) => {
 
     let getUserIdAndGender = async function (user_ids_arr){
         try{
-            let query = "SELECT id,gender FROM users WHERE id IN $1";
-            let arr = [user_ids_arr];
-            let queryResult = await dbPoolInstance.query(query,arr);
+            let someArr = [user_ids_arr]
+            let query = format("SELECT id,gender FROM users WHERE id IN %L",someArr);
+            let queryResult = await dbPoolInstance.query(query);
             if(queryResult.rows.length>0){
                 console.log("GET USER ID AND GENDER SUCCESS");
                 return queryResult.rows;

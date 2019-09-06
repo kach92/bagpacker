@@ -208,11 +208,11 @@ module.exports = (dbPoolInstance) => {
         }
     }
 
-    let getGroupPackingListIdsByTripId = async function (trip_id) {
+    let getGroupPackingListByTripId = async function (trip_id) {
         try{
             let query = 'SELECT * FROM packing_lists WHERE trip_id = $1';
             let arr = [trip_id];
-            let queryResult = await dbPoolInstance.query(query.arr);
+            let queryResult = await dbPoolInstance.query(query,arr);
             if (queryResult.rows.length > 0) {
                 console.log("GET GROUP PACKING LIST IDS BY TRIP ID SUCCESS");
 
@@ -234,7 +234,7 @@ module.exports = (dbPoolInstance) => {
                 console.log("GET PACKINGN LIST ITEMS PACKING LIST ID SUCCESS");
                 return queryResult.rows;
             } else {
-                return Promise.reject(new Error("group packing list returns null"));
+                return Promise.reject(new Error("get packing list items by packing list id returns null"));
             }
         } catch (error) {
             console.log("get packing list items by packing list id" + error)
@@ -265,7 +265,7 @@ module.exports = (dbPoolInstance) => {
         generateSharedList,
         getPackingListIdByTripId,
         getItemsByPackingListId,
-        getGroupPackingListIdsByTripId,
+        getGroupPackingListByTripId,
         getPackingListItemsByPackingListId,
         updateItemQuantity
 
