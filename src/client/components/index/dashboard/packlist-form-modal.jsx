@@ -73,7 +73,7 @@ class PacklistForm extends React.Component {
 			if (item !== "activities") {
 				if (item === "group") {
 					if (groupPax > 1) {
-						if (groupPax != formInputs[item].length) {
+						if (groupPax-1 != formInputs[item].length) {
 							validated = false;
 						} else {
 							formInputs[item].forEach(function (email) {
@@ -120,7 +120,7 @@ class PacklistForm extends React.Component {
 
 		if (this.state.groupPax > 1) {
 			groupInputs.push(<label>Trip Mates</label>);
-			for (let i=0;i<this.state.groupPax; i++){
+			for (let i=0;i<this.state.groupPax-1; i++){
 				groupInputs.push(
 					<Form.Group key={i}>
 						<Form.Control type="email" value={this.state.formInputs.group[i]} onChange={(e)=>{this.updateTripmate(e,i)}}/>
