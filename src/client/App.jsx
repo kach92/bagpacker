@@ -15,6 +15,7 @@ import { sha256, sha224 } from 'js-sha256';
 const SALT = "Jarpy Bear"
 
 import {Container} from 'react-bootstrap';
+import mainStyles from './style.scss';
 
 class App extends React.Component {
 	constructor() {
@@ -59,7 +60,7 @@ class App extends React.Component {
 				<Route path="/" render={props => (
 					<Navigation authed={this.state.authed} checkUser={this.checkUser} {...props}/>
 				)}/>
-				<Container>
+				<Container className={mainStyles.wrapper} fluid>
 					<Route exact path="/" render={props => (
 						this.state.authed
 						? <Dashboard/>
