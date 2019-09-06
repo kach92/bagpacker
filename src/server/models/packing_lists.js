@@ -96,11 +96,10 @@ module.exports = (dbPoolInstance) => {
     let createPackingListItems = async function (packList,packing_list_id,shared=false) {
 
         try {
-            let finalList = []
+            let finalList = [];
             for (var key in packList) {
-                finalList.concat(packList[key]);
+                finalList = finalList.concat(packList[key]);
             }
-
             finalList = finalList.map(x=>[packing_list_id,x.name,x.quantity,x.category,shared])
             let query = format('INSERT INTO packing_list_items (packing_list_id,name,quantity,category,shared) VALUES %L RETURNING *',finalList);
 

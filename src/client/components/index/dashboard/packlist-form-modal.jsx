@@ -103,15 +103,9 @@ class PacklistForm extends React.Component {
 			}
 		}).then(res => res.json())
 			.then(res => {
-				let packlist = {
-					location: data.location,
-					startDate: data.startDate,
-					endDate: data.endDate,
-					items: res
-				};
-				this.props.updatePacklist(packlist);
+                let url = "/trips/"+res
+                this.props.history.push(url)
 			})
-			.then( () => this.props.history.push('/list'))
 			.catch(error => console.error('Error:', error));
 	};
 	calcDuration = (start, end) => {
