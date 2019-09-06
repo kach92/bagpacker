@@ -45,14 +45,13 @@ module.exports = (db) => {
                         shared_packing_list = packingList.splice(index,1);
                     }
                 })
-
                 let individualList = {};
                 for(let i=0; i<packingList.length;i++){
                     let listItems = await db.packingList.getPackingListItemsByPackingListId(packingList[i].id);
                     individualList[packingList[i].user_id] = listItems;
                 }
 
-                let sharedListItems = await db.packingList.getPackingListItemsByPackingListId(shared_packing_list.id)
+                let sharedListItems = await db.packingList.getPackingListItemsByPackingListId(shared_packing_list[0].id)
 
                 response.send({
                     trip:trip_details,
