@@ -94,7 +94,6 @@
     "react-dom": "^16.9.0",
     "react-hot-loader": "^4.12.12",
     "react-router-dom": "^5.0.1",
-    "request": "^2.88.0",
     "sanitize.css": "^11.0.0",
     "webpack": "^4.39.3",
     "webpack-dev-middleware": "^3.7.1",
