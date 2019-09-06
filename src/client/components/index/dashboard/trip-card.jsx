@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 class TripCard extends React.Component {
 	render() {
 		let months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+        console.log(this.props.trip)
 		let trip = this.props.trip;
 		let tripLink = "/trips/"+trip.id;
 		let startDate = new Date(trip.destinations[0].start_date);
@@ -15,7 +16,7 @@ class TripCard extends React.Component {
 		return (
 			<Link to={tripLink}>
 				<Card className="mb-3">
-					{/*<Card.Img variant="top" src="holder.js/100px180" />*/}
+					<Card.Img variant="top" src={trip.destinations[0].image} />
 					<Card.Body>
 						<Card.Title className="mb-5">{trip.name}</Card.Title>
 						<Card.Text>

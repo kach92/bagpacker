@@ -1,9 +1,14 @@
+
+
 module.exports = (db) => {
 
 
     let getAllTrips = async function (request, response) {
 
         try {
+
+
+
             let user_id = parseInt(request.cookies["user_id"]);
             let group_ids = await db.users.getUserGroups(user_id);
             let trip = await db.trips.getTripsOfUser(user_id,group_ids);

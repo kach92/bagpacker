@@ -44,7 +44,6 @@ class PacklistForm extends React.Component {
 		formInputs.location = e.target.value;
         let locationInput = e.target.value;
         if(locationInput.length>0){
-            console.log(locationInput.length)
             this.state.countryDropdown = this.state.allCountries.filter(x=>{
                 return x.toLowerCase().startsWith(e.target.value.toLowerCase())
             });
@@ -119,23 +118,67 @@ class PacklistForm extends React.Component {
 			}
 		});
 		if (validated) {
-			formInputs["duration"] = this.calcDuration(formInputs["startDate"], formInputs["endDate"]);
-			this.createTrip(formInputs);
+            let image_src = null;
+            let url = 'https://api.teleport.org/api/cities/?search='+formInputs.location.toLowerCase();
+
+            fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(res => res.json())
+            .then(res => {
+                fetch(res["_embedded"]["city:search-results"][0]["_links"]["city:item"]["href"], {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(res => res.json())
+                .then(res => {
+                    fetch(res["_links"]["city:urban_area"]["href"], {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    })
+                    .then(res => res.json())
+                    .then(res => {
+                        fetch(res["_links"]["ua:images"]["href"], {
+                            method: 'GET',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            }
+                        })
+                        .then(res => res.json())
+                        .then(res => {
+                            image_src = res["photos"][0]["image"]["mobile"]
+                            console.log(image_src)
+                            formInputs["image"] = image_src;
+                            formInputs["duration"] = this.calcDuration(formInputs["startDate"], formInputs["endDate"]);
+                            this.createTrip(formInputs);
+                        })
+                    })
+                })
+            })
 		}
 	};
 	createTrip = (data) => {
+
 		fetch('/trips', {
 			method: 'POST',
 			body: JSON.stringify(data),
 			headers: {
 				'Content-Type': 'application/json'
 			}
-		}).then(res => res.json())
-			.then(res => {
-                let url = "/trips/"+res;
-                this.props.history.push(url);
-			})
-			.catch(error => console.error('Error:', error));
+		})
+        .then(res => res.json())
+		.then(res => {
+            let url = "/trips/"+res;
+            this.props.history.push(url);
+		})
+		.catch(error => console.error('Error:', error));
 	};
 	calcDuration = (start, end) => {
 		let duration = (new Date(end).getTime() - new Date(start).getTime());
@@ -153,7 +196,6 @@ class PacklistForm extends React.Component {
 
 
 	render() {
-        console.log(this.state.countryDropdown)
         let countryDropdownContainer = <div>{this.state.countryDropdown.map(x=><div onClick={this.pushToInput}>{x}</div>)}</div>;
 		let groupInputs = [];
 		if (this.state.groupPax > 1) {
