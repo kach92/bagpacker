@@ -50,10 +50,12 @@ module.exports = (db) => {
                         shared_packing_list = packingList.splice(index,1);
                     }
                 })
-                let individualList = {};
+                let individualList = [];
                 for(let i=0; i<packingList.length;i++){
+                    let user = await db.users.getUserDetailsById(packingList[i].user_id);
                     let listItems = await db.packingList.getPackingListItemsByPackingListId(packingList[i].id);
-                    individualList[packingList[i].user_id] = listItems;
+                    user["items"] = listItems;
+                    individualList.push(user);
                 }
 
                 let sharedListItems = await db.packingList.getPackingListItemsByPackingListId(shared_packing_list[0].id)
