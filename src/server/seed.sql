@@ -25,8 +25,8 @@ INSERT INTO users (firstname,lastname,email,password,gender) VALUES ('Shirley','
 INSERT INTO users (firstname,lastname,email,password,gender) VALUES ('Khai','Ri','iosodunno@gmail.com','a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3','M');
 
 
-INSERT INTO groups (name) VALUES ('TripDetails to Tokyo');
-INSERT INTO groups (name) VALUES ('TripDetails to Africa');
+INSERT INTO groups (name) VALUES ('Trip to Tokyo');
+INSERT INTO groups (name) VALUES ('Trip to Africa');
 
 INSERT INTO groups_users (user_id,group_id) VALUES (1,1);
 INSERT INTO groups_users (user_id,group_id) VALUES (2,1);
@@ -40,9 +40,9 @@ INSERT INTO trips (name,user_id,group_id) VALUES ('Trip to Africa',null,2);
 INSERT INTO trips (name,user_id,group_id) VALUES ('Trip to Wonderland',2,null);
 INSERT INTO trips (name,user_id,group_id) VALUES ('Trip to Holland',3,null);
 
-INSERT INTO destinations (name,start_date,end_date,duration,trip_id) VALUES ('TripDetails to Beijing','2019-08-01','2019-08-10',9,1);
-INSERT INTO destinations (name,start_date,end_date,duration,trip_id) VALUES ('TripDetails to Bangkok','2019-08-01','2019-08-10',9,2);
-INSERT INTO destinations (name,start_date,end_date,duration,trip_id) VALUES ('TripDetails to Tokyo','2019-08-01','2019-08-10',9,3);
-INSERT INTO destinations (name,start_date,end_date,duration,trip_id) VALUES ('TripDetails to Africa','2019-08-01','2019-08-10',9,4);
-INSERT INTO destinations (name,start_date,end_date,duration,trip_id) VALUES ('TripDetails to Wonderland','2019-08-01','2019-08-10',9,5);
-INSERT INTO destinations (name,start_date,end_date,duration,trip_id) VALUES ('TripDetails to Holland','2019-08-01','2019-08-10',9,6);
+INSERT INTO destinations (name,start_date,end_date,duration,trip_id) VALUES ('Beijing','2019-08-01','2019-08-10',9,1);
+INSERT INTO destinations (name,start_date,end_date,duration,trip_id) VALUES ('Bangkok','2019-08-01','2019-08-10',9,2);
+INSERT INTO destinations (name,start_date,end_date,duration,trip_id) VALUES ('Tokyo','2019-08-01','2019-08-10',9,3);
+INSERT INTO destinations (name,start_date,end_date,duration,trip_id) VALUES ('Africa','2019-08-01','2019-08-10',9,4);
+INSERT INTO destinations (name,start_date,end_date,duration,trip_id) VALUES ('Wonderland','2019-08-01','2019-08-10',9,5);
+INSERT INTO destinations (name,start_date,end_date,duration,trip_id) VALUES ('Holland','2019-08-01','2019-08-10',9,6);
