@@ -8,9 +8,14 @@ class SidePanel extends React.Component {
 	}
 
 	render() {
+		let panelImage = {};
+		if (this.props.tripImage) {
+			panelImage = {backgroundImage: `url(${this.props.tripImage})`};
+		}
 		return (
 			<div className={mainStyles.sidePanel}>
 				{this.props.children}
+				<div className={mainStyles.sidePanelBg} style={panelImage}></div>
 				<div className={mainStyles.sidePanelOverlay}></div>
 			</div>
 		);
@@ -18,5 +23,6 @@ class SidePanel extends React.Component {
 }
 
 SidePanel.propTypes ={
+	tripImage: PropTypes.string
 };
 export default SidePanel;

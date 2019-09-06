@@ -1,7 +1,8 @@
 import React from 'react';
-import {Col,Row} from 'react-bootstrap';
+import {Col,Row,Tabs,Tab} from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import TripCard from "./trip-card";
+import mainStyles from "../../../style.scss";
 
 class Trips extends React.Component {
 	constructor() {
@@ -40,17 +41,21 @@ class Trips extends React.Component {
 				No trips found. Create one now!
 			</Col>
 		);
+		let soloTripsLength = 0;
+		let groupTripsLength = 0;
 		if (trips) {
 			if (trips.solo.length > 0) {
+				soloTripsLength = trips.solo.length;
 				soloTrips = trips.solo.map((trip, index) => {
 					return (
-						<Col key={index} md={4}>
+						<Col key={index} md={4} className={mainStyles.tripCard}>
 							<TripCard trip={trip}/>
 						</Col>
 					)
 				})
 			}
 			if (trips.group.length > 0) {
+				groupTripsLength = trips.group.length;
 				groupTrips = trips.group.map((trip, index) => {
 					return (
 						<Col key={index} md={4}>
@@ -61,34 +66,15 @@ class Trips extends React.Component {
 			}
 		}
 		return (
-			<React.Fragment>
-				<Row className="mb-5">
-					<Col>
-						<Row>
-							<Col>
-								<h4>Solo Trips</h4>
-							</Col>
-						</Row>
-						<Row>
-							{soloTrips}
-						</Row>
+			<Tabs variant="pills" className={`nav-fill mb-5 ${mainStyles.tab}`} id="uncontrolled-tab-example">
+				<Tab eventKey="solo" title={`Solo Trips (${soloTripsLength})`}>
+					<Row>{soloTrips}</Row>
+				</Tab>
+				<Tab eventKey="group" title={`Group Trips (${groupTripsLength})`}>
+					<Row>{groupTrips}</Row>
+				</Tab>
+			</Tabs>
 
-					</Col>
-				</Row>
-				<Row>
-					<Col>
-						<Row>
-							<Col>
-								<h4>Group Trips</h4>
-							</Col>
-						</Row>
-						<Row>
-							{groupTrips}
-						</Row>
-
-					</Col>
-				</Row>
-			</React.Fragment>
 
 		);
 	}
