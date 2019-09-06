@@ -147,8 +147,7 @@ class PacklistForm extends React.Component {
                         })
                         .then(res => res.json())
                         .then(res => {
-                            image_src = res["photos"][0]["image"]["mobile"]
-                            console.log(image_src)
+                            image_src = res["photos"][0]["image"]["mobile"];
                             formInputs["image"] = image_src;
                             formInputs["duration"] = this.calcDuration(formInputs["startDate"], formInputs["endDate"]);
                             this.createTrip(formInputs);
@@ -156,6 +155,14 @@ class PacklistForm extends React.Component {
                     })
                 })
             })
+            .catch(error => {
+                console.error('Error:', error)
+                image_src = "#";
+                formInputs["image"] = image_src;
+                formInputs["duration"] = this.calcDuration(formInputs["startDate"], formInputs["endDate"]);
+                this.createTrip(formInputs);
+
+            });
 		}
 	};
 	createTrip = (data) => {

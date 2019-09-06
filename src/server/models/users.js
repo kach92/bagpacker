@@ -169,7 +169,7 @@ module.exports = (dbPoolInstance) => {
         try{
             let query = 'SELECT * FROM users WHERE id = $1'
             let arr = [user_id];
-            let queryResult = dbPoolInstance.query(query,arr);
+            let queryResult = await dbPoolInstance.query(query,arr);
             if(queryResult.rows.length>0){
                 console.log("GET USER DETAILS BY ID SUCCESS");
                 return queryResult.rows[0];

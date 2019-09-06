@@ -93,15 +93,20 @@ module.exports = (dbPoolInstance) => {
         }
     }
 
-    let createPackingListItems = async function (packList,packing_list_id) {
+    let createPackingListItems = async function (packList,packing_list_id,shared,group_id=null) {
 
         try {
             let finalList = [];
             for (var key in packList) {
                 finalList = finalList.concat(packList[key]);
             }
-            finalList = finalList.map(x=>[packing_list_id,x.name,x.quantity,x.category])
-            let query = format('INSERT INTO packing_list_items (packing_list_id,name,quantity,category) VALUES %L RETURNING *',finalList);
+            if(shared){
+                finalList = finalList.map(x=>[packing_list_id,x.name,x.quantity,'Shared',shared,group_id]);
+            }else{
+                finalList = finalList.map(x=>[packing_list_id,x.name,x.quantity,x.category,shared,group_id]);
+            }
+
+            let query = format('INSERT INTO packing_list_items (packing_list_id,name,quantity,category,shared,group_id) VALUES %L RETURNING *',finalList);
 
             let queryResult = await dbPoolInstance.query(query);
             if(queryResult.rows.length>0){
@@ -225,17 +230,28 @@ module.exports = (dbPoolInstance) => {
         }
     }
 
-    let getPackingListItemsByPackingListId = async function (packing_list_id){
+    let getPackingListItemsByPackingListId = async function (packing_list_id,group_id = null){
         try{
-            let query = 'SELECT * FROM packing_list_items WHERE packing_list_id = $1'
-            let arr = [packing_list_id];
+            let query = null;
+            let arr = null;
+            if(group_id){
+                query = 'SELECT * FROM packing_list_items WHERE group_id = $1 AND shared = true'
+                arr = [group_id];
+            }else{
+                query = 'SELECT * FROM packing_list_items WHERE packing_list_id = $1'
+                arr = [packing_list_id];
+            }
+
             let queryResult = await dbPoolInstance.query(query,arr);
             if (queryResult.rows.length > 0) {
                 console.log("GET PACKINGN LIST ITEMS PACKING LIST ID SUCCESS");
                 return queryResult.rows;
             } else {
-                return Promise.reject(new Error("get packing list items by packing list id returns null"));
+                console.log("GET PACKING LIST ITEMS BY PACKINIG LIST ID RETURNS NULL")
+                return [];
             }
+
+
         } catch (error) {
             console.log("get packing list items by packing list id" + error)
         }
@@ -292,6 +308,38 @@ module.exports = (dbPoolInstance) => {
         }
     }
 
+    let getUserPackingListIdByUserIdAndTripId = async function (user_id,trip_id){
+        try {
+            let query = 'SELECT * FROM packing_lists WHERE user_id = $1 AND trip_id = $2'
+            let arr = [user_id,trip_id];
+            let queryResult = await dbPoolInstance.query(query,arr);
+            if(queryResult.rows.length>0){
+                console.log("GET USER PACKING LIST ID BY USER ID AND TRIP ID SUCCESS");
+                return queryResult.rows[0].id;
+            }else{
+                return Promise.reject(new Error("get user packing list id by user id and trip id returns null"));
+            }
+        } catch (error) {
+            console.log("get user packing list id by user id and trip id "+ error)
+        }
+    }
+
+    let updateSharedItemId = async function (item_id,new_plist_id){
+        try{
+            let query = 'UPDATE packing_list_items SET packing_list_id = $1 WHERE id = $2 RETURNING *'
+            let arr = [new_plist_id,item_id];
+            let queryResult = await dbPoolInstance.query(query,arr);
+            if(queryResult.rows.length>0){
+                console.log("UPDATE SHARED ITEM ID SUCCESS");
+                return queryResult.rows[0];
+            }else{
+                return Promise.reject(new Error("update shared item id returns null"));
+            }
+        }catch (error){
+            console.log("update shared item id "+null)
+        }
+    }
+
     return {
         generateTempList,
         createPackingList,
@@ -303,7 +351,9 @@ module.exports = (dbPoolInstance) => {
         getPackingListItemsByPackingListId,
         updateItemQuantity,
         updateItemName,
-        updateItemPacked
+        updateItemPacked,
+        getUserPackingListIdByUserIdAndTripId,
+        updateSharedItemId
 
     };
 };

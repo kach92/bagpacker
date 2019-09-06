@@ -54,13 +54,13 @@ module.exports = (db) => {
                 //create packing list id for shared items
                 let packing_list_shared_id = await db.packingList.createPackingList(trip_id,null,group_id);
                 let finalList_shared = await db.packingList.generateSharedList(tripInfo)
-                let packing_list_items_shared = await db.packingList.createPackingListItems(finalList_shared,packing_list_shared_id)
+                let packing_list_items_shared = await db.packingList.createPackingListItems(finalList_shared,packing_list_shared_id,true,group_id)
                 //create packing list id for each user,generate list and save into packing list
 
                 for(let i = 0; i< user_gender_arrObj.length ; i++) {
                     let finalList = await db.packingList.generateTempList(tripInfo,user_gender_arrObj[i].gender,true);
                     let packing_list_id = await db.packingList.createPackingList(trip_id,user_gender_arrObj[i].id,group_id);
-                    let packing_list_items = await db.packingList.createPackingListItems(finalList,packing_list_id);
+                    let packing_list_items = await db.packingList.createPackingListItems(finalList,packing_list_id,false,group_id);
                 }
                 //send a true response to tell cliend side save ok, need to redirect to group/invidiaul trip page
                 response.status(200).send(trip_id.toString());
@@ -73,7 +73,7 @@ module.exports = (db) => {
                 let destination_id = await db.trips.createDestination(tripInfo,trip_id);
                 let packing_list_id = await db.packingList.createPackingList(trip_id,user_id);
                 let finalList = await db.packingList.generateTempList(tripInfo,user_gender);
-                let packing_list_items = await db.packingList.createPackingListItems(finalList,packing_list_id);
+                let packing_list_items = await db.packingList.createPackingListItems(finalList,packing_list_id,false);
                 console.log(trip_id)
 
                 response.status(200).send(trip_id.toString());
@@ -90,9 +90,10 @@ module.exports = (db) => {
             let item_id = parseInt(request.body.item_id);
             let quantity = parseInt(request.body.quantity);
             let getResponse = await db.packingList.updateItemQuantity(item_id,quantity);
-            response.send(getResponse);
+            response.send(true);
         }catch (error){
-            console.log("update item quantity controller"+ error)
+            console.log("update item quantity controller"+ error);
+            response.send(false);
         }
     }
 
@@ -101,9 +102,10 @@ module.exports = (db) => {
             let item_id = parseInt(request.body.item_id);
             let name = request.body.name;
             let getResponse = await db.packingList.updateItemName(item_id,name);
-            response.send(getResponse);
+            response.send(true);
         } catch (error) {
-            console.log('update item name controller '+error)
+            console.log('update item name controller '+error);
+            response.send(false);
         }
     }
 
@@ -112,9 +114,24 @@ module.exports = (db) => {
             let item_id = parseInt(request.body.item_id);
             let packed = request.body.packed;
             let getResponse = await db.packingList.updateItemPacked(item_id,packed);
-            response.send(getResponse);
+            response.send(true);
         } catch (error) {
-            console.log('update item packed controller '+error)
+            console.log('update item packed controller '+error);
+            response.send(false);
+        }
+    }
+
+    let updateSharedItem = async function(request,response){
+        try {
+            let item_id = parseInt(request.body.item_id);
+            let user_id = parseInt(request.body.user_id);
+            let trip_id = parseInt(request.body.trip_id);
+
+            let user_packing_list_id = await db.packList.getUserPackingListIdByUserIdAndTripId(user_id,trip_id);
+            let doUpdate = await db.packList.updateSharedItemId(item_id,user_packing_list_id);
+            response.send(true);
+        } catch (error) {
+            console.log("update shared item "+ error);
         }
     }
 
@@ -124,7 +141,8 @@ module.exports = (db) => {
         userListSave : userListSave,
         updateItemQuantity : updateItemQuantity,
         updateItemName : updateItemName,
-        updateItemPacked : updateItemPacked
+        updateItemPacked : updateItemPacked,
+        updateSharedItem : updateSharedItem
     }
 
 };
