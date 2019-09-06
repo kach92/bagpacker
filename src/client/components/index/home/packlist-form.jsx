@@ -98,10 +98,14 @@ class PacklistForm extends React.Component {
 	render() {
 		return (
 			<Form className={mainStyles.packlistForm}>
-				<Form.Group>
-					<Form.Label>Location</Form.Label>
-					<Form.Control type="text" value={this.state.formInputs.location} onChange={this.updateLocation}/>
-				</Form.Group>
+				<Row>
+					<Col>
+						<Form.Group>
+							<Form.Label>Location</Form.Label>
+							<Form.Control type="text" value={this.state.formInputs.location} onChange={this.updateLocation}/>
+						</Form.Group>
+					</Col>
+				</Row>
 				<Row>
 					<Col>
 						<Form.Group>
@@ -137,10 +141,16 @@ class PacklistForm extends React.Component {
 						</Form.Group>
 					</Col>
 				</Row>
-				<div className={mainStyles.multiSelectWrapper}>
-					<label>Activities</label>
-					<ActivitiesForm updateActivities={this.updateActivities}/>
-				</div>
+				<Row>
+					<Col>
+						<Form.Group>
+							<div className={mainStyles.multiSelectWrapper}>
+								<label>Activities</label>
+								<ActivitiesForm updateActivities={this.updateActivities}/>
+							</div>
+						</Form.Group>
+					</Col>
+				</Row>
 				<button type="submit" onClick={this.submit} className={mainStyles.btn}>Create Packing List</button>
 				<br/>
 				<div className="error">
