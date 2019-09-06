@@ -3,6 +3,8 @@ import {Col,Row,ButtonToolbar, Button,Modal} from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import PacklistForm from "./packlist-form-modal";
 import Trips from "./trips";
+import SidePanel from "../../side-panel/side-panel";
+import mainStyles from "../../..//style.scss";
 
 function PacklistFormModal(props) {
 	return (
@@ -24,8 +26,9 @@ function Dashboard(props) {
 	return (
 		<Row>
 			<Col md={4}>
-				<ButtonToolbar>
-					<Button variant="primary" onClick={() => setModalShow(true)}>
+				<SidePanel>
+					<h2>Trips</h2>
+					<Button onClick={() => setModalShow(true)} className={mainStyles.btn}>
 						Create New Trip
 					</Button>
 
@@ -34,7 +37,7 @@ function Dashboard(props) {
 						onHide={() => setModalShow(false)}
 						history={props.history}
 					/>
-				</ButtonToolbar>
+				</SidePanel>
 			</Col>
 			<Col md={{span:8}}>
 				<Trips/>
