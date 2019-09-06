@@ -33,12 +33,12 @@ INSERT INTO groups_users (user_id,group_id) VALUES (2,1);
 INSERT INTO groups_users (user_id,group_id) VALUES (2,2);
 INSERT INTO groups_users (user_id,group_id) VALUES (3,2);
 
-INSERT INTO trips (name,user_id,group_id) VALUES ('TripDetails to Beijing',1,null);
-INSERT INTO trips (name,user_id,group_id) VALUES ('TripDetails to Bangkok',1,null);
-INSERT INTO trips (name,user_id,group_id) VALUES ('TripDetails to Tokyo',null,1);
-INSERT INTO trips (name,user_id,group_id) VALUES ('TripDetails to Africa',null,2);
-INSERT INTO trips (name,user_id,group_id) VALUES ('TripDetails to Wonderland',2,null);
-INSERT INTO trips (name,user_id,group_id) VALUES ('TripDetails to Holland',3,null);
+INSERT INTO trips (name,user_id,group_id) VALUES ('Trip to Beijing',1,null);
+INSERT INTO trips (name,user_id,group_id) VALUES ('Trip to Bangkok',1,null);
+INSERT INTO trips (name,user_id,group_id) VALUES ('Trip to Tokyo',null,1);
+INSERT INTO trips (name,user_id,group_id) VALUES ('Trip to Africa',null,2);
+INSERT INTO trips (name,user_id,group_id) VALUES ('Trip to Wonderland',2,null);
+INSERT INTO trips (name,user_id,group_id) VALUES ('Trip to Holland',3,null);
 
 INSERT INTO destinations (name,start_date,end_date,duration,trip_id) VALUES ('TripDetails to Beijing','2019-08-01','2019-08-10',9,1);
 INSERT INTO destinations (name,start_date,end_date,duration,trip_id) VALUES ('TripDetails to Bangkok','2019-08-01','2019-08-10',9,2);
