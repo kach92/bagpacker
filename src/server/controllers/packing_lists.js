@@ -83,10 +83,22 @@ module.exports = (db) => {
 
     }
 
+    let updateItemQuantity = async function(request,response){
+        try{
+            let item_id = parseInt(request.body.item_id);
+            let quantity = parseInt(request.body.quantity);
+            let getResponse = await db.packingList.updateItemQuantity(item_id,quantity);
+            response.send(getResponse);
+        }catch (error){
+            console.log("update item quantity controller"+ error)
+        }
+    }
+
     return {
         nonUserList : nonUserList,
         nonUserListSave : nonUserListSave,
-        userListSave : userListSave
+        userListSave : userListSave,
+        updateItemQuantity : updateItemQuantity
     }
 
 };

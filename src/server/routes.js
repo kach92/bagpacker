@@ -11,4 +11,5 @@ module.exports = (app, db) => {
     app.post('/trips', packingLists.userListSave);
     app.get('/signout',users.signOut);
     app.get('/trips',trips.getAllTrips);
+    app.post('/update_item_quantity',packingLists.updateItemQuantity)
 };

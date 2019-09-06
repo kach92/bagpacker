@@ -20,8 +20,8 @@ INSERT INTO items (name,category,activity_id,weather_id,gender,daily,quantity,sh
 INSERT INTO items (name,category,activity_id,weather_id,gender,daily,quantity,shared) VALUES ('Medications','Essentials',null,null,null,false,1,false);
 INSERT INTO items (name,category,activity_id,weather_id,gender,daily,quantity,shared) VALUES ('Towel','Toiletries',null,null,null,false,1,false);
 
-INSERT INTO users (firstname,lastname,email,password,gender) VALUES ('Kenny','Ang','kenny.ang9206@gmail.com','a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3','M');
-INSERT INTO users (firstname,lastname,email,password,gender) VALUES ('Shirley','Tan','idunno@gmail.com','a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3','F');
+INSERT INTO users (firstname,lastname,email,password,gender) VALUES ('Kenny','Ang','kenny@gmail.com','a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3','M');
+INSERT INTO users (firstname,lastname,email,password,gender) VALUES ('Shirley','Tan','shirley@gmail.com','a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3','F');
 INSERT INTO users (firstname,lastname,email,password,gender) VALUES ('Khai','Ri','iosodunno@gmail.com','a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3','M');
 
 
