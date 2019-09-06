@@ -44,13 +44,15 @@ CREATE TABLE IF NOT EXISTS packing_lists (
 CREATE TABLE IF NOT EXISTS packing_list_items (
     id SERIAL PRIMARY KEY,
     packing_list_id INTEGER,
+    group_id INTEGER,
     name TEXT,
     quantity INTEGER,
     packed BOOLEAN DEFAULT false,
     private BOOLEAN DEFAULT false,
     shared BOOLEAN,
     category TEXT,
-    FOREIGN KEY (packing_list_id) REFERENCES packing_lists(id)
+    FOREIGN KEY (packing_list_id) REFERENCES packing_lists(id),
+    FOREIGN KEY (group_id) REFERENCES groups (id)
 );
 
 
