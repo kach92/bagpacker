@@ -46,7 +46,7 @@ module.exports = (db) => {
                 //insert users into group
                 let insertUsers = db.users.insertUserIntoGroups(group_id,user_ids_arr);
                 //create trip
-                let trip_id = await db.trips.createTrip(tripInfo,group_id);
+                let trip_id = await db.trips.createTrip(tripInfo,null,group_id);
                 //create destination
                 let destination_id = await db.trips.createDestination(tripInfo,trip_id);
                 //create packing list id for shared items
@@ -61,7 +61,7 @@ module.exports = (db) => {
                     let packing_list_items = await db.packingList.createPackingListItems(finalList,packing_list_id);
                 }
                 //send a true response to tell cliend side save ok, need to redirect to group/invidiaul trip page
-                response.send(trip_id.toString())
+                response.status(200).send(trip_id.toString());
 
             }else{
                 let user_id = parseInt(request.cookies["user_id"]);
