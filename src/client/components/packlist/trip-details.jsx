@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-class Trip extends React.Component {
+class TripDetails extends React.Component {
 	render() {
 		return (
 			<React.Fragment>
@@ -12,9 +12,9 @@ class Trip extends React.Component {
 		);
 	}
 }
-Trip.propTypes ={
+TripDetails.propTypes ={
 	location: PropTypes.string,
 	startDate: PropTypes.string,
 	endDate: PropTypes.string,
 };
-export default Trip;
+export default TripDetails;
