@@ -1,4 +1,4 @@
-{
+export default {
 "Aarhus": "aarhus",
 "Adelaide": "adelaide",
 "Albuquerque": "albuquerque",

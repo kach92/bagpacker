@@ -4,6 +4,7 @@ import ActivitiesForm from "../packlist-activities-form";
 import mainStyles from "../../../style.scss";
 import {Form} from 'react-bootstrap';
 import Category from "../../packlist/category";
+import Countries from "./countries.js"
 
 class PacklistForm extends React.Component {
 	constructor(props) {
@@ -17,15 +18,42 @@ class PacklistForm extends React.Component {
 				activities: [],
 				group: []
 			},
+            locationInput:"",
+            countryDropdown:[],
+            allCountries:[],
 			errorMessage: "",
 			groupPax: 1
 		};
 	}
 
+    componentDidMount(){
+        for (let key in Countries){
+            this.state.allCountries.push(key);
+        }
+        this.setState({allCountries:this.state.allCountries});
+    }
+
+    componentWillUnmount(){
+        this.state.allCountries = [];
+        this.setState({allCountries:this.state.allCountries});
+    }
+
 	updateLocation = (e) => {
 		let formInputs = this.state.formInputs;
 		formInputs.location = e.target.value;
-		this.setState({formInputs: formInputs});
+        let locationInput = e.target.value;
+        if(locationInput.length>0){
+            console.log(locationInput.length)
+            this.state.countryDropdown = this.state.allCountries.filter(x=>{
+                return x.toLowerCase().startsWith(e.target.value.toLowerCase())
+            });
+
+        }else{
+            this.state.countryDropdown = [];
+        }
+
+		this.setState({formInputs: formInputs, locationInput:locationInput,countryDropdown:this.state.countryDropdown});
+
 	};
 
 	updateStartDate = (e) => {
@@ -114,10 +142,19 @@ class PacklistForm extends React.Component {
 		return duration + 1;
 	};
 
+    pushToInput = (e) => {
+        let formInputs = this.state.formInputs;
+        formInputs.location = e.target.innerText;
+        let locationInput = e.target.innerText;
+        let countryDropdown = [];
+        this.setState({formInputs: formInputs, locationInput:locationInput,countryDropdown:countryDropdown});
+    }
+
 
 	render() {
+        console.log(this.state.countryDropdown)
+        let countryDropdownContainer = <div>{this.state.countryDropdown.map(x=><div onClick={this.pushToInput}>{x}</div>)}</div>;
 		let groupInputs = [];
-
 		if (this.state.groupPax > 1) {
 			groupInputs.push(<label>Trip Mates</label>);
 			for (let i=0;i<this.state.groupPax; i++){
@@ -133,6 +170,7 @@ class PacklistForm extends React.Component {
 				<Form.Group>
 					<Form.Label>Location</Form.Label>
 					<Form.Control type="text" placeholder="Location" value={this.state.formInputs.location} onChange={this.updateLocation} />
+                    {countryDropdownContainer}
 				</Form.Group>
 
 				<Form.Group>
