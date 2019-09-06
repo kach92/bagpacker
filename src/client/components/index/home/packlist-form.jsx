@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import ActivitiesForm from "../packlist-activities-form";
 import mainStyles from "../../../style.scss";
 import {Form, Row, Col} from 'react-bootstrap';
+import Countries from "../../../countries.js"
 
 class PacklistForm extends React.Component {
 	constructor(props) {
@@ -16,14 +17,33 @@ class PacklistForm extends React.Component {
 				weather: "1",
 				activities: []
 			},
+            allCountries:[],
+            filteredCountries:[],
 			errorMessage: ""
 		};
 	}
 
+    componentDidMount(){
+        for (let key in Countries){
+            this.state.allCountries.push(key);
+        }
+        this.setState({allCountries:this.state.allCountries});
+    }
+
 	updateLocation = (e) => {
 		let formInputs = this.state.formInputs;
 		formInputs.location = e.target.value;
-		this.setState({formInputs: formInputs});
+
+        if(e.target.value.length>0){
+            this.state.filteredCountries = this.state.allCountries.filter(x=>{
+                return x.toLowerCase().startsWith(e.target.value.toLowerCase())
+            });
+
+        }else{
+            this.state.filteredCountries = [];
+        }
+
+        this.setState({formInputs: formInputs,filteredCountries:this.state.filteredCountries});
 	};
 
 	updateStartDate = (e) => {
@@ -96,13 +116,19 @@ class PacklistForm extends React.Component {
 	};
 
 	render() {
+        let datalistOptions = this.state.filteredCountries.map(x=><option>{x}</option>)
+
 		return (
 			<Form className={mainStyles.packlistForm}>
 				<Row>
 					<Col>
 						<Form.Group>
 							<Form.Label>Location</Form.Label>
-							<Form.Control type="text" value={this.state.formInputs.location} onChange={this.updateLocation}/>
+							<Form.Control type="text" list="country-list" value={this.state.formInputs.location} onChange={this.updateLocation}/>
+
+                            <datalist id="country-list">
+                            {datalistOptions}
+                            </datalist>
 						</Form.Group>
 					</Col>
 				</Row>

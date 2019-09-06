@@ -14,14 +14,14 @@ class Category extends React.Component {
 			}
 			if (this.props.currentItemQty === item.id) {
 				itemQty = (
-					<input type="number" value={this.props.currentItemQtyValue} min="1" onChange={(e) => this.props.updateItemQtyValue(e)} onKeyDown={(e)=>this.props.checkKey(e)}/>
+					<input type="number" value={this.props.currentItemQtyValue} min="1" onChange={(e) => this.props.updateItemQtyValue(e)}/>
 				)
 			}
 			return(
 				<Row key={index}>
 					<Col xs={1}>
 						<Form>
-							<Form.Check checked={item.packed} onChange={this.props.packItem}/>
+							<Form.Check checked={item.packed} onChange={(e)=>this.props.packItem(e,item.id)}/>
 						</Form>
 					</Col>
 					<Col xs={1}>

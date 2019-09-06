@@ -100,6 +100,7 @@ a {
 }
 
 .packlistForm{
+    position:relative;
   & > div {
     margin-bottom: 1rem;
   }
@@ -158,6 +159,22 @@ a {
       height: 10px;
       border-width: 0 2px 2px 0;
       transform: translate(-50%, -50%) rotate(45deg);
+    }
+  }
+
+  .drop-down-container{
+    height:100px;
+    overflow-y: auto;
+    width:100%;
+    position:absolute;
+    background-color:white;
+
+    & > div{
+        transition: 0.3s;
+        &:hover{
+            color:white;
+            background-color:blue;
+        }
     }
   }
 }

@@ -46,8 +46,8 @@ CREATE TABLE IF NOT EXISTS packing_list_items (
     packing_list_id INTEGER,
     name TEXT,
     quantity INTEGER,
-    packed BOOLEAN,
-    private BOOLEAN,
+    packed BOOLEAN DEFAULT false,
+    private BOOLEAN DEFAULT false,
     category TEXT,
     FOREIGN KEY (packing_list_id) REFERENCES packing_lists(id)
 );
@@ -71,6 +71,7 @@ CREATE TABLE IF NOT EXISTS destinations (
     end_date TIMESTAMPTZ,
     duration INT,
     trip_id INT,
+    image TEXT,
     FOREIGN KEY (trip_id) REFERENCES trips(id)
 );
 

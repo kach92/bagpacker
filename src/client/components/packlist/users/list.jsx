@@ -16,8 +16,9 @@ class List extends React.Component {
 		});
 	}
 
-	packItem = (e) => {
+	packItem = (e,item_id) => {
 		let data = {
+			item_id,
 			packed: e.target.checked
 		};
 		fetch('/update_item_packed', {
@@ -69,15 +70,15 @@ class List extends React.Component {
 		});
 	};
 	updateItemQtyValue = (e) => {
-		let qty = parseInt(e.target.value);
+		let quantity = parseInt(e.target.value);
 		this.setState({
-			currentItemQtyValue: qty
+			currentItemQtyValue: quantity
 		});
-		this.submitQtyEdit(qty);
+		this.submitQtyEdit(this.state.currentItemQty,quantity);
 	};
 	checkKey = (e) => {
 		if(e.keyCode == 13){
-			this.submitNameEdit(e.target.value);
+			this.submitNameEdit(this.state.currentItem,e.target.value);
 			this.setState({
 				currentItem:0,
 				currentItemValue:"",
@@ -85,8 +86,9 @@ class List extends React.Component {
 			});
 		}
 	};
-	submitNameEdit = (name) => {
+	submitNameEdit = (item_id,name) => {
 		let data = {
+			item_id,
 			name
 		};
 		fetch('/update_item_name', {
@@ -95,14 +97,13 @@ class List extends React.Component {
 			headers: {
 				'Content-Type': 'application/json'
 			}
-		}).then(res => res.json())
-			.then(res => {
-			})
+		}).then(res => console.log(res))
 			.catch(error => console.error('Error:', error));
 	};
-	submitQtyEdit = (qty) => {
+	submitQtyEdit = (item_id,quantity) => {
 		let data = {
-			qty
+			item_id,
+			quantity
 		};
 		fetch('/update_item_quantity', {
 			method: 'POST',
@@ -110,9 +111,7 @@ class List extends React.Component {
 			headers: {
 				'Content-Type': 'application/json'
 			}
-		}).then(res => res.json())
-			.then(res => {
-			})
+		}).then(res => console.log(res))
 			.catch(error => console.error('Error:', error));
 	};
 	render() {

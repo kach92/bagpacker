@@ -4,6 +4,7 @@
  * ===========================================
  */
 var format = require('pg-format');
+
 module.exports = (dbPoolInstance) => {
 
     // `dbPoolInstance` is accessible within this function scope
@@ -34,8 +35,8 @@ module.exports = (dbPoolInstance) => {
 
     let createDestination = async function (tripInfo,trip_id){
         try{
-            let query = 'INSERT INTO destinations (name,start_date,end_date,duration,trip_id) VALUES ($1,$2,$3,$4,$5) RETURNING *'
-            let arr = [tripInfo.location,tripInfo.startDate,tripInfo.endDate,tripInfo.duration,trip_id];
+            let query = 'INSERT INTO destinations (name,start_date,end_date,duration,trip_id,image) VALUES ($1,$2,$3,$4,$5,$6) RETURNING *'
+            let arr = [tripInfo.location,tripInfo.startDate,tripInfo.endDate,tripInfo.duration,trip_id,tripInfo.image];
 
             let queryResult = await dbPoolInstance.query(query,arr);
             if (queryResult.rows.length > 0) {
@@ -53,6 +54,7 @@ module.exports = (dbPoolInstance) => {
 
     let getTripsOfUser = async function(user_id,group_ids){
         try{
+
             group_ids = [group_ids]
 
             let query = format('SELECT * FROM trips WHERE user_id = %L OR group_id IN %L',user_id,group_ids);

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import ActivitiesForm from "../packlist-activities-form";
 import mainStyles from "../../../style.scss";
 import {Form} from 'react-bootstrap';
-import Countries from "./countries.js"
+import Countries from "../../../countries.js"
 
 
 class PacklistForm extends React.Component {
@@ -18,9 +18,8 @@ class PacklistForm extends React.Component {
 				activities: [],
 				group: []
 			},
-            locationInput:"",
-            countryDropdown:[],
             allCountries:[],
+            filteredCountries:[],
 			errorMessage: "",
 			groupPax: 1
 		};
@@ -33,25 +32,20 @@ class PacklistForm extends React.Component {
         this.setState({allCountries:this.state.allCountries});
     }
 
-    componentWillUnmount(){
-        this.state.allCountries = [];
-        this.setState({allCountries:this.state.allCountries});
-    }
 
 	updateLocation = (e) => {
 		let formInputs = this.state.formInputs;
 		formInputs.location = e.target.value;
-        let locationInput = e.target.value;
-        if(locationInput.length>0){
-            this.state.countryDropdown = this.state.allCountries.filter(x=>{
+        if(e.target.value.length>0){
+            this.state.filteredCountries = this.state.allCountries.filter(x=>{
                 return x.toLowerCase().startsWith(e.target.value.toLowerCase())
             });
 
         }else{
-            this.state.countryDropdown = [];
+            this.state.filteredCountries = [];
         }
 
-		this.setState({formInputs: formInputs, locationInput:locationInput,countryDropdown:this.state.countryDropdown});
+        this.setState({formInputs: formInputs,filteredCountries:this.state.filteredCountries});
 
 	};
 
@@ -117,23 +111,67 @@ class PacklistForm extends React.Component {
 			}
 		});
 		if (validated) {
-			formInputs["duration"] = this.calcDuration(formInputs["startDate"], formInputs["endDate"]);
-			this.createTrip(formInputs);
+            let image_src = null;
+            let url = 'https://api.teleport.org/api/cities/?search='+formInputs.location.toLowerCase();
+
+            fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(res => res.json())
+            .then(res => {
+                fetch(res["_embedded"]["city:search-results"][0]["_links"]["city:item"]["href"], {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(res => res.json())
+                .then(res => {
+                    fetch(res["_links"]["city:urban_area"]["href"], {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    })
+                    .then(res => res.json())
+                    .then(res => {
+                        fetch(res["_links"]["ua:images"]["href"], {
+                            method: 'GET',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            }
+                        })
+                        .then(res => res.json())
+                        .then(res => {
+                            image_src = res["photos"][0]["image"]["mobile"]
+                            console.log(image_src)
+                            formInputs["image"] = image_src;
+                            formInputs["duration"] = this.calcDuration(formInputs["startDate"], formInputs["endDate"]);
+                            this.createTrip(formInputs);
+                        })
+                    })
+                })
+            })
 		}
 	};
 	createTrip = (data) => {
+
 		fetch('/trips', {
 			method: 'POST',
 			body: JSON.stringify(data),
 			headers: {
 				'Content-Type': 'application/json'
 			}
-		}).then(res => res.json())
-			.then(res => {
-                let url = "/trips/"+res;
-                this.props.history.push(url);
-			})
-			.catch(error => console.error('Error:', error));
+		})
+        .then(res => res.json())
+		.then(res => {
+            let url = "/trips/"+res;
+            this.props.history.push(url);
+		})
+		.catch(error => console.error('Error:', error));
 	};
 	calcDuration = (start, end) => {
 		let duration = (new Date(end).getTime() - new Date(start).getTime());
@@ -151,7 +189,7 @@ class PacklistForm extends React.Component {
 
 
 	render() {
-        let countryDropdownContainer = <div>{this.state.countryDropdown.map(x=><div onClick={this.pushToInput}>{x}</div>)}</div>;
+        let datalistOptions = this.state.filteredCountries.map(x=><option>{x}</option>);
 		let groupInputs = [];
 		if (this.state.groupPax > 1) {
 			groupInputs.push(<label>Trip Mates</label>);
@@ -167,8 +205,10 @@ class PacklistForm extends React.Component {
 			<Form className={mainStyles.packlistForm}>
 				<Form.Group>
 					<Form.Label>Location</Form.Label>
-					<Form.Control type="text" placeholder="Location" value={this.state.formInputs.location} onChange={this.updateLocation} />
-                    {countryDropdownContainer}
+					<Form.Control type="text" list="country-list"placeholder="Location" value={this.state.formInputs.location} onChange={this.updateLocation} />
+                    <datalist id="country-list">
+                            {datalistOptions}
+                    </datalist>
 				</Form.Group>
 
 				<Form.Group>

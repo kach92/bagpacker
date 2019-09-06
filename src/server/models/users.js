@@ -165,6 +165,22 @@ module.exports = (dbPoolInstance) => {
         }
     }
 
+    let getUserDetailsById = async function (user_id){
+        try{
+            let query = 'SELECT * FROM users WHERE id = $1'
+            let arr = [user_id];
+            let queryResult = dbPoolInstance.query(query,arr);
+            if(queryResult.rows.length>0){
+                console.log("GET USER DETAILS BY ID SUCCESS");
+                return queryResult.rows[0];
+            }else{
+                return Promise.reject(new Error("get user details by id return null"));
+            }
+        } catch (error){
+            console.log("get user details by id " +error)
+        }
+    }
+
     return {
         signUp,
         isUserExist,
@@ -174,7 +190,8 @@ module.exports = (dbPoolInstance) => {
         createGroup,
         insertUserIntoGroups,
         getUserIdAndGender,
-        getUserGroups
+        getUserGroups,
+        getUserDetailsById
 
     };
 };
