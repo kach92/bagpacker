@@ -54,7 +54,7 @@ module.exports = (db) => {
                 //create packing list id for shared items
                 let packing_list_shared_id = await db.packingList.createPackingList(trip_id,null,group_id);
                 let finalList_shared = await db.packingList.generateSharedList(tripInfo)
-                let packing_list_items_shared = await db.packingList.createPackingListItems(finalList_shared,packing_list_shared_id)
+                let packing_list_items_shared = await db.packingList.createPackingListItems(finalList_shared,packing_list_shared_id,true)
                 //create packing list id for each user,generate list and save into packing list
 
                 for(let i = 0; i< user_gender_arrObj.length ; i++) {

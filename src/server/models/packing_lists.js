@@ -93,15 +93,20 @@ module.exports = (dbPoolInstance) => {
         }
     }
 
-    let createPackingListItems = async function (packList,packing_list_id) {
+    let createPackingListItems = async function (packList,packing_list_id,shared = false) {
 
         try {
             let finalList = [];
             for (var key in packList) {
                 finalList = finalList.concat(packList[key]);
             }
-            finalList = finalList.map(x=>[packing_list_id,x.name,x.quantity,x.category])
-            let query = format('INSERT INTO packing_list_items (packing_list_id,name,quantity,category) VALUES %L RETURNING *',finalList);
+            if(shared){
+                finalList = finalList.map(x=>[packing_list_id,x.name,x.quantity,'Shared',shared]);
+            }else{
+                finalList = finalList.map(x=>[packing_list_id,x.name,x.quantity,x.category,shared]);
+            }
+
+            let query = format('INSERT INTO packing_list_items (packing_list_id,name,quantity,category,shared) VALUES %L RETURNING *',finalList);
 
             let queryResult = await dbPoolInstance.query(query);
             if(queryResult.rows.length>0){

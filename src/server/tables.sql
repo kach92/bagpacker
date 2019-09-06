@@ -48,6 +48,7 @@ CREATE TABLE IF NOT EXISTS packing_list_items (
     quantity INTEGER,
     packed BOOLEAN DEFAULT false,
     private BOOLEAN DEFAULT false,
+    shared BOOLEAN,
     category TEXT,
     FOREIGN KEY (packing_list_id) REFERENCES packing_lists(id)
 );
