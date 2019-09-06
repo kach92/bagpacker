@@ -175,6 +175,70 @@ module.exports = (dbPoolInstance) => {
         }
     }
 
+
+    let getPackingListIdByTripId = async function (trip_id) {
+        try {
+            let query = 'SELECT * FROM packing_lists WHERE trip_id = $1';
+            let arr = [trip_id];
+            let queryResult = await dbPoolInstance.query(query,arr);
+            if (queryResult.rows.length > 0) {
+                console.log("GET PACKING LIST BY TRIP ID SUCCESS")
+                return queryResult.rows[0].id;
+            } else {
+                return Promise.reject(new Error("packing list returns null"));
+            }
+        } catch (error) {
+            console.log("get packing list by trip id " + error)
+        }
+    }
+
+    let getItemsByPackingListId = async function (packing_list_id){
+        try {
+            let query = 'SELECT * FROM packing_list_items WHERE packing_list_id = $1';
+            let arr = [packing_list_id];
+            let queryResult = await dbPoolInstance.query(query,arr);
+            if (queryResult.rows.length > 0) {
+                console.log("GET ITEMS BY PACKING LIST ID SUCCESS")
+                return queryResult.rows;
+            } else {
+                return [];
+            }
+        } catch (error) {
+            console.log("get items by packing list id model "+error)
+        }
+    }
+
+    let getGroupPackingListByTripId = async function (trip_id) {
+        try{
+            let query = 'SELECT * FROM packing_lists WHERE trip_id = $1';
+            let arr = [trip_id];
+            let queryResult = await dbPoolInstance.query(query.arr);
+            if (queryResult.rows.length > 0) {
+                console.log("GET GROUP PACKING LIST IDS BY TRIP ID SUCCESS");
+
+                return queryResult.rows;
+            } else {
+                return Promise.reject(new Error("group packing list returns null"));
+            }
+        } catch (error) {
+            console.log("get group pacling list ids by trip id" + error)
+        }
+    }
+
+    let getPackingListItemsByPackingListId = async function (packing_list_id){
+        try{
+            let query = 'SELECT * FROM packing_list_items WHERE packing_list_id = $1'
+            let arr = [packing_list_id];
+            let queryResult = await dbPoolInstance.query(query,arr);
+            if (queryResult.rows.length > 0) {
+                console.log("GET PACKINGN LIST ITEMS PACKING LIST ID SUCCESS");
+                return queryResult.rows;
+            } else {
+                return Promise.reject(new Error("group packing list returns null"));
+            }
+        } catch (error) {
+            console.log("get packing list items by packing list id" + error)
+
     let updateItemQuantity = async function (item_id,quantity){
         try{
             let query = 'UPDATE INTO packing_list_items SET quantity = $1 WHERE id = $2 RETURNING *'
@@ -188,6 +252,7 @@ module.exports = (dbPoolInstance) => {
             }
         }catch (error){
             console.log("update item quantity model "+error)
+
         }
     }
 
@@ -196,7 +261,12 @@ module.exports = (dbPoolInstance) => {
         createPackingList,
         createPackingListItems,
         generateSharedList,
+        getPackingListIdByTripId,
+        getItemsByPackingListId,
+        getGroupPackingListIdsByTripId,
+        getPackingListItemsByPackingListId
         updateItemQuantity
+
 
     };
 };

@@ -56,7 +56,7 @@ module.exports = (dbPoolInstance) => {
             group_ids = [group_ids]
 
             let query = format('SELECT * FROM trips WHERE user_id = %L OR group_id IN %L',user_id,group_ids);
-            console.log(query)
+
             let queryResult = await dbPoolInstance.query(query);
             if (queryResult.rows.length > 0) {
                 console.log("GET TRIPS OF USERS SUCCESS")
@@ -86,12 +86,31 @@ module.exports = (dbPoolInstance) => {
         }
     }
 
+    let getTripById = async function (trip_id){
+        try {
+            let query = 'SELECT * FROM trips WHERE id = $1'
+            let arr = [trip_id];
+            let queryResult = await dbPoolInstance.query(query,arr);
+            if (queryResult.rows.length > 0) {
+                console.log("GET TRIP BY ID SUCCESS")
+                return queryResult.rows[0];
+            } else {
+                return Promise.reject(new Error("no trip exists"));
+            }
+
+        } catch (error) {
+            console.log('get trip by id '+ error)
+        }
+    }
+
 
     return {
         createTrip,
         createDestination,
         getTripsOfUser,
-        getDestinationsByTrip
+        getDestinationsByTrip,
+        getTripById
+
 
     };
 };

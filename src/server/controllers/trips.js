@@ -29,12 +29,67 @@ module.exports = (db) => {
 
     };
 
+    let getSingleTrip = async function (request, response) {
+        try{
+            let trip_id = request.params.id;
+            let trip_details = await db.trips.getTripById(trip_id);
+            let destination_details = await db.trips.getDestinationsByTrip(trip_id);
+            trip_details["destinations"] = destination_details;
+            if(trip_details.group_id){
+                console.log("GET GROUP TRIP");
+                let packingList = await db.packingList.getGroupPackingListByTripId(trip_id);
+                //take out packing list for shared items
+                let shared_packing_list = null
+                packingList.forEach((x,index)=>{
+                    if(x.user_id === null){
+                        shared_packing_list = packingList.splice(index,1);
+                    }
+                })
+
+                let individualList = {};
+                for(let i=0; i<packingList.length;i++){
+                    let listItems = await db.packingList.getPackingListItemsByPackingListId(packingList[i].id);
+                    individualList[packingList[i].user_id] = listItems;
+                }
+
+                let sharedListItems = await db.packingList.getPackingListItemsByPackingListId(shared_packing_list.id)
+
+                response.send({
+                    trip:trip_details,
+                    individual:individualList,
+                    shared:sharedListItems
+                })
+
+
+
+            } else{
+                console.log("GET SOLO TRIP");
+                let packing_list_id = await db.packingList.getPackingListIdByTripId(trip_id);
+                let packing_list_items = await db.packingList.getItemsByPackingListId(packing_list_id);
+                let finalList = {};
+                let availableCategory = [...new Set(packing_list_items.map(x => x.category))];
+                for(let i=0;i<availableCategory.length;i++){
+                    finalList[availableCategory[i]] = packing_list_items.filter(x=>x.category === availableCategory[i])
+                }
+                let result = {
+                    trip:trip_details,
+                    list:finalList
+                }
+                response.send(result)
+
+            }
+        } catch (error){
+            console.log("get single trip controller " + error)
+        }
+    }
+
 
 
 
 
     return {
-        getAllTrips : getAllTrips
+        getAllTrips : getAllTrips,
+        getSingleTrip : getSingleTrip
     }
 
 };
