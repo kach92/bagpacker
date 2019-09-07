@@ -7,19 +7,12 @@ import mainStyles from "../../../style.scss";
 class List extends React.Component {
 	constructor(){
 		super();
-		this.state=({
-			editing:false,
-			currentItem: 0,
-			currentItemQty:0,
-			currentItemValue: "",
-			currentItemQtyValue: 0
-		});
 	}
 
-	packItem = (e,item_id) => {
+	packItem = (checked,item_id) => {
 		let data = {
 			item_id,
-			packed: e.target.checked
+			packed: checked
 		};
 		fetch('/update_item_packed', {
 			method: 'POST',
@@ -32,60 +25,7 @@ class List extends React.Component {
 			})
 			.catch(error => console.error('Error:', error));
 	};
-	editItemName = (e,index) => {
-		if (!this.state.editing){
-			this.setState({
-				currentItem:index,
-				currentItemValue:e.target.innerText,
-				editing:true
-			})
-		}
-		else {
-			this.setState({
-				currentItem:0,
-				currentItemValue:"",
-				editing:false
-			});
-		}
-	};
-	editItemQty = (e,index) => {
-		if (!this.state.editing){
-			this.setState({
-				currentItemQty:index,
-				currentItemQtyValue:parseInt(e.target.innerText),
-				editing:true
-			})
-		}
-		else {
-			this.setState({
-				currentItemQty:0,
-				currentItemQtyValue: 0,
-				editing:false
-			});
-		}
-	};
-	updateItemValue = (e) => {
-		this.setState({
-			currentItemValue: e.target.value
-		});
-	};
-	updateItemQtyValue = (e) => {
-		let quantity = parseInt(e.target.value);
-		this.setState({
-			currentItemQtyValue: quantity
-		});
-		this.submitQtyEdit(this.state.currentItemQty,quantity);
-	};
-	checkKey = (e) => {
-		if(e.keyCode == 13){
-			this.submitNameEdit(this.state.currentItem,e.target.value);
-			this.setState({
-				currentItem:0,
-				currentItemValue:"",
-				editing:false
-			});
-		}
-	};
+
 	submitNameEdit = (item_id,name) => {
 		let data = {
 			item_id,
@@ -101,6 +41,9 @@ class List extends React.Component {
 			.catch(error => console.error('Error:', error));
 	};
 	submitQtyEdit = (item_id,quantity) => {
+        console.log("YESSSSSS")
+        console.log(item_id);
+        console.log(quantity)
 		let data = {
 			item_id,
 			quantity
@@ -126,15 +69,8 @@ class List extends React.Component {
 					category={category}
 					items={list[category]}
 					packItem={ListComponent.packItem}
-					editItemName={ListComponent.editItemName}
-					currentItem={ListComponent.state.currentItem}
-					currentItemValue={ListComponent.state.currentItemValue}
-					updateItemValue={ListComponent.updateItemValue}
-					checkKey={ListComponent.checkKey}
-					editItemQty={ListComponent.editItemQty}
-					currentItemQty={ListComponent.state.currentItemQty}
-					currentItemQtyValue={ListComponent.state.currentItemQtyValue}
-					updateItemQtyValue={ListComponent.updateItemQtyValue}
+                    submitNameEdit={ListComponent.submitNameEdit}
+                    submitQtyEdit={ListComponent.submitQtyEdit}
 				/>
 			);
 		});
