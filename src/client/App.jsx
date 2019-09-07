@@ -69,7 +69,7 @@ class App extends React.Component {
 					<Route path="/signup/" render={props => (this.state.authed ? <Redirect to='/' /> : <Signup {...props}/>)}/>
 					<Route path="/trips/:id" render={props => (
 						this.state.authed
-						? <Trip {...props}/>
+						? <Trip userId={this.state.userId} {...props}/>
 						: <Home updatePacklist={this.updatePacklist} checkUser={this.checkUser} {...props}/>
 					)}/>
 					<Route path="/list/" render={props => (
