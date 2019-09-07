@@ -105,13 +105,29 @@ module.exports = (dbPoolInstance) => {
         }
     }
 
+    let deleteTrip = async function (trip_id) {
+        try {
+            let query = 'DELETE FROM trips WHERE id = $1 RETURNING *'
+            let arr = [trip_id];
+            let queryResult = await dbPoolInstance.query(query,arr);
+            if (queryResult.rows.length > 0) {
+                console.log("DELETE TRIP SUCCESS")
+                return queryResult.rows[0];
+            } else {
+                return Promise.reject(new Error("trip delete returns null"));
+            }
+        }catch (error){
+            console.log('delete trip model '+error)
+        }
+    }
 
     return {
         createTrip,
         createDestination,
         getTripsOfUser,
         getDestinationsByTrip,
-        getTripById
+        getTripById,
+        deleteTrip
 
 
     };

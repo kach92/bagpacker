@@ -94,12 +94,21 @@ module.exports = (db) => {
     }
 
 
-
+    let deleteTrip = async function (request,response){
+        try{
+            let trip_id = request.body.trip_id;
+            let deleteTrip = await db.trips.deleteTrip(trip_id);
+            response.send(true);
+        }catch (error){
+            console.log("delete trip controller "+error)
+        }
+    }
 
 
     return {
         getAllTrips : getAllTrips,
-        getSingleTrip : getSingleTrip
+        getSingleTrip : getSingleTrip,
+        deleteTrip : deleteTrip
     }
 
 };
