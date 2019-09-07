@@ -24,19 +24,44 @@ a {
   min-height:100vh;
   padding: 8rem 3rem 0;
   h2 {
-    font-weight: 300;
+    font-weight: 400;
+    font-size:2.25rem;
     letter-spacing: 1px;
   }
 }
 
 .navbar {
-  padding: .5rem 3rem 0;
-
+  padding: .5rem 3rem;
+  transition: .3s;
+  .navLinks a {
+    color: #333!important;
+  }
+  &.navbarBg {
+    background-color: #333;
+    .navLinks a {
+      color: #fff!important;
+    }
+  }
 }
 
 .sidePanel {
+  position: fixed;
   color: $white;
-  &:before {
+  button {
+    color: $white!important;
+    background-color: transparent!important;
+    border-color: transparent!important;
+    &::after {
+      border-top: 2px solid $white;
+      border-right: 2px solid $white;
+    }
+    &:focus,
+    &:active,
+    &:active:focus{
+      box-shadow: none!important;
+    }
+  }
+  .sidePanelBg {
     content: "";
     background-image: url("./images/bg.jpg");
     background-size: cover;
@@ -62,7 +87,7 @@ a {
     z-index: -1;
   }
   .sidePanelOverlay {
-    background-image: linear-gradient(to right, rgba(0,0,0,0.2) , rgba(0,0,0,0.7));
+    background-image: linear-gradient(to right, rgba(0,0,0,0.5) , rgba(0,0,0,.65));
     width: 33.333333%;
     height: 100vh;
     position: fixed;
@@ -262,6 +287,7 @@ a {
 }
 
 .packlist {
+  column-count: 2;
   p {
     border-bottom: 1px solid transparent;
   }
@@ -278,11 +304,46 @@ a {
     letter-spacing: 0.5px;
     margin-bottom: 1rem;
   }
-  input[type="number"] {
-    width: 1.5rem;
-  }
   input:focus {
     outline: none;
     box-shadow: none;
+  }
+  .listCard {
+    border-radius: 0;
+  }
+}
+
+.tripCard {
+  a {
+    color:#333;
+    & > div {
+      border-radius: 0;
+    }
+  }
+}
+.tripImage {
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  &:after {
+    content: "";
+    display: block;
+    padding-bottom: 50%;
+    background-color: rgba(0,0,0,0.5);
+  }
+  div {
+    position: absolute;
+    color: $white;
+    left: 1rem;
+    bottom: 1rem;
+    margin: 0;
+  }
+}
+
+.tab {
+  background-color: $black;
+  a {
+    color: $white;
+    border-radius: 0!important;
   }
 }

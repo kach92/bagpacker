@@ -47,11 +47,13 @@ class Trip extends React.Component {
 		let tripName = "";
 		let tripDestination = "";
 		let tripDate = "";
+		let tripImage = "";
 
 		let trip=this.state.trip;
 		if (trip) {
 			tripName = trip.name;
 			tripDestination = trip.destinations[0].name;
+			tripImage = trip.destinations[0].image;
 			tripDate = this.dateDisplay(trip.destinations[0].start_date,trip.destinations[0].end_date);
 		}
 
@@ -63,9 +65,9 @@ class Trip extends React.Component {
 		return (
 			<Row>
 				<Col md={4}>
-					<SidePanel>
+					<SidePanel tripImage={tripImage}>
 						<h2>{tripName}</h2>
-						<p>{tripDestination}</p>
+						<p><i className='bx bxs-map'></i>{tripDestination}</p>
 						<p>{tripDate}</p>
 					</SidePanel>
 				</Col>
