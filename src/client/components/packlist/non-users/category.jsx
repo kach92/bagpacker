@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Card,Col,Row,Form} from "react-bootstrap";
+import mainStyles from "../../../style.scss";
 
 class Category extends React.Component {
 	render() {
@@ -12,7 +13,7 @@ class Category extends React.Component {
 							<Form.Check checked={item.packed} onChange={this.packItem}/>
 						</Form>
 					</Col>
-					<Col xs={1}>
+					<Col xs={2}>
 						{item.quantity}
 					</Col>
 					<Col xs={9}>
@@ -22,7 +23,7 @@ class Category extends React.Component {
 			);
 		});
 		return (
-			<Card>
+			<Card className={mainStyles.listCard}>
 				<Card.Body>
 					<Row>
 						<Col>

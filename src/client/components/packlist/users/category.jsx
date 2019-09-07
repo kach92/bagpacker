@@ -23,8 +23,8 @@ class Category extends React.Component {
 
     deleteItem(e,item_id){
         let updatedItems = this.state.items;
-        updatedItems = updatedItems.filter(item => item.id !== item_id)
-        console.log("filtered", updatedItems)
+        updatedItems = updatedItems.filter(item => item.id !== item_id);
+        console.log("filtered", updatedItems);
         this.setState({items:updatedItems});
         this.props.deleteItem(item_id);
     }
@@ -37,7 +37,7 @@ class Category extends React.Component {
 			return(
 				<Row key={item.id}>
 					<Col xs={1}>
-                            {itemChecked}
+                        {itemChecked}
 					</Col>
 					<Col xs={2}>
 						{itemQty}
