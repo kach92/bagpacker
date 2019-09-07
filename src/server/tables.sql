@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS groups_users (
     user_id INTEGER,
     group_id INTEGER,
     FOREIGN KEY (user_id) REFERENCES users(id),
-    FOREIGN KEY (group_id) REFERENCES groups(id)
+    FOREIGN KEY (group_id) REFERENCES groups(id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS trips (
@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS trips (
     user_id INTEGER,
     group_id INTEGER,
     FOREIGN KEY (user_id) REFERENCES users (id),
-    FOREIGN KEY (group_id) REFERENCES groups (id)
+    FOREIGN KEY (group_id) REFERENCES groups (id) ON DELETE CASCADE
 );
 
 
@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS packing_lists (
     trip_id INTEGER,
     FOREIGN KEY (user_id) REFERENCES users (id),
     FOREIGN KEY (group_id) REFERENCES groups (id),
-    FOREIGN KEY (trip_id) REFERENCES trips (id)
+    FOREIGN KEY (trip_id) REFERENCES trips (id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS packing_list_items (
@@ -51,7 +51,7 @@ CREATE TABLE IF NOT EXISTS packing_list_items (
     private BOOLEAN DEFAULT false,
     shared BOOLEAN,
     category TEXT,
-    FOREIGN KEY (packing_list_id) REFERENCES packing_lists(id),
+    FOREIGN KEY (packing_list_id) REFERENCES packing_lists(id) ON DELETE CASCADE,
     FOREIGN KEY (group_id) REFERENCES groups (id)
 );
 
@@ -75,7 +75,7 @@ CREATE TABLE IF NOT EXISTS destinations (
     duration INT,
     trip_id INT,
     image TEXT,
-    FOREIGN KEY (trip_id) REFERENCES trips(id)
+    FOREIGN KEY (trip_id) REFERENCES trips(id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS items (
