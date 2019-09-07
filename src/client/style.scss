@@ -42,6 +42,24 @@ a {
       color: #fff!important;
     }
   }
+  .dropdownMenu div {
+    right: 0;
+    left: auto;
+    margin: 0;
+  }
+  .navUsername {
+    display: inline-block;
+    padding-right: 2rem;
+  }
+  .navUserImage {
+    position: absolute;
+    top:2px;
+    right: 0;
+    display: block;
+    background-image: url("./images/profile.svg");
+    width: 36px;
+    height: 36px;
+  }
 }
 
 .sidePanel {

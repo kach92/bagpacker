@@ -1,14 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Link} from "react-router-dom";
-import {Navbar,Nav} from 'react-bootstrap';
+import {Navbar,Nav,NavDropdown} from 'react-bootstrap';
 import mainStyles from '../../style.scss';
 
 class Navigation extends React.Component {
 	constructor() {
 		super();
 		this.state={
-			hideNavBg: true
+			hideNavBg: true,
+			hoverOverDropDown: false
 		}
 	}
 	signOut = () => {
@@ -20,27 +21,28 @@ class Navigation extends React.Component {
 			}
 		}).then(res => res.json())
 			.then(res => {
-                console.log(this.props);
                 window.location.reload();
             })
 			.catch(error => console.error('Error:', error));
 	};
 	componentDidMount() {
 		window.addEventListener('scroll', this.listenToScroll)
-	}
+	};
 	listenToScroll = () => {
 		const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-		if (winScroll > 60) {
-			this.setState({
-				hideNavBg: false
-			})
-		}
-		else {
-			this.setState({
-				hideNavBg: true
-			})
-		}
-	}
+		(winScroll > 60)
+			? this.setState({ hideNavBg: false })
+			: this.setState({ hideNavBg: true });
+	};
+	handleOpen = () => {
+		console.log("HOOVER");
+		this.setState({ hoverOverDropDown: true })
+	};
+
+	handleClose = () => {
+		this.setState({ hoverOverDropDown: false })
+	};
+
 	render() {
 		let navlinks = (
 			<React.Fragment>
@@ -52,11 +54,20 @@ class Navigation extends React.Component {
 				</li>
 			</React.Fragment>
 		);
+		let title = (
+			<React.Fragment>
+				<div className={mainStyles.navUsername}>{this.props.username}</div>
+				<div className={mainStyles.navUserImage}></div>
+			</React.Fragment>
+		);
 		if(this.props.authed) {
 			navlinks = (
 				<React.Fragment>
 					<Link to="/" className="nav-link">Trips</Link>
-					<a className="nav-link" onClick={this.signOut}>Sign Out</a>
+					<NavDropdown title={title} onMouseEnter = { this.handleOpen } onMouseLeave = { this.handleClose } show={ this.state.hoverOverDropDown } className={mainStyles.dropdownMenu}>
+						<NavDropdown.Item><Link to="/user/edit">Edit Profile</Link></NavDropdown.Item>
+						<NavDropdown.Item onClick={this.signOut}>Sign Out</NavDropdown.Item>
+					</NavDropdown>
 				</React.Fragment>
 			);
 		}
@@ -69,7 +80,7 @@ class Navigation extends React.Component {
 			<Navbar expand="md" fixed="top" className={navbarClass} variant="dark">
 				<Navbar.Brand href="/">Bagpacker</Navbar.Brand>
 				<Navbar.Toggle aria-controls="responsive-navbar-nav" />
-				<Navbar.Collapse id="responsive-navbar-nav">
+				<Navbar.Collapse>
 					<Nav className={`ml-auto ${mainStyles.navLinks}`}>
 						{navlinks}
 					</Nav>

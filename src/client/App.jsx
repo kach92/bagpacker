@@ -8,9 +8,9 @@ import Home from './components/index/home/home';
 import Dashboard from './components/index/dashboard/dashboard';
 import Login from './components/user/login/login';
 import Signup from './components/user/signup/signup';
+import EditProfile from './components/user/edit-profile/edit-profile';
 
 import Trip from './components/trip/trip';
-import TripDetails from './components/trip/trip';
 import NonUserList from './components/packlist/non-users/packlist';
 
 import { sha256, sha224 } from 'js-sha256';
@@ -26,7 +26,8 @@ class App extends React.Component {
 		this.state = {
 			packlist : null,
 			authed : false,
-			userId : null
+			userId : null,
+			username: null
 		};
         this.checkUser = this.checkUser.bind(this);
 	}
@@ -49,7 +50,8 @@ class App extends React.Component {
         if(cookies.session === sha256(cookies.user_id + "logged_in" + SALT)){
             this.setState({
                 authed: true,
-                userId: parseInt(cookies.user_id)
+				userId: parseInt(cookies.user_id),
+				username: cookies.user_name
             });
         }
     }
@@ -58,7 +60,7 @@ class App extends React.Component {
 		return (
 			<Router>
 				<Route path="/" render={props => (
-					<Navigation authed={this.state.authed} checkUser={this.checkUser} {...props}/>
+					<Navigation authed={this.state.authed} checkUser={this.checkUser} username={this.state.username} {...props}/>
 				)}/>
 				<Container className={mainStyles.wrapper}  fluid>
 					<Route exact path="/" render={props => (
@@ -76,6 +78,11 @@ class App extends React.Component {
 					<Route path="/list/" render={props => (
 						this.state.packlist != null
 							? <NonUserList packlist={this.state.packlist} {...props}/>
+							: <Redirect to='/' />
+					)}/>
+					<Route path="/user/edit" render={props => (
+						this.state.authed != null
+							? <EditProfile/>
 							: <Redirect to='/' />
 					)}/>
 
