@@ -1,4 +1,4 @@
-
+const availableCategory = ["Essentials","Toiletries","Equipments","Beauty"]
 
 module.exports = (db) => {
 
@@ -55,9 +55,11 @@ module.exports = (db) => {
                     let user = await db.users.getUserDetailsById(packingList[i].user_id);
                     let listItems = await db.packingList.getPackingListItemsByPackingListId(packingList[i].id);
                     let finalList = {};
-                    let availableCategory = [...new Set(listItems.map(x => x.category))];
                     for(let i=0;i<availableCategory.length;i++){
                         finalList[availableCategory[i]] = listItems.filter(x=>x.category === availableCategory[i])
+                    }
+                    if(listItems.filter(x=>x.category==="Shared").length >0){
+                        finalList["Shared"] = listItems.filter(x=>x.category === "Shared")
                     }
                     user["items"] = finalList;
                     individualList.push(user);
@@ -77,7 +79,6 @@ module.exports = (db) => {
                 let packing_list_id = await db.packingList.getPackingListIdByTripId(trip_id);
                 let packing_list_items = await db.packingList.getItemsByPackingListId(packing_list_id);
                 let finalList = {};
-                let availableCategory = [...new Set(packing_list_items.map(x => x.category))];
                 for(let i=0;i<availableCategory.length;i++){
                     finalList[availableCategory[i]] = packing_list_items.filter(x=>x.category === availableCategory[i])
                 }
