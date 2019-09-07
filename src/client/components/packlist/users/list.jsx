@@ -116,8 +116,6 @@ class List extends React.Component {
 	};
 	render() {
 		let list = this.props.list;
-		console.log("LIST++++++++++++++++");
-		console.log(list);
 		let ListComponent = this;
 		let categories = Object.keys(list).map(function(category,index) {
 			return (

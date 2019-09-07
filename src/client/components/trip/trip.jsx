@@ -55,7 +55,6 @@ class Trip extends React.Component {
 		return(`${startDateDisplay} — ${endDateDisplay}`);
 	}
 	render() {
-		console.log(this.state);
 		let tripName = "";
 		let tripDestination = "";
 		let tripDate = "";
@@ -77,7 +76,7 @@ class Trip extends React.Component {
 			}
 		}
 		else {
-			listDisplay = <GroupList list={this.state.list} shared={this.state.shared}/>
+			listDisplay = <GroupList userId={this.props.userId} list={this.state.list} shared={this.state.shared}/>
 		}
 		return (
 			<Row>
@@ -96,5 +95,6 @@ class Trip extends React.Component {
 	}
 }
 Trip.propTypes ={
+	userId: PropTypes.number
 };
 export default Trip;
