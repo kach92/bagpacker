@@ -98,6 +98,9 @@ module.exports = (db) => {
         try{
             let trip_id = request.body.trip_id;
             let deleteTrip = await db.trips.deleteTrip(trip_id);
+            if(deleteTrip.group_id){
+                let deleteGroup = await db.users.deleteGroup(deleteTrip.group_id);
+            }
             response.send(true);
         }catch (error){
             console.log("delete trip controller "+error)

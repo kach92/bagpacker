@@ -20,4 +20,5 @@ module.exports = (app, db) => {
     app.post('/add_custom_item',packingLists.addCustomItem);
     app.post('/delete_item',packingLists.deleteItem);
     app.post('/delete_trip',trips.deleteTrip);
+    app.post('/edit_profile_general',users.editProfileGeneral);
 };

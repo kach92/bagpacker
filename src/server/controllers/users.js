@@ -65,10 +65,19 @@ module.exports = (db) => {
         response.send(true)
     }
 
+    let editProfileGeneral = async function (request,response){
+        try{
+            let editProfileGeneral = await db.users.editProfileGeneral(request.body);
+        }catch (error){
+            console.log("edit profile general controller "+error)
+        }
+    }
+
     return {
         signUp : signUp,
         login : login,
-        signOut : signOut
+        signOut : signOut,
+        editProfileGeneral : editProfileGeneral
     }
 
 };
