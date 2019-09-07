@@ -1,3 +1,6 @@
+var multer = require('multer');
+var upload = multer({ dest: './uploads/' });
+
 module.exports = (app, db) => {
 
     const users = require('./controllers/users')(db);
@@ -22,4 +25,5 @@ module.exports = (app, db) => {
     app.post('/delete_trip',trips.deleteTrip);
     app.post('/edit_profile_general',users.editProfileGeneral);
     app.post('/edit_profile_password',users.editProfilePassword);
+    app.post('/change_profile_pic',upload.single('myFile'),users.changeProfilePic)
 };

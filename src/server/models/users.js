@@ -231,6 +231,23 @@ module.exports = (dbPoolInstance) => {
         }
     }
 
+    let changeProfilePic = async function (user_id,image_url){
+        try{
+            let query = "UPDATE users SET image = $1 WHERE id = $2 RETURNING *";
+            let arr = [image_url,user_id];
+            let queryResult = await dbPoolInstance.query(query,arr);
+            if(queryResult.rows.length>0){
+                console.log("CHANGE PROFILE PIC SUCCESS");
+                return queryResult.rows[0];
+            }else{
+                return Promise.reject(new Error("change profile pic returns null"));
+            }
+
+        }catch (error){
+            console.log("change profile pic model "+error)
+        }
+    }
+
     return {
         signUp,
         isUserExist,
@@ -244,7 +261,8 @@ module.exports = (dbPoolInstance) => {
         getUserDetailsById,
         editProfileGeneral,
         deleteGroup,
-        changePassword
+        changePassword,
+        changeProfilePic
 
     };
 };
