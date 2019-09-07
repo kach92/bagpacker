@@ -18,7 +18,7 @@ class Trips extends React.Component {
 	}
 
 	getTrips() {
-		fetch('/trips', {
+		fetch('/get_all_trips', {
 			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json'

@@ -105,10 +105,10 @@ module.exports = (db) => {
     let changeProfilePic = async function (request,response){
         try{
             let user_id = request.cookies["user_id"];
-            cloudinary.uploader.upload(request.file.path, function(result) {
-                let changePic = await db.user.changeProfilePic(user_id,result.url);
-                response.send(true);
-            }
+            let result = await cloudinary.uploader.upload(request.file.path)
+            let changePic = await db.user.changeProfilePic(user_id,result.url);
+            response.send(true);
+
         }catch (error){
             console.log("change profile pic controller "+error)
         }
