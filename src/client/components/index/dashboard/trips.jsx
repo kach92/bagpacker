@@ -58,7 +58,7 @@ class Trips extends React.Component {
 				groupTripsLength = trips.group.length;
 				groupTrips = trips.group.map((trip, index) => {
 					return (
-						<Col key={index} md={4}>
+						<Col key={index} md={4} className={mainStyles.tripCard}>
 							<TripCard trip={trip}/>
 						</Col>
 					)

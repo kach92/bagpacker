@@ -42,6 +42,24 @@ a {
       color: #fff!important;
     }
   }
+  .dropdownMenu div {
+    right: 0;
+    left: auto;
+    margin: 0;
+  }
+  .navUsername {
+    display: inline-block;
+    padding-right: 2rem;
+  }
+  .navUserImage {
+    position: absolute;
+    top:2px;
+    right: 0;
+    display: block;
+    background-image: url("./images/profile.svg");
+    width: 36px;
+    height: 36px;
+  }
 }
 
 .sidePanel {
@@ -361,7 +379,8 @@ a {
 }
 
 
-.signupForm{
+.signupForm,
+.profileInfoForm{
   input[type="text"],
   input[type="email"],
   input[type="password"]{
@@ -397,6 +416,9 @@ a {
   input:-webkit-autofill {
     -webkit-animation-name: autofill;
     -webkit-animation-fill-mode: both;
+  }
+  h4 {
+    margin-bottom: 3rem;
   }
 }
 
@@ -436,6 +458,34 @@ a {
   }
 }
 
+.profileImage {
+  display: block;
+  &:after {
+    content:"";
+    display: block;
+    width: 100%;
+    padding-bottom: 100%;
+    border-radius: 0;
+    background-image: url("./images/profile.svg");
+    -webkit-background-size: contain;
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+}
+
+.profileImageForm {
+  input {
+    display: none;
+  }
+  label {
+    text-transform: uppercase;
+    cursor: pointer;
+    border-bottom: 1px $black solid;
+    padding: 0.5rem 0;
+    color:$black;
+    letter-spacing: 1px;
+  }
+}
 @-webkit-keyframes autofill {
   to {
     color: #666;
