@@ -21,7 +21,8 @@ class PacklistForm extends React.Component {
             allCountries:[],
             filteredCountries:[],
 			errorMessage: "",
-			groupPax: 1
+			groupPax: 1,
+			loading: false
 		};
 	}
 
@@ -87,6 +88,7 @@ class PacklistForm extends React.Component {
 	};
 	submit = (e) => {
 		e.preventDefault();
+		this.setState({loading:true});
 		let formInputs = this.state.formInputs;
 		let validated = true;
 		let groupPax = this.state.groupPax;
@@ -155,7 +157,7 @@ class PacklistForm extends React.Component {
                 })
             })
             .catch(error => {
-                console.error('Error:', error)
+                console.error('Error:', error);
                 image_src = "#";
                 formInputs["image"] = image_src;
                 formInputs["duration"] = this.calcDuration(formInputs["startDate"], formInputs["endDate"]);
@@ -165,7 +167,6 @@ class PacklistForm extends React.Component {
 		}
 	};
 	createTrip = (data) => {
-
 		fetch('/trips', {
 			method: 'POST',
 			body: JSON.stringify(data),
@@ -186,15 +187,6 @@ class PacklistForm extends React.Component {
 		return duration + 1;
 	};
 
-    pushToInput = (e) => {
-        let formInputs = this.state.formInputs;
-        formInputs.location = e.target.innerText;
-        let locationInput = e.target.innerText;
-        let countryDropdown = [];
-        this.setState({formInputs: formInputs, locationInput:locationInput,countryDropdown:countryDropdown});
-    }
-
-
 	render() {
         let datalistOptions = this.state.filteredCountries.map(x=><option>{x}</option>);
 		let groupInputs = [];
@@ -207,6 +199,20 @@ class PacklistForm extends React.Component {
 					</Form.Group>
 				)
 			}
+		}
+		let loadingScreen = null;
+		console.log(this.state.loading);
+		if (this.state.loading) {
+			loadingScreen = (
+				<div className={mainStyles.loadingScreen}>
+					<div className={mainStyles.loader}>
+						<div className={mainStyles.spinner}>
+							<div className={mainStyles.loaderBubble1}></div>
+							<div className={mainStyles.loaderBubble2}></div>
+						</div>
+					</div>
+				</div>
+			)
 		}
 		return (
 			<Form className={mainStyles.packlistModalForm}>
@@ -270,6 +276,7 @@ class PacklistForm extends React.Component {
 				<br/>
 				<div className="error">
 				</div>
+				{loadingScreen}
 			</Form>
 		);
 	}

@@ -55,7 +55,7 @@ a {
     color: $white!important;
     background-color: $blue!important;
     border-color: transparent!important;
-    padding: 0.25rem 1rem 0.25rem 0.7rem;
+    padding: 0.5rem 1rem 0.5rem 0.7rem;
     border-radius: 0;
     margin-top: 2rem;
     letter-spacing: 1px;
@@ -115,7 +115,7 @@ a {
   text-transform: uppercase;
   background-color: $blue;
   border: none;
-  padding: 0.25rem 1rem 0.25rem 0.7rem;
+  padding: 0.5rem 1rem 0.5rem 0.7rem;
   color:$white;
   letter-spacing: 1px;
   &::after {
@@ -295,7 +295,52 @@ a {
       }
     }
   }
+  .loadingScreen {
+    background: rgba(0, 0, 0, 0.33333);
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .loader {
+      height: 100px;
+    }
+    .spinner {
+      animation: loadingI 1.5s linear infinite;
+      position: relative;
+      width: 50px;
+      height: 50px;
+      margin: 0 auto;
+    }
+    .loaderBubble1,
+    .loaderBubble2{
+      position: absolute;
+      top: 0;
+      width: 25px;
+      height: 25px;
+      border-radius: 100%;
+      background-color: $blue;
+      animation: bounce 1.5s ease-in-out infinite;
+    }
+    .loaderBubble2 {
+      top: auto;
+      bottom: 0;
+      animation-delay: 1s;
+      transform: scale(0.0)
+    }
+  }
 }
+@keyframes loadingI {
+  100% {transform: rotate(360deg);}
+}
+@keyframes bounce  {
+  0%, 100% {transform: scale(0.0);}
+  50% {transform: scale(1.0);}
+}
+
 
 .signupForm{
   input[type="text"],
