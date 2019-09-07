@@ -12,7 +12,6 @@ class ItemChecked extends React.Component {
     }
 
     componentDidMount(){
-        console.log(this.props.item_packed)
         this.setState({
             item_id:this.props.item_id,
             checked:this.props.item_packed
