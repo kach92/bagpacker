@@ -47,13 +47,27 @@ a {
 .sidePanel {
   position: fixed;
   color: $white;
+  width: 33.33333%;
+  h2 {
+    width: 70%;
+  }
   button {
     color: $white!important;
-    background-color: transparent!important;
+    background-color: $blue!important;
     border-color: transparent!important;
+    padding: 0.25rem 1rem 0.25rem 0.7rem;
+    border-radius: 0;
+    margin-top: 2rem;
+    letter-spacing: 1px;
     &::after {
-      border-top: 2px solid $white;
-      border-right: 2px solid $white;
+      content: "";
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      border-top: 1px solid $white;
+      border-right: 1px solid $white;
+      transform: rotate(45deg);
+      margin-top: -4px;
     }
     &:focus,
     &:active,
@@ -99,10 +113,11 @@ a {
 
 .btn {
   text-transform: uppercase;
-  background-color: transparent;
+  background-color: $blue;
   border: none;
-  padding: 0;
-  color:$blue;
+  padding: 0.25rem 1rem 0.25rem 0.7rem;
+  color:$white;
+  letter-spacing: 1px;
   &::after {
     content: "";
     display: inline-block;
@@ -111,8 +126,8 @@ a {
     right: 0;
     width: 12px;
     height: 12px;
-    border-top: 2px solid $blue;
-    border-right: 2px solid $blue;
+    border-top: 1px solid $white;
+    border-right: 1px solid $white;
     transform: rotate(45deg);
   }
   &:hover {
@@ -133,8 +148,7 @@ a {
     outline: none;
     box-shadow: none;
   }
-  input[type="text"],
-  input[type="date"]{
+  input{
     display:block;
     position: static;
     opacity: 1;
@@ -200,6 +214,85 @@ a {
             color:white;
             background-color:blue;
         }
+    }
+  }
+}
+
+.packlistModalForm{
+  position:relative;
+  & > div {
+    margin-bottom: 1rem;
+  }
+  input:focus {
+    outline: none;
+    box-shadow: none;
+  }
+  input{
+    display:block;
+    position: static;
+    opacity: 1;
+    cursor: default;
+    height: auto;
+    width: 100%;
+    border: none;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+    border-bottom: 1px solid $gray;
+    padding: .375rem 0;
+  }
+  input[type="radio"]{
+    display: inline-block;
+    position: static;
+    opacity: 1;
+    cursor: default;
+    height: auto;
+    width: auto;
+  }
+  .multiSelectWrapper {
+    display: block;
+
+    & > div {
+      margin: 0;
+    }
+  }
+  .multiSelectWrapper div:nth-child(1) {
+    div {
+      height: auto;
+      background-color: $blue;
+      border-radius: 0;
+      margin-left: 0;
+      margin-right: 8px;
+      margin-bottom: 8px;
+    }
+  }
+  .multiSelectWrapper div:nth-child(3) {
+    span {
+      border-radius: 50%;
+    }
+    span::after {
+      top: 50%;
+      left: 50%;
+      width: 5px;
+      height: 10px;
+      border-width: 0 2px 2px 0;
+      transform: translate(-50%, -50%) rotate(45deg);
+    }
+  }
+
+  .drop-down-container{
+    height:100px;
+    overflow-y: auto;
+    width:100%;
+    position:absolute;
+    background-color:white;
+
+    & > div{
+      transition: 0.3s;
+      &:hover{
+        color:white;
+        background-color:blue;
+      }
     }
   }
 }
