@@ -1,5 +1,14 @@
 var sha256 = require('js-sha256');
-const SALT = "Jarpy Bear"
+const SALT = "Jarpy Bear";
+
+var cloudinary = require('cloudinary');
+var configForCloudinary;
+if (process.env.CLOUDINARY_URL) {
+    configForCloudinary = process.env.CLOUDINARY_URL;
+} else {
+    configForCloudinary = require("../../../cloudinary.json");
+}
+cloudinary.config(configForCloudinary);
 
 module.exports = (db) => {
 
@@ -93,12 +102,25 @@ module.exports = (db) => {
         }
     }
 
+    let changeProfilePic = async function (request,response){
+        try{
+            let user_id = request.cookies["user_id"];
+            cloudinary.uploader.upload(request.file.path, function(result) {
+                let changePic = await db.user.changeProfilePic(user_id,result.url);
+                response.send(true);
+            }
+        }catch (error){
+            console.log("change profile pic controller "+error)
+        }
+    }
+
     return {
         signUp : signUp,
         login : login,
         signOut : signOut,
         editProfileGeneral : editProfileGeneral,
-        editProfilePassword : editProfilePassword
+        editProfilePassword : editProfilePassword,
+        changeProfilePic : changeProfilePic
     }
 
 };
