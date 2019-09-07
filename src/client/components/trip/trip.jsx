@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import SidePanel from '../side-panel/side-panel';
 import List from '../packlist/users/list';
 import GroupList from '../packlist/users/group-list';
+import TripDelete from './trip-delete';
 
-import {Col,Row,CardColumns,Card} from 'react-bootstrap';
+import {Col, Row, Button} from 'react-bootstrap';
 
 class Trip extends React.Component {
 	constructor(props){
@@ -85,6 +86,7 @@ class Trip extends React.Component {
 						<h2>{tripName}</h2>
 						<p><i className='bx bxs-map'></i>{tripDestination}</p>
 						<p>{tripDate}</p>
+						<TripDelete/>
 					</SidePanel>
 				</Col>
 				<Col md={{span:8}}>
