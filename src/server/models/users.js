@@ -198,11 +198,36 @@ module.exports = (dbPoolInstance) => {
         }
     }
 
-    let editProfileGeneral = async function (user_info){
+    let editProfileGeneral = async function (user_info,user_id){
         try{
-            let query = 'UPDATE users SET name=$1'
+            let query = 'UPDATE users SET firstname=$1,lastname=$2,email=$3 WHERE id=$4 RETURNING *' ;
+            let arr = [user_info.firstName,user_info.lastName,user_info.email,user_id];
+            let queryResult = await dbPoolInstance.query(query,arr);
+            if(queryResult.rows.length>0){
+                console.log("EDIT PROGILE GENERAL SUCCESS");
+                return queryResult.rows[0];
+            }else{
+                return Promise.reject(new Error("edit profile general returns null"));
+            }
+
         } catch (error){
             console.log("edit profile general model "+error)
+        }
+    }
+
+    let changePassword = async function (new_password,user_id){
+        try{
+            let query = 'UPDATE users SET password = $1 WHERE id =  $2 RETURNING *';
+            let arr = [new_password,user_id];
+            let queryResult = await dbPoolInstance.query(query,arr);
+            if(queryResult.rows.length>0){
+                console.log("CHANGE PASSWORD SUCCESS");
+                return queryResult.rows[0];
+            }else{
+                return Promise.reject(new Error("change password return null"));
+            }
+        }catch (error){
+            console.log("change password model "+error)
         }
     }
 
@@ -218,7 +243,8 @@ module.exports = (dbPoolInstance) => {
         getUserGroups,
         getUserDetailsById,
         editProfileGeneral,
-        deleteGroup
+        deleteGroup,
+        changePassword
 
     };
 };

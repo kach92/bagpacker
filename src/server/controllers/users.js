@@ -67,9 +67,29 @@ module.exports = (db) => {
 
     let editProfileGeneral = async function (request,response){
         try{
-            let editProfileGeneral = await db.users.editProfileGeneral(request.body);
+            let user_id = request.cookies["user_id"];
+            let editProfileGeneral = await db.users.editProfileGeneral(request.body,user_id);
+            response.cookie("user_name", editProfileGeneral.firstname);
+            response.send(true);
         }catch (error){
             console.log("edit profile general controller "+error)
+        }
+    }
+
+    let editProfilePassword = async function (request,response){
+        try{
+            let user_id = request.cookies["user_id"];
+            //check old password, if tally only change password
+            let user_info = await db.users.getUserDetailsById(user_id);
+            if(sha256(userinfo.password) === sha256(request.body.old_password)){
+                let changePassword = await db.users.changePassword(sha256(request.body.new_password),user_id);
+                response.send(true)
+            }else{
+                console.log("old password is wrong");
+                response.send(false);
+            }
+        }catch (error){
+            console.log("edit profile password controller"+error)
         }
     }
 
@@ -77,7 +97,8 @@ module.exports = (db) => {
         signUp : signUp,
         login : login,
         signOut : signOut,
-        editProfileGeneral : editProfileGeneral
+        editProfileGeneral : editProfileGeneral,
+        editProfilePassword : editProfilePassword
     }
 
 };
