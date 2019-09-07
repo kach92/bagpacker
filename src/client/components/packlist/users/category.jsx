@@ -8,7 +8,8 @@ import ItemChecked from './item-checked';
 
 class Category extends React.Component {
 	render() {
-		let items = this.props.items.map((item, index)=> {
+        console.log(this.props.items.sort((a,b)=> a.name<b.name? -1:1))
+		let items = this.props.items.sort((a,b)=> a.name.toLowerCase()<b.name.toLowerCase()? -1:1).sort((x,y)=>x.packed === y.packed? 0 : (x.packed? 1 : -1)).map((item, index)=> {
             let itemName = <Item item_name={item.name} item_id={item.id} submitNameEdit={this.props.submitNameEdit}/>
             let itemQty = <ItemQty item_quantity={item.quantity} item_id={item.id} submitQtyEdit={this.props.submitQtyEdit}/>
             let itemChecked = <ItemChecked item_packed={item.packed} packItem={this.props.packItem} item_id={item.id} />

@@ -60,7 +60,7 @@ class List extends React.Component {
 	render() {
 		let list = this.props.list;
 		let ListComponent = this;
-		let categories = Object.keys(list).map(function(category,index) {
+		let categories = Object.keys(list).sort((a,b)=> a.toLowerCase()<b.toLowerCase()? -1:1).map(function(category,index) {
 			return (
 				<Category
 					key={index}
