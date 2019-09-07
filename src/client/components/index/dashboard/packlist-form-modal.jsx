@@ -153,13 +153,30 @@ class PacklistForm extends React.Component {
                             formInputs["duration"] = this.calcDuration(formInputs["startDate"], formInputs["endDate"]);
                             this.createTrip(formInputs);
                         })
+                        .catch(error => {
+                            console.error("NO IMAGE");
+                            formInputs["duration"] = this.calcDuration(formInputs["startDate"], formInputs["endDate"]);
+                            this.createTrip(formInputs);
+
+                        });
                     })
+                    .catch(error => {
+                        console.error("NO IMAGE");
+                        formInputs["duration"] = this.calcDuration(formInputs["startDate"], formInputs["endDate"]);
+                        this.createTrip(formInputs);
+
+                    });
                 })
+                .catch(error => {
+                    console.error("NO IMAGE");
+                    formInputs["duration"] = this.calcDuration(formInputs["startDate"], formInputs["endDate"]);
+                    this.createTrip(formInputs);
+
+                });
+
             })
             .catch(error => {
-                console.error('Error:', error);
-                image_src = "#";
-                formInputs["image"] = image_src;
+                console.error("NO IMAGE");
                 formInputs["duration"] = this.calcDuration(formInputs["startDate"], formInputs["endDate"]);
                 this.createTrip(formInputs);
 
