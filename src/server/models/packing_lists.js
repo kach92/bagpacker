@@ -375,6 +375,22 @@ module.exports = (dbPoolInstance) => {
         }
     }
 
+    let deleteItem = async function(item_id){
+        try{
+            let query = 'DELETE FROM packing_list_items WHERE id = $1 RETURNING *';
+            let arr = [item_id];
+            let queryResult = await dbPoolInstance.query(query,arr);
+            if(queryResult.rows.length>0){
+                console.log("DELETE ITEM SUCCESS");
+                return queryResult.rows[0];
+            }else{
+                return Promise.reject(new Error("delete item return null"));
+            }
+        }catch (error){
+            console.log("delete item model "+ error)
+        }
+    }
+
     return {
         generateTempList,
         createPackingList,
@@ -390,7 +406,8 @@ module.exports = (dbPoolInstance) => {
         getUserPackingListIdByUserIdAndTripId,
         updateSharedItemId,
         getPackingListDetailsByUserIdAndTripId,
-        addCustomItem
+        addCustomItem,
+        deleteItem
 
     };
 };

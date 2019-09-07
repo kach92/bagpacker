@@ -171,6 +171,18 @@ module.exports = (db) => {
         }
     }
 
+    let deleteItem = async function (request,response){
+        try{
+            let item_id = request.body.item_id;
+
+            let deleteItem = await db.packingList.deleteItem(item_id);
+            response.send(true);
+
+        }catch (error){
+            console.log('delete item controller '+ error)
+        }
+    }
+
     return {
         nonUserList : nonUserList,
         nonUserListSave : nonUserListSave,
@@ -179,7 +191,8 @@ module.exports = (db) => {
         updateItemName : updateItemName,
         updateItemPacked : updateItemPacked,
         updateSharedItem : updateSharedItem,
-        addCustomItem : addCustomItem
+        addCustomItem : addCustomItem,
+        deleteItem : deleteItem
     }
 
 };
