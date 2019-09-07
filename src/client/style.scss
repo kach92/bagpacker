@@ -88,6 +88,9 @@ a {
     top: 0;
     z-index: -1;
   }
+  .sidePanelImage {
+    background-image: url("./images/default.jpg");
+  }
   &:after {
     content: "";
     background-color: #fff;
@@ -485,6 +488,7 @@ a {
   }
 }
 .tripImage {
+  background-image: url("./images/default.jpg");
   background-size: cover;
   background-position: center;
   position: relative;
