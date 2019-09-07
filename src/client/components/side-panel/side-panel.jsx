@@ -8,14 +8,21 @@ class SidePanel extends React.Component {
 	}
 
 	render() {
-		let panelImage = {};
+		let panelImage = null;
+		let panelClass = null;
 		if (this.props.tripImage) {
-			panelImage = {backgroundImage: `url(${this.props.tripImage})`};
+			if (this.props.tripImage !== "#") {
+				panelImage = {backgroundImage: `url(${this.props.tripImage})`};
+			}
+			else {
+				panelClass = mainStyles.sidePanelImage;
+				console.log(panelClass);
+			}
 		}
 		return (
 			<div className={mainStyles.sidePanel}>
 				{this.props.children}
-				<div className={mainStyles.sidePanelBg} style={panelImage}></div>
+				<div className={`${mainStyles.sidePanelBg} ${panelClass}`} style={panelImage}></div>
 				<div className={mainStyles.sidePanelOverlay}></div>
 			</div>
 		);

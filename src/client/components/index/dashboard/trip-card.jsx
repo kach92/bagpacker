@@ -14,11 +14,13 @@ class TripCard extends React.Component {
 		let startDateDisplay = `${startDate.getDate()} ${months[startDate.getMonth()]} ${startDate.getFullYear()}`;
 		let endDateDisplay = `${endDate.getDate()} ${months[endDate.getMonth()]} ${endDate.getFullYear()}`;
 
-		let tripImage = {backgroundImage: `url(${trip.destinations[0].image})`};
+		let tripImage = null;
+		if (trip.destinations[0].image !== "#") {
+			tripImage = {backgroundImage: `url(${trip.destinations[0].image})`};
+		}
 		return (
 			<Link to={tripLink}>
 				<Card className="mb-3">
-					{/*<Card.Img variant="top" src={trip.destinations[0].image} />*/}
 					<div className={mainStyles.tripImage} style={tripImage}>
 						<Card.Title>{trip.name}</Card.Title>
 					</div>
