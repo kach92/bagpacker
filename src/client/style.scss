@@ -141,6 +141,22 @@ a {
     outline: 0;
   }
 }
+.deleteBtn {
+  text-transform: uppercase;
+  background-color: $blue;
+  border: none;
+  padding: 0.5rem 0.7rem!important;
+  color: $white;
+  letter-spacing: 1px;
+
+  &::after {
+    content: "";
+    display: inline-block;
+    width: 0!important;
+    height: 0!important;
+    border: none!important;
+  }
+}
 
 .packlistForm{
     position:relative;

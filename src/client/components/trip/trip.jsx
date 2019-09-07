@@ -4,7 +4,8 @@ import SidePanel from '../side-panel/side-panel';
 import List from '../packlist/users/list';
 import GroupList from '../packlist/users/group-list';
 
-import {Col,Row,CardColumns,Card} from 'react-bootstrap';
+import {Col, Row, Button} from 'react-bootstrap';
+import mainStyles from "../..//style.scss";
 
 class Trip extends React.Component {
 	constructor(props){
@@ -54,6 +55,9 @@ class Trip extends React.Component {
 		let endDateDisplay = `${endDate.getDate()} ${months[endDate.getMonth()]} ${endDate.getFullYear()}`;
 		return(`${startDateDisplay} — ${endDateDisplay}`);
 	}
+	deleteTrip = () => {
+		console.log("deleted");
+	};
 	render() {
 		let tripName = "";
 		let tripDestination = "";
@@ -85,6 +89,9 @@ class Trip extends React.Component {
 						<h2>{tripName}</h2>
 						<p><i className='bx bxs-map'></i>{tripDestination}</p>
 						<p>{tripDate}</p>
+						<Button onClick={this.deleteTrip} className={`${mainStyles.btn} ${mainStyles.deleteBtn}`}>
+							Delete Trip <i className='bx bx-x'></i>
+						</Button>
 					</SidePanel>
 				</Col>
 				<Col md={{span:8}}>

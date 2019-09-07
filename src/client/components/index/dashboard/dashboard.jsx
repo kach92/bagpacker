@@ -1,5 +1,5 @@
 import React from 'react';
-import {Col,Row,ButtonToolbar, Button,Modal} from 'react-bootstrap';
+import {Col,Row, Button,Modal} from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import PacklistForm from "./packlist-form-modal";
 import Trips from "./trips";
