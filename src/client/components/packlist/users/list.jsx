@@ -41,9 +41,6 @@ class List extends React.Component {
 			.catch(error => console.error('Error:', error));
 	};
 	submitQtyEdit = (item_id,quantity) => {
-        console.log("YESSSSSS")
-        console.log(item_id);
-        console.log(quantity)
 		let data = {
 			item_id,
 			quantity
@@ -57,6 +54,24 @@ class List extends React.Component {
 		}).then(res => console.log(res))
 			.catch(error => console.error('Error:', error));
 	};
+
+    deleteItem = (item_id) =>{
+        let data = {
+            item_id
+        };
+        fetch('/delete_item', {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(res => res.json())
+            .then(res => {
+            })
+            .catch(error => console.error('Error:', error));
+    }
+
+
 	render() {
 		let list = this.props.list;
 		let ListComponent = this;
@@ -69,6 +84,7 @@ class List extends React.Component {
 					packItem={ListComponent.packItem}
                     submitNameEdit={ListComponent.submitNameEdit}
                     submitQtyEdit={ListComponent.submitQtyEdit}
+                    deleteItem={ListComponent.deleteItem}
 				/>
 			);
 		});
