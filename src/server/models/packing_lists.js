@@ -340,6 +340,41 @@ module.exports = (dbPoolInstance) => {
         }
     }
 
+
+    let getPackingListDetailsByUserIdAndTripId = async function (user_id,trip_id){
+        try{
+            let query = 'SELECT * FROM packing_lists WHERE user_id = $1 AND trip_id = $2';
+            let arr = [user_id,trip_id];
+            let queryResult = await dbPoolInstance.query(query,arr);
+            if(queryResult.rows.length>0){
+                console.log("GET PACKING LIST DETAILS BY USER ID AND TRIP ID SUCCESS");
+                return queryResult.rows[0];
+            }else{
+                return Promise.reject(new Error("get packing list details by user id and trip id returns null"));
+            }
+
+        }catch (error){
+            console.log("get packing list details by user id and trip id model "+ error)
+        }
+    }
+
+    let addCustomItem = async function(packing_list_id,group_id,item_name,quantity,shared,category){
+
+        try{
+            let query = 'INSERT INTO packing_list_items (packing_list_id,group_id,name,quantity,shared,category) VALUES ($1,$2,$3,$4,$5,$6) RETURNING *';
+            let arr = [packing_list_id,group_id,item_name,quantity,shared,category];
+            let queryResult = await dbPoolInstance.query(query,arr);
+            if(queryResult.rows.length>0){
+                console.log("ADD CUSTOM ITEM SUCCESS");
+                return queryResult.rows[0];
+            }else{
+                return Promise.reject(new Error("ADD CUSTOM ITEM RETURN NULL"));
+            }
+        }catch (error){
+            console.log("add custom item model "+ error)
+        }
+    }
+
     return {
         generateTempList,
         createPackingList,
@@ -353,7 +388,9 @@ module.exports = (dbPoolInstance) => {
         updateItemName,
         updateItemPacked,
         getUserPackingListIdByUserIdAndTripId,
-        updateSharedItemId
+        updateSharedItemId,
+        getPackingListDetailsByUserIdAndTripId,
+        addCustomItem
 
     };
 };
