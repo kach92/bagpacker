@@ -10,6 +10,7 @@ import Login from './components/user/login/login';
 import Signup from './components/user/signup/signup';
 
 import Trip from './components/trip/trip';
+import TripDetails from './components/trip/trip';
 import NonUserList from './components/packlist/non-users/packlist';
 
 import { sha256, sha224 } from 'js-sha256';

@@ -6,6 +6,7 @@ import GroupList from '../packlist/users/group-list';
 import TripDelete from './trip-delete';
 
 import {Col, Row, Button} from 'react-bootstrap';
+import TripDetails from "./trip-details";
 
 class Trip extends React.Component {
 	constructor(props){
@@ -46,15 +47,6 @@ class Trip extends React.Component {
 			})
 			.catch(error => console.error('Error:', error));
 	}
-	dateDisplay(start,end) {
-		let months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
-		let startDate = new Date(start);
-		let endDate = new Date(end);
-		let startDateDisplay = `${startDate.getDate()} ${months[startDate.getMonth()]} ${startDate.getFullYear()}`;
-		let endDateDisplay = `${endDate.getDate()} ${months[endDate.getMonth()]} ${endDate.getFullYear()}`;
-		return(`${startDateDisplay} — ${endDateDisplay}`);
-	}
-
     deleteTrip = (e) =>{
         let data ={
             trip_id:this.state.trip.id
@@ -79,7 +71,8 @@ class Trip extends React.Component {
 	render() {
 		let tripName = "";
 		let tripDestination = "";
-		let tripDate = "";
+		let tripStartDate = "";
+		let tripEndDate = "";
 		let tripImage = "";
 
 		let trip=this.state.trip;
@@ -87,7 +80,8 @@ class Trip extends React.Component {
 			tripName = trip.name;
 			tripDestination = trip.destinations[0].name;
 			tripImage = trip.destinations[0].image;
-			tripDate = this.dateDisplay(trip.destinations[0].start_date,trip.destinations[0].end_date);
+			tripStartDate = trip.destinations[0].start_date;
+			tripEndDate = trip.destinations[0].end_date
 		}
 
 		let listDisplay = "No items found";
@@ -104,9 +98,9 @@ class Trip extends React.Component {
 			<Row>
 				<Col md={4}>
 					<SidePanel tripImage={tripImage}>
+
 						<h2>{tripName}</h2>
-						<p><i className='bx bxs-map'></i>{tripDestination}</p>
-						<p>{tripDate}</p>
+						<TripDetails location={tripDestination} startDate={tripStartDate} endDate={tripEndDate}/>
 						<TripDelete deleteTrip={this.deleteTrip}/>
 					</SidePanel>
 				</Col>

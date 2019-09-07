@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {Col,Row} from 'react-bootstrap';
 import SidePanel from '../../side-panel/side-panel';
 import mainStyles from "../../../style.scss";
-import Trip from './trip-details';
+import TripDetails from '../../trip/trip-details';
 import List from './list';
 
 class Packlist extends React.Component {
@@ -17,7 +17,7 @@ class Packlist extends React.Component {
 				<Col md={4}>
 					<SidePanel>
 						<h2>Packing List for {packlist.location}</h2>
-						<Trip location={packlist.location} startDate={packlist.startDate} endDate={packlist.endDate}/>
+						<TripDetails location={packlist.location} startDate={packlist.startDate} endDate={packlist.endDate}/>
 						<button onClick={this.redirectToLogin} className={mainStyles.btn}>Save Trip</button>
 					</SidePanel>
 				</Col>

@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Category from './Category';
 import {CardColumns} from "react-bootstrap";
+import mainStyles from "../../../style.scss";
 
 class List extends React.Component {
 	render() {
@@ -10,7 +11,7 @@ class List extends React.Component {
 			return <Category key={index} category={category} items={list[category]}/>;
 		});
 		return (
-			<CardColumns>
+			<CardColumns className={mainStyles.packlist}>
 				{categories}
 			</CardColumns>
 
