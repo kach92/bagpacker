@@ -155,6 +155,7 @@ class PacklistForm extends React.Component {
                         })
                         .catch(error => {
                             console.error("NO IMAGE");
+                            formInputs["image"] = "#";
                             formInputs["duration"] = this.calcDuration(formInputs["startDate"], formInputs["endDate"]);
                             this.createTrip(formInputs);
 
@@ -162,6 +163,7 @@ class PacklistForm extends React.Component {
                     })
                     .catch(error => {
                         console.error("NO IMAGE");
+                        formInputs["image"] = "#";
                         formInputs["duration"] = this.calcDuration(formInputs["startDate"], formInputs["endDate"]);
                         this.createTrip(formInputs);
 
@@ -169,6 +171,7 @@ class PacklistForm extends React.Component {
                 })
                 .catch(error => {
                     console.error("NO IMAGE");
+                    formInputs["image"] = "#";
                     formInputs["duration"] = this.calcDuration(formInputs["startDate"], formInputs["endDate"]);
                     this.createTrip(formInputs);
 
@@ -177,6 +180,7 @@ class PacklistForm extends React.Component {
             })
             .catch(error => {
                 console.error("NO IMAGE");
+                formInputs["image"] = "#";
                 formInputs["duration"] = this.calcDuration(formInputs["startDate"], formInputs["endDate"]);
                 this.createTrip(formInputs);
 
