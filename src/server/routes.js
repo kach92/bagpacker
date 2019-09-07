@@ -13,7 +13,7 @@ module.exports = (app, db) => {
     app.post('/list/save', packingLists.nonUserListSave);
     app.post('/trips', packingLists.userListSave);
     app.get('/signout',users.signOut);
-    app.get('/trips',trips.getAllTrips);
+    app.get('/get_all_trips',trips.getAllTrips);
     app.get('/get_trip/:id',trips.getSingleTrip);
     app.post('/update_item_quantity',packingLists.updateItemQuantity);
     app.post('/update_item_quantity',packingLists.updateItemQuantity);
