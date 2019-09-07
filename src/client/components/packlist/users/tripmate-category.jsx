@@ -3,17 +3,12 @@ import PropTypes from 'prop-types';
 import {Card,Col,Row,Form} from "react-bootstrap";
 import mainStyles from "../../../style.scss";
 
-class SharedList extends React.Component {
+class TripmateCategory extends React.Component {
 	render() {
-		let items = this.props.list.map((item, index)=> {
+		let items = this.props.items.map((item, index)=> {
 			return(
 				<Row key={index}>
-					<Col xs={1}>
-						<Form>
-							<Form.Check checked={item.packed}/>
-						</Form>
-					</Col>
-					<Col xs={1}>
+					<Col xs={2}>
 						<p>{item.quantity}</p>
 					</Col>
 					<Col xs={10} className="pl-0">
@@ -26,11 +21,10 @@ class SharedList extends React.Component {
 			<Card className={mainStyles.listCard}>
 				<Card.Body>
 					<Row>
-						<Col xs={12}>
-							<h4>Shared Items</h4>
+						<Col>
+							<h4>{this.props.category}</h4>
 						</Col>
 					</Row>
-
 					{items}
 				</Card.Body>
 			</Card>
@@ -38,7 +32,8 @@ class SharedList extends React.Component {
 		);
 	}
 }
-SharedList.propTypes ={
-	list: PropTypes.array
+TripmateCategory.propTypes ={
+	items: PropTypes.array,
+	category: PropTypes.string,
 };
-export default SharedList;
+export default TripmateCategory;
