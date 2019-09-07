@@ -23,7 +23,6 @@ class Trip extends React.Component {
 	}
 	getTripInfo(id) {
 		let fetchUrl = '/get_trip/'+id;
-		console.log(fetchUrl);
 		fetch(fetchUrl, {
 			method: 'GET',
 			headers: {
@@ -55,6 +54,28 @@ class Trip extends React.Component {
 		let endDateDisplay = `${endDate.getDate()} ${months[endDate.getMonth()]} ${endDate.getFullYear()}`;
 		return(`${startDateDisplay} — ${endDateDisplay}`);
 	}
+
+    deleteTrip = (e) =>{
+        let data ={
+            trip_id:this.state.trip.id
+        }
+        let fetchUrl = '/delete_trip';
+        fetch(fetchUrl, {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(res => res.json())
+        .then(res => {
+            console.log("DELETE TRIP OK");
+            this.props.history.push('/');
+        })
+        .catch(error => console.error('Error:', error));
+
+    }
+
 	render() {
 		let tripName = "";
 		let tripDestination = "";
@@ -86,7 +107,7 @@ class Trip extends React.Component {
 						<h2>{tripName}</h2>
 						<p><i className='bx bxs-map'></i>{tripDestination}</p>
 						<p>{tripDate}</p>
-						<TripDelete/>
+						<TripDelete deleteTrip={this.deleteTrip}/>
 					</SidePanel>
 				</Col>
 				<Col md={{span:8}}>

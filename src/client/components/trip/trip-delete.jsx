@@ -13,7 +13,7 @@ function DeleteTripModal(props) {
 		>
 			<Modal.Body>
 				<h4>Confirm Delete?</h4>
-				<Button className={mainStyles.btnSecondary}>
+				<Button className={mainStyles.btnSecondary} onClick={(e)=>{props.deleteTrip(e)}}>
 					Delete
 				</Button>
 			</Modal.Body>
@@ -23,6 +23,7 @@ function DeleteTripModal(props) {
 
 function TripDelete(props) {
 	const [modalShow, setModalShow] = React.useState(false);
+    const deleteTrip = props.deleteTrip
 	return (
 		<React.Fragment>
 			<Button onClick={() => setModalShow(true)} className={`${mainStyles.btn} ${mainStyles.btnSecondary}`}>
@@ -33,6 +34,7 @@ function TripDelete(props) {
 				show={modalShow}
 				onHide={() => setModalShow(false)}
 				history={props.history}
+                deleteTrip={deleteTrip}
 			/>
 		</React.Fragment>
 	);
