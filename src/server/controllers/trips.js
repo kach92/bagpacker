@@ -54,7 +54,12 @@ module.exports = (db) => {
                 for(let i=0; i<packingList.length;i++){
                     let user = await db.users.getUserDetailsById(packingList[i].user_id);
                     let listItems = await db.packingList.getPackingListItemsByPackingListId(packingList[i].id);
-                    user["items"] = listItems;
+                    let finalList = {};
+                    let availableCategory = [...new Set(listItems.map(x => x.category))];
+                    for(let i=0;i<availableCategory.length;i++){
+                        finalList[availableCategory[i]] = listItems.filter(x=>x.category === availableCategory[i])
+                    }
+                    user["items"] = finalList;
                     individualList.push(user);
                 }
 
