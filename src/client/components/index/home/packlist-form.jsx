@@ -124,7 +124,7 @@ class PacklistForm extends React.Component {
 					<Col>
 						<Form.Group>
 							<Form.Label>Location</Form.Label>
-							<Form.Control type="text" list="country-list" value={this.state.formInputs.location} onChange={this.updateLocation}/>
+							<Form.Control list="country-list" value={this.state.formInputs.location} onChange={this.updateLocation}/>
 
                             <datalist id="country-list">
                             {datalistOptions}

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ActivitiesForm from "../packlist-activities-form";
 import mainStyles from "../../../style.scss";
-import {Form} from 'react-bootstrap';
+import {Col, Form, Row} from 'react-bootstrap';
 import Countries from "../../../countries.js"
 
 
@@ -209,43 +209,63 @@ class PacklistForm extends React.Component {
 			}
 		}
 		return (
-			<Form className={mainStyles.packlistForm}>
-				<Form.Group>
-					<Form.Label>Location</Form.Label>
-					<Form.Control type="text" list="country-list"placeholder="Location" value={this.state.formInputs.location} onChange={this.updateLocation} />
-                    <datalist id="country-list">
-                            {datalistOptions}
-                    </datalist>
-				</Form.Group>
-
-				<Form.Group>
-					<label>Start Date</label>
-					<Form.Control type="date" value={this.state.formInputs.startDate} onChange={this.updateStartDate}/>
-				</Form.Group>
-
-				<Form.Group>
-					<label>End Date</label>
-					<Form.Control type="date" value={this.state.formInputs.endDate} onChange={this.updateEndDate}/>
-				</Form.Group>
-
-				<Form.Group>
-					<label>Number of people</label>
-					<Form.Control type="number" value={this.state.groupPax} min="1" max="10" onChange={this.updateGroupPax}/>
-				</Form.Group>
-
-				{groupInputs}
-
-				<Form.Group>
-					<label>Weather</label>
-					<select value={this.state.formInputs.weather} onChange={this.updateWeather}>
-						<option value="1">Sunny</option>
-						<option value="2">Snowy</option>
-						<option value="3">Rainy</option>
-					</select>
-				</Form.Group>
-				<div className={mainStyles.multiSelectWrapper}>
-					<ActivitiesForm updateActivities={this.updateActivities}/>
-				</div>
+			<Form className={mainStyles.packlistModalForm}>
+				<Row>
+					<Col>
+						<Form.Group>
+							<Form.Label>Location</Form.Label>
+							<Form.Control list="country-list" placeholder="Location" value={this.state.formInputs.location} onChange={this.updateLocation} />
+							<datalist id="country-list">{datalistOptions} </datalist>
+						</Form.Group>
+					</Col>
+				</Row>
+				<Row>
+					<Col>
+						<Form.Group>
+							<label>Start Date</label>
+							<Form.Control type="date" value={this.state.formInputs.startDate} onChange={this.updateStartDate}/>
+						</Form.Group>
+					</Col>
+					<Col>
+						<Form.Group>
+							<label>End Date</label>
+							<Form.Control type="date" value={this.state.formInputs.endDate} onChange={this.updateEndDate}/>
+						</Form.Group>
+					</Col>
+				</Row>
+				<Row>
+					<Col>
+						<Form.Group>
+							<label>Number of people</label>
+							<Form.Control type="number" value={this.state.groupPax} min="1" max="10" onChange={this.updateGroupPax}/>
+						</Form.Group>
+					</Col>
+				</Row>
+				<Row>
+					<Col>
+						{groupInputs}
+					</Col>
+				</Row>
+				<Row>
+					<Col>
+						<Form.Group>
+							<label>Weather</label><br/>
+							<select value={this.state.formInputs.weather} onChange={this.updateWeather}>
+								<option value="1">Sunny</option>
+								<option value="2">Snowy</option>
+								<option value="3">Rainy</option>
+							</select>
+						</Form.Group>
+					</Col>
+				</Row>
+				<Row>
+					<Col>
+						<div className={mainStyles.multiSelectWrapper}>
+							<label>Activities</label>
+							<ActivitiesForm updateActivities={this.updateActivities}/>
+						</div>
+					</Col>
+				</Row>
 				<button type="submit" onClick={this.submit} className={mainStyles.btn}>Create Packing List</button>
 				<br/>
 				<div className="error">
