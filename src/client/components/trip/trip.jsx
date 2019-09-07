@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import SidePanel from '../side-panel/side-panel';
 import List from '../packlist/users/list';
+import GroupList from '../packlist/users/group-list';
 
 import {Col,Row,CardColumns,Card} from 'react-bootstrap';
 
@@ -10,7 +11,9 @@ class Trip extends React.Component {
 		super(props);
 		this.state = {
 			trip: null,
-			list: null
+			list: null,
+			solo: true,
+			shared: null
 		}
 	}
 
@@ -27,9 +30,18 @@ class Trip extends React.Component {
 			}
 		}).then(res => res.json())
 			.then(res => {
+				let solo = true;
+				let shared = null;
+				if (res.trip.group_id) {
+					solo = false;
+					shared = res.shared;
+				}
 				this.setState({
 					trip: res.trip,
-					list: res.list
+					list: res.list,
+					solo,
+					shared
+
 				})
 			})
 			.catch(error => console.error('Error:', error));
@@ -58,9 +70,14 @@ class Trip extends React.Component {
 		}
 
 		let listDisplay = "No items found";
-		let list=this.state.list;
-		if (list){
-			listDisplay = <List list={this.state.list}/>
+		if (this.state.solo) {
+			let list = this.state.list;
+			if (list) {
+				listDisplay = <List list={this.state.list}/>
+			}
+		}
+		else {
+			listDisplay = <GroupList list={this.state.list} shared={this.state.shared}/>
 		}
 		return (
 			<Row>
