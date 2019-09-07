@@ -135,6 +135,42 @@ module.exports = (db) => {
         }
     }
 
+    let addCustomItem = async function (request, response){
+        try {
+            let user_id = parseInt(request.body.user_id);
+            let item_name = request.body.item_name;
+            let quantity = parseInt(request.body.quantity);
+            let category = request.body.category;
+            let trip_id = parseInt(request.body.trip_id);
+            let packing_list_details = null;
+            let group_id = null;
+            let packing_list_id = null;
+            let shared = null;
+
+            if(user_id){
+                console.log("ADD CUSTOM ITEM INTO USER LIST");
+                packing_list_details = await db.packingList.getPackingListDetailsByUserIdAndTripId(user_id,trip_id);
+                shared = false;
+
+
+            }else{
+                console.log("ADD CUSTOM ITEM INTO GROUP LIST");
+                packing_list_details = await db.packingList.getPackingListDetailsByUserIdAndTripId(null,trip_id);
+                shared = true;
+            }
+
+            group_id = packing_list_details.group_id;
+            packing_list_id = packing_list_details.id;
+
+            let insertItem = await db.packingList.addCustomItem(packing_list_id,group_id,item_name,quantity,shared,category);
+            response.send(true);
+
+
+        } catch (error) {
+            console.log('add custom item controller'+ error)
+        }
+    }
+
     return {
         nonUserList : nonUserList,
         nonUserListSave : nonUserListSave,
@@ -142,7 +178,8 @@ module.exports = (db) => {
         updateItemQuantity : updateItemQuantity,
         updateItemName : updateItemName,
         updateItemPacked : updateItemPacked,
-        updateSharedItem : updateSharedItem
+        updateSharedItem : updateSharedItem,
+        addCustomItem : addCustomItem
     }
 
 };

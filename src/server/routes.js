@@ -17,5 +17,6 @@ module.exports = (app, db) => {
     app.post('/update_item_name',packingLists.updateItemName);
     app.post('/update_item_packed',packingLists.updateItemPacked);
     app.post('/update_shared_item',packingLists.updateSharedItem);
+    app.post('/add_custom_item',packingLists.addCustomItem);
 
 };
