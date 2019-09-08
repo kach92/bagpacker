@@ -142,6 +142,7 @@ a {
   padding: 0.5rem 1rem 0.5rem 0.7rem;
   color:$white;
   letter-spacing: 1px;
+  border-radius: 0;
   &::after {
     content: "";
     display: inline-block;
@@ -160,22 +161,6 @@ a {
   }
   &:focus {
     outline: 0;
-  }
-}
-.btnSecondary {
-  text-transform: uppercase;
-  background-color: $blue;
-  border: none;
-  padding: 0.5rem 0.7rem!important;
-  color: $white;
-  letter-spacing: 1px;
-
-  &::after {
-    content: "";
-    display: inline-block;
-    width: 0!important;
-    height: 0!important;
-    border: none!important;
   }
 }
 
@@ -652,5 +637,30 @@ a {
 
   div {
     margin: 0;
+  }
+}
+button.btnSecondary {
+  text-transform: uppercase;
+  background-color: $black!important;
+  border: none;
+  padding: 0.5rem 0.7rem!important;
+  color: $white;
+  letter-spacing: 1px;
+
+  &::after {
+    content: "";
+    display: inline-block;
+    width: 0!important;
+    height: 0!important;
+    border: none!important;
+  }
+}
+
+.deleteModal {
+  padding: 1rem;
+
+  text-align: center;
+  h4 {
+    margin-bottom: 2rem;
   }
 }

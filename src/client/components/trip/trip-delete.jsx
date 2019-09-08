@@ -7,13 +7,14 @@ function DeleteTripModal(props) {
 	return (
 		<Modal
 			{...props}
-			size="lg"
+			size="md"
 			aria-labelledby="contained-modal-title-vcenter"
 			centered
+			className={mainStyles.deleteModal}
 		>
 			<Modal.Body>
 				<h4>Confirm Delete?</h4>
-				<Button className={mainStyles.btnSecondary} onClick={(e)=>{props.deleteTrip(e)}}>
+				<Button className={`${mainStyles.btn} ${mainStyles.btnSecondary}`} onClick={(e)=>{props.deleteTrip(e)}}>
 					Delete
 				</Button>
 			</Modal.Body>
