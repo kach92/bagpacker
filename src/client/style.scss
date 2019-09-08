@@ -400,6 +400,10 @@ a {
     border-bottom: 1px solid $gray;
     padding: .375rem 0;
     //font-weight: 300;
+    &:disabled {
+      background:transparent;
+      color: $gray
+    }
   }
   input[type="radio"]{
     display: inline-block;

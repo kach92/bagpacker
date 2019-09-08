@@ -79,19 +79,19 @@ class EditProfilePassword extends React.Component {
 					<Col xs={12}>
 						<Form.Group>
 							<label>Old Password</label>
-							<Form.Control type="password" onChange={this.updateOldPassword}></Form.Control>
+							<Form.Control type="password" value={this.state.formInputs.oldPassword} onChange={this.updateOldPassword}></Form.Control>
 						</Form.Group>
 					</Col>
 					<Col xs={12}>
 						<Form.Group>
 							<label>New Password</label>
-							<Form.Control type="password" onChange={this.updateNewPassword}></Form.Control>
+							<Form.Control type="password" value={this.state.formInputs.newPassword} onChange={this.updateNewPassword}></Form.Control>
 						</Form.Group>
 					</Col>
 					<Col xs={12}>
 						<Form.Group>
 							<label>Confirm New Password</label>
-							<Form.Control type="password" onChange={this.updateConfirmNewPassword}></Form.Control>
+							<Form.Control type="password" value={this.state.formInputs.confirmNewPassword} onChange={this.updateConfirmNewPassword}></Form.Control>
 						</Form.Group>
 					</Col>
 				</Row>
