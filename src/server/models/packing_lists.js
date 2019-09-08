@@ -343,8 +343,15 @@ module.exports = (dbPoolInstance) => {
 
     let getPackingListDetailsByUserIdAndTripId = async function (user_id,trip_id){
         try{
-            let query = 'SELECT * FROM packing_lists WHERE user_id = $1 AND trip_id = $2';
-            let arr = [user_id,trip_id];
+            let query = null;
+            let arr = null;
+            if(user_id){
+                query = 'SELECT * FROM packing_lists WHERE user_id = $1 AND trip_id = $2';
+                arr = [user_id,trip_id];
+            }else{
+                query = 'SELECT * FROM packing_lists WHERE user_id = null AND trip_id = $2';
+                arr = [trip_id];
+            }
             let queryResult = await dbPoolInstance.query(query,arr);
             if(queryResult.rows.length>0){
                 console.log("GET PACKING LIST DETAILS BY USER ID AND TRIP ID SUCCESS");

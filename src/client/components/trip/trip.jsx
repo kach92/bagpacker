@@ -15,8 +15,10 @@ class Trip extends React.Component {
 			trip: null,
 			list: null,
 			solo: true,
-			shared: null
+			shared: null,
+            trip_id:null
 		}
+        this.updateTripInfo = this.updateTripInfo.bind(this);
 	}
 
 	componentDidMount(){
@@ -31,7 +33,6 @@ class Trip extends React.Component {
 			}
 		}).then(res => res.json())
 			.then(res => {
-                console.log(res)
 				let solo = true;
 				let shared = null;
 				if (res.trip.group_id) {
@@ -41,6 +42,7 @@ class Trip extends React.Component {
 				this.setState({
 					trip: res.trip,
 					list: res.list,
+                    trip_id:res.trip.id,
 					solo,
 					shared
 
@@ -48,6 +50,36 @@ class Trip extends React.Component {
 			})
 			.catch(error => console.error('Error:', error));
 	}
+
+    updateTripInfo () {
+        console.log("TESTSETSETESTSETESTESTEST")
+        let fetchUrl = '/get_trip/'+this.state.trip_id;
+        fetch(fetchUrl, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(res => res.json())
+        .then(res => {
+            console.log(res)
+            let solo = true;
+            let shared = null;
+            if (res.trip.group_id) {
+                solo = false;
+                shared = res.shared;
+            }
+            this.setState({
+                trip: res.trip,
+                list: res.list,
+                solo,
+                shared
+
+            })
+        })
+        .catch(error => console.error('Error:', error));
+    }
+
     deleteTrip = (e) =>{
         let data ={
             trip_id:this.state.trip.id
@@ -93,7 +125,7 @@ class Trip extends React.Component {
 			}
 		}
 		else {
-			listDisplay = <GroupList userId={this.props.userId} list={this.state.list} shared={this.state.shared} tripId={this.state.trip.id}/>
+			listDisplay = <GroupList userId={this.props.userId} list={this.state.list} shared={this.state.shared} tripId={this.state.trip.id} updateTripInfo={this.updateTripInfo}/>
 		}
 		return (
 			<Row>

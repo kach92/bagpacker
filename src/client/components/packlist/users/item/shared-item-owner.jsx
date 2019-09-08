@@ -19,6 +19,8 @@ class SharedItemOwner extends React.Component {
                 this.setState({owner:x.firstname})
             }
         })
+        console.log("IHWEOFIHW;OIEHFOUHWEFIOUHWE")
+        console.log(this.props)
     }
 
     checkEdit = (e) => {
@@ -33,6 +35,8 @@ class SharedItemOwner extends React.Component {
     updateOwner = (e,userId) =>{
         this.setState({owner:e.target.innerText})
         this.props.updateSharedItem(userId,this.props.itemId);
+        this.props.updateTripInfo();
+        // location.reload();
     };
 
 

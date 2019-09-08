@@ -114,7 +114,7 @@ class SharedList extends React.Component {
 						{itemName}
 					</Col>
 					<Col xs={4}>
-						<SharedItemOwner itemId={item.id} item_packinglist_id={item.packing_list_id}tripmates={this.props.tripmates} updateSharedItem={this.updateSharedItem}/>
+						<SharedItemOwner itemId={item.id} item_packinglist_id={item.packing_list_id}tripmates={this.props.tripmates} updateSharedItem={this.updateSharedItem} updateTripInfo={this.props.updateTripInfo}/>
 					</Col>
 				</Row>
 			);
