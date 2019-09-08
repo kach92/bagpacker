@@ -463,6 +463,7 @@ a {
 
 .profileImage {
   display: block;
+  margin-bottom: 2rem;
   &:after {
     content:"";
     display: block;
@@ -596,4 +597,14 @@ a {
 
 .addButton {
   font-weight: 300;
+}
+
+.formError {
+  border: 1px solid red;
+  padding: 1rem 0;
+  margin-bottom: 2rem;
+  p {
+    margin: 0;
+    text-align: center;
+  }
 }
