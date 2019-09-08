@@ -1,12 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Category from './category';
-import {CardColumns} from "react-bootstrap";
+import {Card, CardColumns, Col, Row} from "react-bootstrap";
 import mainStyles from "../../../style.scss";
+import ItemAdd from "./item-add";
 
 class List extends React.Component {
 	constructor(){
 		super();
+		this.state = {
+			adding: false
+		};
 	}
 
 	packItem = (checked,item_id) => {
@@ -95,6 +99,9 @@ class List extends React.Component {
             .catch(error => console.error('Error:', error));
     };
 
+    checkAdding = () => {
+		this.setState({adding:true});
+    };
 	render() {
 		let list = this.props.list;
 		let ListComponent = this;
@@ -112,10 +119,34 @@ class List extends React.Component {
 				/>
 			);
 		});
+		let newCategory = null;
+
+		if (this.state.adding) {
+			newCategory = (
+				<Card className={mainStyles.listCard}>
+					<Card.Body>
+						<Row>
+							<Col>
+								<h4>New Category</h4>
+							</Col>
+						</Row>
+						<ItemAdd addItem={this.props.addItem}/>
+					</Card.Body>
+				</Card>
+			)
+		}
 		return (
-			<CardColumns className={mainStyles.packlist}>
-				{categories}
-			</CardColumns>
+			<Row className="mb-5">
+				<Col>
+					<CardColumns className={mainStyles.packlist}>
+						{categories}
+						{newCategory}
+					</CardColumns>
+					<div className="text-center">
+						<div className={`mt-3 ${mainStyles.addButton}`} onClick={this.checkAdding}><i className='bx bx-plus'></i> Add new category</div>
+					</div>
+				</Col>
+			</Row>
 
 		);
 	}
