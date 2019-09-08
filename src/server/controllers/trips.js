@@ -7,8 +7,6 @@ module.exports = (db) => {
 
         try {
 
-
-
             let user_id = parseInt(request.cookies["user_id"]);
             let group_ids = await db.users.getUserGroups(user_id);
             let trip = await db.trips.getTripsOfUser(user_id,group_ids);
@@ -29,7 +27,7 @@ module.exports = (db) => {
             response.send(result);
 
         } catch (error) {
-            console.log("non user list controller " +error)
+            console.log("get all trips controller  " +error)
         }
 
     };

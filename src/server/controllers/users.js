@@ -87,10 +87,11 @@ module.exports = (db) => {
 
     let editProfilePassword = async function (request,response){
         try{
+
             let user_id = request.cookies["user_id"];
             //check old password, if tally only change password
             let user_info = await db.users.getUserDetailsById(user_id);
-            if(sha256(userinfo.password) === sha256(request.body.old_password)){
+            if(user_info.password === sha256(request.body.old_password)){
                 let changePassword = await db.users.changePassword(sha256(request.body.new_password),user_id);
                 response.send(true)
             }else{

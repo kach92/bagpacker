@@ -54,10 +54,17 @@ module.exports = (dbPoolInstance) => {
 
     let getTripsOfUser = async function(user_id,group_ids){
         try{
-
-            group_ids = [group_ids]
-
-            let query = format('SELECT * FROM trips WHERE user_id = %L OR group_id IN %L',user_id,group_ids);
+            let query = null
+            console.log("iohnheowifhowehfhouwe")
+            console.log(group_ids)
+            if (group_ids.length <1){
+                console.log("test")
+                query = format('SELECT * FROM trips WHERE user_id = %L',user_id);
+            }else{
+                console.log("test")
+                group_ids = [group_ids]
+                query = format('SELECT * FROM trips WHERE user_id = %L OR group_id IN %L',user_id,group_ids);
+            }
 
             let queryResult = await dbPoolInstance.query(query);
             if (queryResult.rows.length > 0) {
