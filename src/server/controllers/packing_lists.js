@@ -137,7 +137,7 @@ module.exports = (db) => {
 
     let addCustomItem = async function (request, response){
         try {
-            let user_id = parseInt(request.body.user_id);
+            let user_id = parseInt(request.cookies["user_id"]);
             let item_name = request.body.item_name;
             let quantity = parseInt(request.body.quantity);
             let category = request.body.category;
@@ -146,7 +146,7 @@ module.exports = (db) => {
             let group_id = null;
             let packing_list_id = null;
             let shared = null;
-            if(isNaN(user_id)){
+            if(category === "Shared"){
                 console.log("ADD CUSTOM ITEM INTO GROUP LIST");
                 packing_list_details = await db.packingList.getPackingListDetailsByUserIdAndTripId(null,trip_id);
                 shared = true;
