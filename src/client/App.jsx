@@ -27,7 +27,8 @@ class App extends React.Component {
 			packlist : null,
 			authed : false,
 			userId : null,
-			username: null
+			username: null,
+            userImg: null
 		};
         this.checkUser = this.checkUser.bind(this);
 	}
@@ -47,11 +48,13 @@ class App extends React.Component {
             let val = value.split("=");
             cookies[val[0]] = val[1];
         });
+        console.log(decodeURIComponent(cookies.user_img))
         if(cookies.session === sha256(cookies.user_id + "logged_in" + SALT)){
             this.setState({
                 authed: true,
 				userId: parseInt(cookies.user_id),
-				username: cookies.user_name
+				username: cookies.user_name,
+                userImg: decodeURIComponent(cookies.user_img)
             });
         }
     }
@@ -60,7 +63,7 @@ class App extends React.Component {
 		return (
 			<Router>
 				<Route path="/" render={props => (
-					<Navigation authed={this.state.authed} checkUser={this.checkUser} username={this.state.username} {...props}/>
+					<Navigation authed={this.state.authed} checkUser={this.checkUser} username={this.state.username} userImg={this.state.userImg}{...props}/>
 				)}/>
 				<Container className={mainStyles.wrapper}  fluid>
 					<Route exact path="/" render={props => (

@@ -16,7 +16,7 @@ class EditProfileInfo extends React.Component {
 	photoUploaded = (e) => {
 		console.log("uploaded");
 		let photo = Array.from(e.target.files)[0];
-		this.setState({uploaded:true, photo});
+		this.setState({uploaded:true, photo:photo});
 	};
 
 	submit = (e) => {
@@ -27,15 +27,13 @@ class EditProfileInfo extends React.Component {
 		}
 	};
 	uploadToServer = (photo) => {
+        console.log(photo)
 		const formData = new FormData();
 		formData.append('myFile',photo);
 
 		fetch('/change_profile_pic', {
 			method: 'POST',
-			body: formData,
-			headers:{
-				'Content-Type': 'multipart/form-data'
-			}
+			body: formData
 		}).then(res => res.json())
 			.then(res => console.log(res))
 			.catch(error => console.error('Error:', error));

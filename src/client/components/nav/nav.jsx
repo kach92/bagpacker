@@ -44,6 +44,13 @@ class Navigation extends React.Component {
 	};
 
 	render() {
+        let navUserImage = null;
+        console.log(this.props.userImg)
+        if (this.props.userImg !== null) {
+            navUserImage = {backgroundImage: `url(${this.props.userImg})`};
+        }
+
+
 		let navlinks = (
 			<React.Fragment>
 				<li>
@@ -57,7 +64,8 @@ class Navigation extends React.Component {
 		let title = (
 			<React.Fragment>
 				<div className={mainStyles.navUsername}>{this.props.username}</div>
-				<div className={mainStyles.navUserImage}></div>
+
+				<div className={mainStyles.navUserImage} style={navUserImage}></div>
 			</React.Fragment>
 		);
 		if(this.props.authed) {

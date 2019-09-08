@@ -26,6 +26,7 @@ module.exports = (db) => {
                         response.cookie("user_id", result.id);
                         response.cookie("user_name", result.firstname);
                         response.cookie("session", sha256(result.id + "logged_in" + SALT));
+                        response.cookie("user_img",result.image);
                         response.send(true)
                     }else{
                         console.log("SIGN UP FAIL")
@@ -52,6 +53,7 @@ module.exports = (db) => {
                     response.cookie("user_id", result.id);
                     response.cookie("user_name", result.firstname);
                     response.cookie("session", sha256(result.id + "logged_in" + SALT));
+                    response.cookie("user_img",result.image);
                     response.send(true);
                 }else{
                     console.log("PASSWORD NOT MATCHED");
@@ -106,7 +108,7 @@ module.exports = (db) => {
         try{
             let user_id = request.cookies["user_id"];
             let result = await cloudinary.uploader.upload(request.file.path)
-            let changePic = await db.user.changeProfilePic(user_id,result.url);
+            let changePic = await db.users.changeProfilePic(user_id,result.url);
             response.send(true);
 
         }catch (error){
