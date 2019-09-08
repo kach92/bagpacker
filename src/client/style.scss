@@ -636,6 +636,7 @@ a {
     border-radius: 0;
     border-bottom: 1px solid $gray;
     padding: 0;
+    letter-spacing: 0.5px;
     &:after {
       position: absolute;
       right: 0;
@@ -647,5 +648,9 @@ a {
       background: transparent!important;
       color: $black!important;
     }
+  }
+
+  div {
+    margin: 0;
   }
 }

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import mainStyles from "../../../../style.scss";
 import {Col, Row, Dropdown, DropdownButton, Form} from "react-bootstrap";
 import List from "../list";
+import SharedList from "../shared-list";
 
 class SharedItemOwner extends React.Component {
     constructor(){
@@ -11,8 +12,6 @@ class SharedItemOwner extends React.Component {
             editing : false,
             owner : "No owner"
         };
-         this.setWrapperRef = this.setWrapperRef.bind(this);
-         this.handleClickOutside = this.handleClickOutside.bind(this);
     }
 
 
@@ -20,40 +19,31 @@ class SharedItemOwner extends React.Component {
         if(!this.state.editing){
             this.setState({editing:true})
         }
-        document.addEventListener('mousedown', this.handleClickOutside);
+        else {
+            this.setState({editing:false});}
+
     };
 
-    updateOwner = (e) =>{
-        this.setState({item_quantity:e.target.value});
+    updateOwner = (e,userId) =>{
+        this.props.updateSharedItem(userId,this.props.itemId);
     };
 
-    setWrapperRef = (node) => {
-        this.wrapperRef = node;
-    };
-
-    handleClickOutside = (event) => {
-        if (this.wrapperRef && !this.wrapperRef.contains(event.target)) {
-            this.setState({
-                editing:false
-            });
-        }
-    };
 
     render(){
         let itemOwner = null;
         let tripmatesOptions = [];
         this.props.tripmates.map((user,index)=>{
             tripmatesOptions.push(
-                <Dropdown.Item key={index} href="#">{user.firstname}</Dropdown.Item>);
+                <Dropdown.Item key={index} href="#" onClick={(e)=>{this.updateOwner(e,user.id)}}>{user.firstname}</Dropdown.Item>);
         });
         if (this.state.editing) {
             itemOwner =(
-                <DropdownButton title={this.state.owner} className={mainStyles.ownerDropdown}>
+                <DropdownButton onMouseLeave={this.checkEdit} title={this.state.owner} className={mainStyles.ownerDropdown}>
                     {tripmatesOptions}
                 </DropdownButton>
             )
         }else{
-            itemOwner = <div onClick={this.checkEdit}><p>{this.state.owner}</p></div>;
+            itemOwner = <div onMouseEnter={this.checkEdit}><p>{this.state.owner}</p></div>;
         }
 
         return(
@@ -69,5 +59,8 @@ class SharedItemOwner extends React.Component {
 
     }
 }
-
+SharedItemOwner.propTypes ={
+    itemId: PropTypes.number,
+    updateSharedItem: PropTypes.func
+};
 export default SharedItemOwner;

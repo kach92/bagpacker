@@ -60,6 +60,7 @@ class SharedList extends React.Component {
 		let data = {
 			user_id: this.props.userId,
 			trip_id: this.props.tripId,
+			category: "Shared",
 			item_name: name,
 			quantity: quantity
 		};
@@ -79,7 +80,24 @@ class SharedList extends React.Component {
 		// }).then(res => console.log(res))
 		// 	.catch(error => console.error('Error:', error));
 	};
+	updateSharedItem = (userId,itemId) => {
+		let data = {
+			item_id: itemId,
+			user_id: userId,
+			trip_id: this.props.tripId
+		};
+		fetch('/update_shared_item', {
+			method: 'POST',
+			body: JSON.stringify(data),
+			headers:{
+				'Content-Type': 'application/json'
+			}
+		}).then(res => res.json())
+			.then(res => console.log(res))
+			.catch(error => console.error('Error:', error));
+	};
 	render() {
+		console.log(this.props.tripId);
 		let items = this.props.list.map((item, index)=> {
 			let itemName = <Item item_name={item.name} item_id={item.id} submitNameEdit={this.submitNameEdit}/>
 			let itemQty = <ItemQty item_quantity={item.quantity} item_id={item.id} submitQtyEdit={this.submitQtyEdit}/>
@@ -96,7 +114,7 @@ class SharedList extends React.Component {
 						{itemName}
 					</Col>
 					<Col xs={4}>
-						<SharedItemOwner tripmates={this.props.tripmates}/>
+						<SharedItemOwner itemId={item.id} tripmates={this.props.tripmates} updateSharedItem={this.updateSharedItem}/>
 					</Col>
 				</Row>
 			);
@@ -119,6 +137,7 @@ class SharedList extends React.Component {
 }
 SharedList.propTypes ={
 	list: PropTypes.array,
-	tripmates: PropTypes.array
+	tripmates: PropTypes.array,
+	tripId: PropTypes.number
 };
 export default SharedList;

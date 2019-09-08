@@ -48,7 +48,7 @@ class GroupList extends React.Component {
 		return (
 			<Row className={mainStyles.packlist}>
 				<Col xs={12}>
-					<SharedList list={this.props.shared} tripmates={this.props.list}/>
+					<SharedList list={this.props.shared} tripmates={this.props.list} tripId={this.props.tripId}/>
 				</Col>
 				<Col xs={12} className="my-5">
 					<Row>
@@ -75,6 +75,7 @@ class GroupList extends React.Component {
 GroupList.propTypes ={
 	list: PropTypes.array,
 	shared: PropTypes.array,
-	userId: PropTypes.number
+	userId: PropTypes.number,
+	tripId: PropTypes.number
 };
 export default GroupList;
