@@ -26,44 +26,33 @@ class ItemQty extends React.Component {
             this.setState({editing:true})
         }
         document.addEventListener('mousedown', this.handleClickOutside);
-    }
-
-    updateQuantity = (e) =>{
-        this.setState({item_quantity:e.target.value})
-        this.props.submitQtyEdit(this.state.item_id,e.target.value);
-    }
-
-    checkKey = (e) => {
-        if(e.keyCode == 13){
-            this.props.submitQtyEdit(this.state.item_id,this.state.item_quantity);
-            this.setState({
-                editing:false
-            });
-            document.removeEventListener('mousedown', this.handleClickOutside);
-        }
-
     };
 
-    setWrapperRef(node) {
-        this.wrapperRef = node;
-    }
+    updateQuantity = (e) =>{
+        this.setState({item_quantity:e.target.value});
+        this.props.submitQtyEdit(this.state.item_id,e.target.value);
+    };
 
-    handleClickOutside(event) {
+    setWrapperRef = (node) => {
+        this.wrapperRef = node;
+    };
+
+    handleClickOutside = (event) => {
         if (this.wrapperRef && !this.wrapperRef.contains(event.target)) {
             this.setState({
                 editing:false
             });
         }
-    }
+    };
 
     render(){
         let itemQuantity = null;
         if (this.state.editing) {
             itemQuantity =
-                <input type="number" value={this.state.item_quantity} min="1" ref={this.setWrapperRef} onChange={(e) => this.updateQuantity(e)} />
+                <input type="number" value={this.state.item_quantity} min="1" ref={this.setWrapperRef} onChange={this.updateQuantity} />
 
         }else{
-            itemQuantity = <div onClick={(e)=>this.checkEdit(e)}><p>{this.state.item_quantity}</p></div>;
+            itemQuantity = <div onClick={this.checkEdit}><p>{this.state.item_quantity}</p></div>;
         }
 
         return(

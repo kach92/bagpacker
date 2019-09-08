@@ -5,6 +5,7 @@ import mainStyles from "../../../style.scss";
 import Item from './item';
 import ItemQty from './item-qty';
 import ItemChecked from './item-checked';
+import ItemAdd from './item-add';
 
 class Category extends React.Component {
     constructor(){
@@ -20,17 +21,17 @@ class Category extends React.Component {
         this.setState({items:items})
     }
 
-
-    deleteItem(e,item_id){
+    deleteItem = (e,item_id) => {
         let updatedItems = this.state.items;
         updatedItems = updatedItems.filter(item => item.id !== item_id);
         console.log("filtered", updatedItems);
         this.setState({items:updatedItems});
         this.props.deleteItem(item_id);
-    }
+    };
 
 	render() {
-        let items = this.state.items? this.state.items.map((item, index)=> {
+		console.log(this.props);
+        let items = this.state.items? this.state.items.map((item)=> {
             let itemName = <Item item_name={item.name} item_id={item.id} submitNameEdit={this.props.submitNameEdit}/>
             let itemQty = <ItemQty item_quantity={item.quantity} item_id={item.id} submitQtyEdit={this.props.submitQtyEdit}/>
             let itemChecked = <ItemChecked item_packed={item.packed} packItem={this.props.packItem} item_id={item.id} />
@@ -46,7 +47,7 @@ class Category extends React.Component {
 						{itemName}
 					</Col>
                     <Col xs={1}>
-                        <i className={`bx bx-x ${mainStyles["delete-button"]}`} onClick={(e)=>{this.deleteItem(e,item.id)}}></i>
+                        <i className={`bx bx-x ${mainStyles.deleteButton}`} onClick={(e)=>{this.deleteItem(e,item.id)}}></i>
                     </Col>
 				</Row>
 			);
@@ -59,7 +60,10 @@ class Category extends React.Component {
 							<h4>{this.props.category}</h4>
 						</Col>
 					</Row>
+
 					{items}
+
+					<ItemAdd addItem={this.props.addItem}/>
 				</Card.Body>
 			</Card>
 
@@ -70,5 +74,7 @@ Category.propTypes ={
 	items: PropTypes.array,
 	category: PropTypes.string,
 	packItem: PropTypes.func,
+	addItem: PropTypes.func,
+	deleteItem: PropTypes.func
 };
 export default Category;
