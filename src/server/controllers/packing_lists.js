@@ -127,8 +127,8 @@ module.exports = (db) => {
             let user_id = parseInt(request.body.user_id);
             let trip_id = parseInt(request.body.trip_id);
 
-            let user_packing_list_id = await db.packList.getUserPackingListIdByUserIdAndTripId(user_id,trip_id);
-            let doUpdate = await db.packList.updateSharedItemId(item_id,user_packing_list_id);
+            let user_packing_list_id = await db.packingList.getUserPackingListIdByUserIdAndTripId(user_id,trip_id);
+            let doUpdate = await db.packingList.updateSharedItemId(item_id,user_packing_list_id);
             response.send(true);
         } catch (error) {
             console.log("update shared item "+ error);
