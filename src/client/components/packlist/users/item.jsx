@@ -8,9 +8,7 @@ class Item extends React.Component {
             editing : false,
             item_id : null,
             item_name : null
-        }
-         this.setWrapperRef = this.setWrapperRef.bind(this);
-         this.handleClickOutside = this.handleClickOutside.bind(this);
+        };
     }
 
     componentDidMount(){
@@ -26,14 +24,14 @@ class Item extends React.Component {
             this.setState({editing:true})
         }
         document.addEventListener('mousedown', this.handleClickOutside);
-    }
+    };
 
     updateName = (e) =>{
         this.setState({item_name:e.target.value})
-    }
+    };
 
     checkKey = (e) => {
-        if(e.keyCode == 13){
+        if(e.keyCode === 13){
             this.props.submitNameEdit(this.state.item_id,this.state.item_name);
             this.setState({
                 editing:false
@@ -43,26 +41,26 @@ class Item extends React.Component {
 
     };
 
-    setWrapperRef(node) {
+    setWrapperRef = (node) => {
         this.wrapperRef = node;
-    }
+    };
 
-    handleClickOutside(event) {
+    handleClickOutside = (event) => {
         if (this.wrapperRef && !this.wrapperRef.contains(event.target)) {
             this.setState({
                 editing:false
             });
             this.props.submitNameEdit(this.state.item_id,this.state.item_name);
         }
-    }
+    };
 
     render(){
         let itemName = null;
         if (this.state.editing) {
             itemName =
-                <input type="text" value={this.state.item_name} ref={this.setWrapperRef} onChange={(e) => this.updateName(e)} onKeyDown={(e)=>this.checkKey(e)}/>
+                <input type="text" value={this.state.item_name} ref={this.setWrapperRef} onChange={this.updateName} onKeyDown={(e)=>this.checkKey(e)}/>
         }else{
-            itemName = <div onClick={(e)=>this.checkEdit(e)}><p>{this.state.item_name}</p></div>;
+            itemName = <div onClick={this.checkEdit}><p>{this.state.item_name}</p></div>;
         }
         return(
             itemName

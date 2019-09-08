@@ -50,7 +50,7 @@ class Trip extends React.Component {
     deleteTrip = (e) =>{
         let data ={
             trip_id:this.state.trip.id
-        }
+        };
         let fetchUrl = '/delete_trip';
         fetch(fetchUrl, {
             method: 'POST',
@@ -88,7 +88,7 @@ class Trip extends React.Component {
 		if (this.state.solo) {
 			let list = this.state.list;
 			if (list) {
-				listDisplay = <List list={this.state.list}/>
+				listDisplay = <List userId={this.props.userId} list={this.state.list} tripId={this.state.trip.id}/>
 			}
 		}
 		else {

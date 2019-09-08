@@ -65,7 +65,7 @@ class Navigation extends React.Component {
 				<React.Fragment>
 					<Link to="/" className="nav-link">Trips</Link>
 					<NavDropdown title={title} onMouseEnter = { this.handleOpen } onMouseLeave = { this.handleClose } show={ this.state.hoverOverDropDown } className={mainStyles.dropdownMenu}>
-						<NavDropdown.Item><Link to="/user/edit">Edit Profile</Link></NavDropdown.Item>
+						<NavDropdown.Item href="/user/edit">Edit Profile</NavDropdown.Item>
 						<NavDropdown.Item onClick={this.signOut}>Sign Out</NavDropdown.Item>
 					</NavDropdown>
 				</React.Fragment>

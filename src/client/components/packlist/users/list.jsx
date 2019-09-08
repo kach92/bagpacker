@@ -54,7 +54,31 @@ class List extends React.Component {
 		}).then(res => console.log(res))
 			.catch(error => console.error('Error:', error));
 	};
+	addItem = (name, quantity) => {
+		console.log('add');
+		console.log(quantity, name);
+		let data = {
+			user_id: this.props.userId,
+			trip_id: this.props.tripId,
+			item_name: name,
+			quantity: quantity
+		};
+		console.log(data);
+		// let user_id = parseInt(request.body.user_id);
+		// let item_name = request.body.item_name;
+		// let quantity = parseInt(request.body.quantity);
+		// let category = request.body.category;
+		// let trip_id = parseInt(request.body.trip_id);
 
+		// fetch('/update_item_quantity', {
+		// 	method: 'POST',
+		// 	body: JSON.stringify(data),
+		// 	headers: {
+		// 		'Content-Type': 'application/json'
+		// 	}
+		// }).then(res => console.log(res))
+		// 	.catch(error => console.error('Error:', error));
+	};
     deleteItem = (item_id) =>{
         let data = {
             item_id
@@ -69,8 +93,7 @@ class List extends React.Component {
             .then(res => {
             })
             .catch(error => console.error('Error:', error));
-    }
-
+    };
 
 	render() {
 		let list = this.props.list;
@@ -84,6 +107,7 @@ class List extends React.Component {
 					packItem={ListComponent.packItem}
                     submitNameEdit={ListComponent.submitNameEdit}
                     submitQtyEdit={ListComponent.submitQtyEdit}
+					addItem={ListComponent.addItem}
                     deleteItem={ListComponent.deleteItem}
 				/>
 			);
@@ -97,6 +121,8 @@ class List extends React.Component {
 	}
 }
 List.propTypes ={
-	list: PropTypes.object
+	list: PropTypes.object,
+	userId: PropTypes.number,
+	tripId: PropTypes.number
 };
 export default List;

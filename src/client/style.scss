@@ -60,6 +60,9 @@ a {
     width: 36px;
     height: 36px;
   }
+  a:active {
+    background-color: transparent!important;
+  }
 }
 
 .sidePanel {
@@ -539,6 +542,7 @@ a {
   }
   .listCard {
     border-radius: 0;
+    margin-bottom: 2rem;
     h4 {
       margin-bottom: 2rem;
     }
@@ -581,6 +585,15 @@ a {
   }
 }
 
-.delete-button{
+.deleteButton,
+.addButton{
     cursor: pointer;
+  &:hover {
+    opacity: 0.5;
+    transition: 0.3s;
+  }
+}
+
+.addButton {
+  font-weight: 300;
 }
