@@ -8,13 +8,36 @@ class EditProfileInfo extends React.Component {
 		super();
 		this.state = {
 			formInputs: {
-				email: "email",
-				firstName: "",
-				lastName: ""
+				email: null,
+				firstName: null,
+				lastName: null
 			},
 			errorMessage: ""
 		};
 	}
+
+    componentDidMount(){
+        fetch('/get_user_info', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(res => res.json())
+        .then(res => {
+            console.log(res)
+            this.setState({
+                formInputs : {
+                    firstName : res.firstname,
+                    lastName : res.lastname,
+                    email : res.email
+                }
+
+            });
+        })
+        .catch(error => console.error('Error:', error));
+
+    }
 
 	updateFirstName = (e) => {
 		let formInputs = this.state.formInputs;
@@ -42,8 +65,8 @@ class EditProfileInfo extends React.Component {
 	};
 	updateInfo = () => {
 		let data = {
-			first_name: this.state.formInputs.firstName,
-			last_name: this.state.formInputs.lastName
+			firstName: this.state.formInputs.firstName,
+			lastName: this.state.formInputs.lastName
 		};
 		fetch('/edit_profile_general', {
 			method: 'POST',
@@ -52,7 +75,7 @@ class EditProfileInfo extends React.Component {
 				'Content-Type': 'application/json'
 			}
 		}).then(res => res.json())
-			.then(res => this.props.history.push('/'))
+			.then(res =>console.log("update profile ok"))
 			.catch(error => console.error('Error:', error));
 	};
 	render() {
