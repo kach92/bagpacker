@@ -146,17 +146,16 @@ module.exports = (db) => {
             let group_id = null;
             let packing_list_id = null;
             let shared = null;
-
-            if(user_id){
-                console.log("ADD CUSTOM ITEM INTO USER LIST");
-                packing_list_details = await db.packingList.getPackingListDetailsByUserIdAndTripId(user_id,trip_id);
-                shared = false;
-
-
-            }else{
+            if(isNaN(user_id)){
                 console.log("ADD CUSTOM ITEM INTO GROUP LIST");
                 packing_list_details = await db.packingList.getPackingListDetailsByUserIdAndTripId(null,trip_id);
                 shared = true;
+
+
+            }else{
+                console.log("ADD CUSTOM ITEM INTO USER LIST");
+                packing_list_details = await db.packingList.getPackingListDetailsByUserIdAndTripId(user_id,trip_id);
+                shared = false;
             }
 
             group_id = packing_list_details.group_id;

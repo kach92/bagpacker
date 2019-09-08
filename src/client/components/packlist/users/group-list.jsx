@@ -36,7 +36,7 @@ class GroupList extends React.Component {
 		list.map((user,index)=>{
 			if (user.id === this.props.userId){
 				currentUser = index;
-				listToShow = <List list={list[currentUser].items}/>
+				listToShow = <List list={list[currentUser].items} tripId={this.props.tripId}/>
 			}
 			tripmatesOptions.push(<option key={index} value={index}>{user.firstname} {user.lastname}</option>);
 		});
