@@ -60,7 +60,6 @@ class List extends React.Component {
 	};
 	addItem = (name, quantity,category) => {
 		let data = {
-			user_id: this.props.userId,
 			trip_id: this.props.tripId,
 			category,
 			item_name: name,
