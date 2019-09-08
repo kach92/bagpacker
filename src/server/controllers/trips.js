@@ -60,6 +60,7 @@ module.exports = (db) => {
                         finalList["Shared"] = listItems.filter(x=>x.category === "Shared")
                     }
                     user["items"] = finalList;
+                    user["packing_list_id"] = packingList[i].id;
                     individualList.push(user);
                 }
 

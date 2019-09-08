@@ -13,7 +13,13 @@ class SharedItemOwner extends React.Component {
             owner : "No owner"
         };
     }
-
+    componentDidMount(){
+        this.props.tripmates.forEach(x=>{
+            if(x.packing_list_id === this.props.item_packinglist_id){
+                this.setState({owner:x.firstname})
+            }
+        })
+    }
 
     checkEdit = (e) => {
         if(!this.state.editing){
@@ -25,6 +31,7 @@ class SharedItemOwner extends React.Component {
     };
 
     updateOwner = (e,userId) =>{
+        this.setState({owner:e.target.innerText})
         this.props.updateSharedItem(userId,this.props.itemId);
     };
 

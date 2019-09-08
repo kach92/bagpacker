@@ -31,6 +31,7 @@ class Trip extends React.Component {
 			}
 		}).then(res => res.json())
 			.then(res => {
+                console.log(res)
 				let solo = true;
 				let shared = null;
 				if (res.trip.group_id) {
