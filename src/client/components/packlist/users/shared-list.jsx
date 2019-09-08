@@ -2,9 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {Card,Col,Row,Form} from "react-bootstrap";
 import mainStyles from "../../../style.scss";
-import Item from "./item";
-import ItemQty from "./item-qty";
-import ItemChecked from "./item-checked";
+import Item from "./item/item";
+import ItemQty from "./item/item-qty";
+import ItemChecked from "./item/item-checked";
+import ItemAdd from "./item/item-add";
+import SharedItemOwner from "./item/shared-item-owner";
 
 class SharedList extends React.Component {
 	packItem = (checked,item_id) => {
@@ -52,6 +54,31 @@ class SharedList extends React.Component {
 		}).then(res => console.log(res))
 			.catch(error => console.error('Error:', error));
 	};
+	addItem = (name, quantity) => {
+		console.log('add');
+		console.log(quantity, name);
+		let data = {
+			user_id: this.props.userId,
+			trip_id: this.props.tripId,
+			item_name: name,
+			quantity: quantity
+		};
+		console.log(data);
+		// let user_id = parseInt(request.body.user_id);
+		// let item_name = request.body.item_name;
+		// let quantity = parseInt(request.body.quantity);
+		// let category = request.body.category;
+		// let trip_id = parseInt(request.body.trip_id);
+
+		// fetch('/update_item_quantity', {
+		// 	method: 'POST',
+		// 	body: JSON.stringify(data),
+		// 	headers: {
+		// 		'Content-Type': 'application/json'
+		// 	}
+		// }).then(res => console.log(res))
+		// 	.catch(error => console.error('Error:', error));
+	};
 	render() {
 		let items = this.props.list.map((item, index)=> {
 			let itemName = <Item item_name={item.name} item_id={item.id} submitNameEdit={this.submitNameEdit}/>
@@ -65,8 +92,11 @@ class SharedList extends React.Component {
 					<Col xs={1}>
 						{itemQty}
 					</Col>
-					<Col xs={10} className="pl-0">
+					<Col xs={6}>
 						{itemName}
+					</Col>
+					<Col xs={4}>
+						<SharedItemOwner tripmates={this.props.tripmates}/>
 					</Col>
 				</Row>
 			);
@@ -79,8 +109,8 @@ class SharedList extends React.Component {
 							<h4>Shared Items</h4>
 						</Col>
 					</Row>
-
 					{items}
+					<ItemAdd addItem={this.addItem}/>
 				</Card.Body>
 			</Card>
 
@@ -88,6 +118,7 @@ class SharedList extends React.Component {
 	}
 }
 SharedList.propTypes ={
-	list: PropTypes.array
+	list: PropTypes.array,
+	tripmates: PropTypes.array
 };
 export default SharedList;
