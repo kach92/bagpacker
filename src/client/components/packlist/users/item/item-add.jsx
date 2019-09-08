@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Col, Row} from "react-bootstrap";
-import mainStyles from "../../../style.scss";
+import mainStyles from "../../../../style.scss";
 
 class ItemAdd extends React.Component {
     constructor() {
@@ -81,4 +81,7 @@ class ItemAdd extends React.Component {
     }
 }
 
+ItemAdd.propTypes ={
+    addItem: PropTypes.func
+};
 export default ItemAdd;

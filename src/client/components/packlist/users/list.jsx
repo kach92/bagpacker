@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Category from './category';
 import {Card, CardColumns, Col, Row} from "react-bootstrap";
 import mainStyles from "../../../style.scss";
-import ItemAdd from "./item-add";
+import ItemAdd from "./item/item-add";
 
 class List extends React.Component {
 	constructor(){

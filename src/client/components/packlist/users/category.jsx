@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {Card,Col,Row,Form} from "react-bootstrap";
 import mainStyles from "../../../style.scss";
-import Item from './item';
-import ItemQty from './item-qty';
-import ItemChecked from './item-checked';
-import ItemAdd from './item-add';
+import Item from './item/item';
+import ItemQty from './item/item-qty';
+import ItemChecked from './item/item-checked';
+import ItemAdd from './item/item-add';
 
 class Category extends React.Component {
     constructor(){

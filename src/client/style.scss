@@ -465,20 +465,26 @@ a {
   }
 }
 
-.profileImage {
+.profileImage,
+.ownerImage{
   display: block;
   margin-bottom: 2rem;
+  background-image: url("./images/profile.svg");
+  -webkit-background-size: contain;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
   &:after {
     content:"";
     display: block;
     width: 100%;
     padding-bottom: 100%;
     border-radius: 0;
-    background-image: url("./images/profile.svg");
-    -webkit-background-size: contain;
-    background-size: contain;
-    background-repeat: no-repeat;
   }
+}
+.ownerImage {
+  margin-bottom: 0;
+  padding: 0 0 0 0.5rem;
 }
 
 .profileImageForm {
@@ -610,5 +616,41 @@ a {
   p {
     margin: 0;
     text-align: center;
+  }
+}
+
+.ownerDropdown {
+  button {
+    color: $black!important;
+    background: transparent!important;
+    text-align: left;
+    display:block;
+    position: static;
+    opacity: 1;
+    cursor: default;
+    height: auto;
+    width: 100%;
+    border: none;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+    border-bottom: 1px solid $gray;
+    padding: 0;
+    letter-spacing: 0.5px;
+    &:after {
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+    &:hover,&:focus,&:active,&:active:focus {
+      box-shadow: none!important;
+      background: transparent!important;
+      color: $black!important;
+    }
+  }
+
+  div {
+    margin: 0;
   }
 }

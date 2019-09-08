@@ -92,7 +92,7 @@ class Trip extends React.Component {
 			}
 		}
 		else {
-			listDisplay = <GroupList userId={this.props.userId} list={this.state.list} shared={this.state.shared}/>
+			listDisplay = <GroupList userId={this.props.userId} list={this.state.list} shared={this.state.shared} tripId={this.state.trip.id}/>
 		}
 		return (
 			<Row>
