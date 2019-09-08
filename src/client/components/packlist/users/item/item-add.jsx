@@ -52,7 +52,7 @@ class ItemAdd extends React.Component {
                 });
             }
             else {
-                this.props.addItem(this.state.item_name,this.state.item_quantity);
+                this.props.addItem(this.state.item_name,this.state.item_quantity,this.props.category);
             }
             document.removeEventListener('mousedown', this.handleClickOutside);
         }
@@ -62,12 +62,12 @@ class ItemAdd extends React.Component {
         let itemAdd = null;
         if (this.state.editing) {
             itemAdd =(
-                <Row className='mt-3' >
+                <Row className='mt-3' ref={this.setWrapperRef}>
                     <Col xs={2}>
-                        <input type="number" value={this.state.item_quantity} min="1" ref={this.setWrapperRef} onChange={(e) => this.updateQuantity(e)} />
+                        <input type="number" value={this.state.item_quantity} min="1"  onChange={(e) => this.updateQuantity(e)} />
                     </Col>
                     <Col xs={10}>
-                        <input placeholder='Item name here' type="text" value={this.state.item_name} ref={this.setWrapperRef} onChange={this.updateName} onKeyDown={(e)=>this.checkKey(e)}/>
+                        <input placeholder='Item name here' type="text" value={this.state.item_name} onChange={this.updateName} onKeyDown={(e)=>this.checkKey(e)}/>
                     </Col>
                 </Row>
                 );
@@ -82,6 +82,7 @@ class ItemAdd extends React.Component {
 }
 
 ItemAdd.propTypes ={
-    addItem: PropTypes.func
+    addItem: PropTypes.func,
+    category: PropTypes.string
 };
 export default ItemAdd;
