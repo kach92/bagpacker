@@ -200,8 +200,8 @@ module.exports = (dbPoolInstance) => {
 
     let editProfileGeneral = async function (user_info,user_id){
         try{
-            let query = 'UPDATE users SET firstname=$1,lastname=$2,email=$3 WHERE id=$4 RETURNING *' ;
-            let arr = [user_info.firstName,user_info.lastName,user_info.email,user_id];
+            let query = 'UPDATE users SET firstname=$1,lastname=$2 WHERE id=$3 RETURNING *' ;
+            let arr = [user_info.firstName,user_info.lastName,user_id];
             let queryResult = await dbPoolInstance.query(query,arr);
             if(queryResult.rows.length>0){
                 console.log("EDIT PROGILE GENERAL SUCCESS");

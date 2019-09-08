@@ -114,13 +114,24 @@ module.exports = (db) => {
         }
     }
 
+    let getUserInfo = async function(request,response){
+        try{
+            let user_id = request.cookies["user_id"];
+            let result = await db.users.getUserDetailsById(user_id);
+            response.send(result)
+        }catch (error){
+            console.log("get user info controller "+ error)
+        }
+    }
+
     return {
         signUp : signUp,
         login : login,
         signOut : signOut,
         editProfileGeneral : editProfileGeneral,
         editProfilePassword : editProfilePassword,
-        changeProfilePic : changeProfilePic
+        changeProfilePic : changeProfilePic,
+        getUserInfo : getUserInfo
     }
 
 };

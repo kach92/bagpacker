@@ -82,7 +82,7 @@ class App extends React.Component {
 					)}/>
 					<Route path="/user/edit" render={props => (
 						this.state.authed != null
-							? <EditProfile/>
+							? <EditProfile {...props}/>
 							: <Redirect to='/' />
 					)}/>
 
