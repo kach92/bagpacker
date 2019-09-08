@@ -349,7 +349,7 @@ module.exports = (dbPoolInstance) => {
                 query = 'SELECT * FROM packing_lists WHERE user_id = $1 AND trip_id = $2';
                 arr = [user_id,trip_id];
             }else{
-                query = 'SELECT * FROM packing_lists WHERE user_id = null AND trip_id = $2';
+                query = 'SELECT * FROM packing_lists WHERE user_id = null AND trip_id = $1';
                 arr = [trip_id];
             }
             let queryResult = await dbPoolInstance.query(query,arr);

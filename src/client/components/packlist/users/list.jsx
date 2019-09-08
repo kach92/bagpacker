@@ -58,30 +58,22 @@ class List extends React.Component {
 		}).then(res => console.log(res))
 			.catch(error => console.error('Error:', error));
 	};
-	addItem = (name, quantity) => {
-		console.log('add');
-		console.log(quantity, name);
+	addItem = (name, quantity,category) => {
 		let data = {
 			user_id: this.props.userId,
 			trip_id: this.props.tripId,
+			category,
 			item_name: name,
 			quantity: quantity
 		};
-		console.log(data);
-		// let user_id = parseInt(request.body.user_id);
-		// let item_name = request.body.item_name;
-		// let quantity = parseInt(request.body.quantity);
-		// let category = request.body.category;
-		// let trip_id = parseInt(request.body.trip_id);
-
-		// fetch('/update_item_quantity', {
-		// 	method: 'POST',
-		// 	body: JSON.stringify(data),
-		// 	headers: {
-		// 		'Content-Type': 'application/json'
-		// 	}
-		// }).then(res => console.log(res))
-		// 	.catch(error => console.error('Error:', error));
+		fetch('/add_custom_item', {
+			method: 'POST',
+			body: JSON.stringify(data),
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		}).then(res => window.location.reload())
+			.catch(error => console.error('Error:', error));
 	};
     deleteItem = (item_id) =>{
         let data = {

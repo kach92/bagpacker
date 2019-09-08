@@ -63,7 +63,7 @@ class Category extends React.Component {
 
 					{items}
 
-					<ItemAdd addItem={this.props.addItem}/>
+					<ItemAdd category={this.props.category} addItem={this.props.addItem}/>
 				</Card.Body>
 			</Card>
 
