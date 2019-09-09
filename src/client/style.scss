@@ -613,12 +613,12 @@ a {
 }
 
 .formError {
-  border: 1px solid red;
-  padding: 1rem 0;
   margin-bottom: 2rem;
 
   p {
     margin: 0;
+    border: 1px solid red;
+    padding: 1rem 0;
     text-align: center;
   }
 }
@@ -695,7 +695,12 @@ button.btnSecondary {
 
 .datepicker {
   label,
-  > div{
+  > div {
     display: block;
+  }
+  .datepickerPopper {
+    border-radius: 0;
+    font-family: 'Roboto', "Helvetica Neue", Helvetica, Arial, sans-serif!important;
+
   }
 }

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import ActivitiesForm from "../packlist-activities-form";
 import mainStyles from "../../../style.scss";
 import {Form, Row, Col} from 'react-bootstrap';
-import Countries from "../../../countries.js"
+import Countries from "../../../countries.js";
 import DatePicker from "react-datepicker";
 import 'react-datepicker/dist/react-datepicker-cssmodules.css';
 
@@ -87,7 +87,6 @@ class PacklistForm extends React.Component {
 		});
 		if (validated) {
 			formInputs.duration = this.calcDuration(formInputs.startDate, formInputs.endDate);
-			console.log(formInputs.duration);
 			if (formInputs.duration <=0) {
 				this.setState({errorMessage: "The start date cannot be later than the end date"})
 			}
