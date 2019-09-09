@@ -37,6 +37,8 @@ class LoginForm extends React.Component {
 
 		if (validated) {
 			this.loginUser(formInputs);
+		} else {
+			this.setState({errorMessage: "Please fill in email and password"})
 		}
 	};
 
@@ -48,10 +50,20 @@ class LoginForm extends React.Component {
 				'Content-Type': 'application/json'
 			}
 		}).then(res => res.json())
-			.then(res => this.props.history.push('/'))
+			.then(res => {
+				if (res) {
+					this.props.history.push('/');
+				} else {
+					this.setState({errorMessage: "Incorrect email/password"})
+				}
+			})
 			.catch(error => console.error('Error:', error));
 	};
 	render() {
+		let errorMessage = null;
+		if (this.state.errorMessage !== ""){
+			errorMessage = (<Col xs={12} className={mainStyles.formError}><p>{this.state.errorMessage}</p></Col>);
+		}
 		return (
 			<Form className={mainStyles.loginForm}>
 				<Row>
@@ -74,9 +86,7 @@ class LoginForm extends React.Component {
 					<Col xs={12} className="mb-5">
 						<button type="submit" onClick={this.submit} className={mainStyles.btn}>Login</button>
 					</Col>
-					<Col xs={12}>
-						<div className="error"></div>
-					</Col>
+					{errorMessage}
 					<Col xs={12} className="my-5">
 						<p>Don't have an account? <Link to="/signup/">Create one now!</Link></p>
 					</Col>
