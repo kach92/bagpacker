@@ -75,7 +75,7 @@ class EditProfileInfo extends React.Component {
 				'Content-Type': 'application/json'
 			}
 		}).then(res => res.json())
-			.then(res =>console.log("update profile ok"))
+			.then(res => window.location.reload())
 			.catch(error => console.error('Error:', error));
 	};
 	render() {
