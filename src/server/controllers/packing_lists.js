@@ -215,7 +215,10 @@ module.exports = (db) => {
 
     let changeCategoryName = async function (request,response){
         try{
-            console.log("wait")
+            let category_id = request.body.category_id;
+            let category = request.body.category;
+            let changeCategoryName = await db.packingList.changeCategoryName(category_id,category);
+            response.send(true);
         }catch (error){
             console.log("change categoty name controller "+error)
         }
