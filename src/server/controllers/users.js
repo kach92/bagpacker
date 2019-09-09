@@ -105,6 +105,7 @@ module.exports = (db) => {
 
     let changeProfilePic = async function (request,response){
         try{
+            console.log(request.body.newImage)
             let user_id = request.cookies["user_id"];
             let dataURI = request.body.newImage;
             let uploadStr = dataURI.replace(/(\r\n|\n|\r)/gm, "");
