@@ -32,17 +32,17 @@ class EditProfileInfo extends React.Component {
 		if (this.state.uploaded){
 			console.log("uploading to server");
 			console.log(this.state.photo);
-			this.uploadToServer(this.state.photo)
+			this.uploadToServer()
 		}
 	};
-	uploadToServer = (photo) => {
-		let data={newImage: photo};
+	uploadToServer = () => {
+		let data={newImage: this.state.photo};
 
 		fetch('/change_profile_pic', {
 			method: 'POST',
 			body: JSON.stringify(data),
 			headers:{
-				'Content-Type': 'application/json;charset=UTF-8"'
+				'Content-Type': 'application/json;charset=UTF-8'
 			}
 		}).then(res => res.json())
 			.then(res => console.log(res))
