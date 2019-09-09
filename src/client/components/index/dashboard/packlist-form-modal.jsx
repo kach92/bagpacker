@@ -25,8 +25,6 @@ class PacklistForm extends React.Component {
 		};
 	}
 
-
-
 	updateLocation = (location) => {
 		let formInputs = this.state.formInputs;
 		formInputs.location = location;
@@ -230,7 +228,7 @@ class PacklistForm extends React.Component {
 				<Row>
 					<Col>
 						<Form.Group>
-							<label>Country</label>
+							<label>Location</label>
 							<div className={mainStyles.suggestionWrapper}>
 								<CountriesForm updateLocation={this.updateLocation}/>
 							</div>

@@ -52,7 +52,7 @@ class CountriesForm extends React.Component {
 	render() {
 		const { value, suggestions } = this.state;
 		const inputProps = {
-			placeholder: 'Select country',
+			placeholder: 'Select location',
 			value,
 			onChange: this.onChange
 		};
