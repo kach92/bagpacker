@@ -37,7 +37,7 @@ class Trip extends React.Component {
 				let shared = null;
 				if (res.trip.group_id) {
 					solo = false;
-					shared = res.shared;
+					shared = res.shared.sort((a,b)=>parseInt(a.id)>parseInt(b.id)? 1:-1);
 				}
 				this.setState({
 					trip: res.trip,
@@ -67,7 +67,7 @@ class Trip extends React.Component {
             let shared = null;
             if (res.trip.group_id) {
                 solo = false;
-                shared = res.shared;
+                shared = res.shared.sort((a,b)=>parseInt(a.id)>parseInt(b.id)? 1:-1);
             }
             this.setState({
                 trip: res.trip,
