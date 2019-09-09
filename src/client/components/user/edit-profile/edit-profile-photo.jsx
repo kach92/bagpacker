@@ -12,6 +12,21 @@ class EditProfileInfo extends React.Component {
 		}
 
 	}
+	componentDidMount(){
+		fetch('/get_user_info', {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		})
+			.then(res => res.json())
+			.then(res => {
+				this.setState({
+					photo : res.image
+				});
+			})
+			.catch(error => console.error('Error:', error));
+	}
 
 	photoUploaded = (e) => {
 		console.log("uploaded");
@@ -23,6 +38,7 @@ class EditProfileInfo extends React.Component {
 				uploaded:true,
 				photo: reader.result
 			});
+
 		}, false);
 		reader.readAsDataURL(photo);
 	};
@@ -45,7 +61,7 @@ class EditProfileInfo extends React.Component {
 				'Content-Type': 'application/json;charset=UTF-8'
 			}
 		}).then(res => res.json())
-			.then(res => console.log(res))
+			.then(res => window.location.reload())
 			.catch(error => console.error('Error:', error));
 	};
 
@@ -59,7 +75,9 @@ class EditProfileInfo extends React.Component {
 				</Row>
 				<Row>
 					<Col xs={2}>
-						<div className={mainStyles.profileImage}></div>
+						<div className={mainStyles.profileImage}>
+							<img src={this.state.photo}/>
+						</div>
 					</Col>
 					<Col xs={10} className={mainStyles.profileImageForm}>
 						<label htmlFor="file-upload" className="my-3 custom-file-upload">
