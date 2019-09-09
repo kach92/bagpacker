@@ -114,11 +114,24 @@ module.exports = (db) => {
         }
     }
 
+    let editTripName = async function(request,response){
+        try{
+
+            let trip_id = request.body.trip_id;
+            let name = request.body.name;
+            let updateTripName = await db.trips.editTripName(trip_id,name);
+            response.send(true);
+        }catch (error){
+            console.log("edit trip name controller "+error)
+        }
+    }
+
 
     return {
         getAllTrips : getAllTrips,
         getSingleTrip : getSingleTrip,
-        deleteTrip : deleteTrip
+        deleteTrip : deleteTrip,
+        editTripName : editTripName
     }
 
 };

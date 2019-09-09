@@ -4,6 +4,7 @@ import SidePanel from '../side-panel/side-panel';
 import List from '../packlist/users/list';
 import GroupList from '../packlist/users/group-list';
 import TripDelete from './trip-delete';
+import TripName from './trip-name';
 
 import {Col, Row, Button} from 'react-bootstrap';
 import TripDetails from "./trip-details";
@@ -33,7 +34,9 @@ class Trip extends React.Component {
 			}
 		}).then(res => res.json())
 			.then(res => {
+                console.log("///////////////////")
                 console.log(res)
+                console.log("///////////////////")
 				let solo = true;
 				let shared = null;
 				if (res.trip.group_id) {
@@ -53,7 +56,6 @@ class Trip extends React.Component {
 	}
 
     updateTripInfo () {
-        console.log("TESTSETSETESTSETESTESTEST")
         let fetchUrl = '/get_trip/'+this.state.trip_id;
         fetch(fetchUrl, {
             method: 'GET',
@@ -79,6 +81,21 @@ class Trip extends React.Component {
             })
         })
         .catch(error => console.error('Error:', error));
+    }
+
+    updateTripName = (trip_id,name) =>{
+        let data = {
+            trip_id,
+            name
+        };
+        fetch('/edit_trip_name', {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(res => console.log(res))
+            .catch(error => console.error('Error:', error));
     }
 
     deleteTrip = (e) =>{
@@ -108,7 +125,8 @@ class Trip extends React.Component {
 		let tripStartDate = "";
 		let tripEndDate = "";
 		let tripImage = "";
-
+        let tripNameDiv = ""
+        console.log(this.state.trip)
 		let trip=this.state.trip;
 		if (trip) {
 			tripName = trip.name;
@@ -116,6 +134,7 @@ class Trip extends React.Component {
 			tripImage = trip.destinations[0].image;
 			tripStartDate = trip.destinations[0].start_date;
 			tripEndDate = trip.destinations[0].end_date
+            tripNameDiv = <TripName tripName={tripName} trip_id={this.state.trip_id} updateTripName={this.updateTripName}/>
 		}
 
 		let listDisplay = "No items found";
@@ -132,8 +151,7 @@ class Trip extends React.Component {
 			<Row>
 				<Col md={4}>
 					<SidePanel tripImage={tripImage}>
-
-						<h2>{tripName}</h2>
+                        {tripNameDiv}
 						<TripDetails location={tripDestination} startDate={tripStartDate} endDate={tripEndDate}/>
 						<TripDelete deleteTrip={this.deleteTrip}/>
 					</SidePanel>

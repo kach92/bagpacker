@@ -128,13 +128,33 @@ module.exports = (dbPoolInstance) => {
         }
     }
 
+    let editTripName = async function(trip_id,name){
+        try{
+            console.log("INSIDE MODEL")
+            console.log(trip_id);
+            console.log(name)
+            let query = "UPDATE trips SET name=$1 WHERE id = $2 RETURNING *";
+            let arr = [name,trip_id];
+            let queryResult = await dbPoolInstance.query(query,arr);
+            if (queryResult.rows.length > 0) {
+                console.log("edit trip name SUCCESS".toUpperCase());
+                return queryResult.rows[0];
+            } else {
+                return Promise.reject(new Error("edit trip name returns null"));
+            }
+        }catch (error){
+            console.log("edit trip name model "+error)
+        }
+    }
+
     return {
         createTrip,
         createDestination,
         getTripsOfUser,
         getDestinationsByTrip,
         getTripById,
-        deleteTrip
+        deleteTrip,
+        editTripName
 
 
     };
