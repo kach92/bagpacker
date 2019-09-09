@@ -41,6 +41,22 @@ CREATE TABLE IF NOT EXISTS packing_lists (
     FOREIGN KEY (trip_id) REFERENCES trips (id) ON DELETE CASCADE
 );
 
+CREATE TABLE IF NOT EXISTS categories (
+    id SERIAL PRIMARY KEY,
+    name TEXT
+);
+
+CREATE TABLE IF NOT EXISTS packing_list_categories(
+    id SERIAL PRIMARY KEY,
+    packing_list_id INTEGER,
+    category_id INTEGER,
+    FOREIGN KEY (packing_list_id) REFERENCES packing_lists (id) ON DELETE CASCADE,
+    FOREIGN KEY (category_id) REFERENCES categories (id)
+);
+
+
+
+
 CREATE TABLE IF NOT EXISTS packing_list_items (
     id SERIAL PRIMARY KEY,
     packing_list_id INTEGER,
@@ -91,5 +107,4 @@ CREATE TABLE IF NOT EXISTS items (
     FOREIGN KEY (activity_id) REFERENCES activities(id),
     FOREIGN KEY (weather_id) REFERENCES weathers(id)
 );
-
 

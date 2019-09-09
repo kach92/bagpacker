@@ -398,6 +398,48 @@ module.exports = (dbPoolInstance) => {
         }
     }
 
+    let generatePackingListCategories = async function(packing_list_id,shared){
+        try{
+            if(shared){
+                let query = "SELECT * FROM categories WHERE name = 'Shared'";
+                let category_id = await dbPoolInstance.query(query);
+                console.log(packing_list_id)
+                console.log(category_id.rows)
+                let query2 = "INSERT INTO packing_list_categories (packing_list_id,category_id) VALUES ($1,$2) RETURNING *"
+                let arr = [packing_list_id,category_id.rows[0].id];
+                let queryResult = await dbPoolInstance.query(query2,arr);
+                if(queryResult.rows.length>0){
+                    console.log("generate shared packing list categories success".toUpperCase());
+                    return queryResult.rows;
+                }else{
+                    return Promise.reject(new Error("generate shared packing list categories returns null"));
+                }
+            }else{
+                let query = "SELECT * FROM categories WHERE NOT name = 'Shared'";
+                let categoryArrObj = await dbPoolInstance.query(query);
+
+                let arrOfarr = [];
+                categoryArrObj.rows.forEach(x=>{
+                    arrOfarr.push([packing_list_id,x.id])
+                })
+
+                let query2 = format('INSERT INTO packing_list_categories (packing_list_id,category_id) VALUES %L RETURNING *',arrOfarr);
+                let queryResult = await dbPoolInstance.query(query2);
+
+                if(queryResult.rows.length>0){
+                    console.log("generate packing list categories success".toUpperCase());
+                    return queryResult.rows;
+                }else{
+                    return Promise.reject(new Error("generate packing list categories returns null"));
+                }
+
+            }
+
+        } catch (error){
+            console.log("generate packing list categories model "+error)
+        }
+    }
+
     return {
         generateTempList,
         createPackingList,
@@ -414,7 +456,8 @@ module.exports = (dbPoolInstance) => {
         updateSharedItemId,
         getPackingListDetailsByUserIdAndTripId,
         addCustomItem,
-        deleteItem
+        deleteItem,
+        generatePackingListCategories
 
     };
 };

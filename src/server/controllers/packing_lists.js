@@ -53,13 +53,15 @@ module.exports = (db) => {
                 let destination_id = await db.trips.createDestination(tripInfo,trip_id);
                 //create packing list id for shared items
                 let packing_list_shared_id = await db.packingList.createPackingList(trip_id,null,group_id);
-                let finalList_shared = await db.packingList.generateSharedList(tripInfo)
+                let finalList_shared = await db.packingList.generateSharedList(tripInfo);
+                let generateCategories = await db.packingList.generatePackingListCategories(packing_list_shared_id,true);
                 let packing_list_items_shared = await db.packingList.createPackingListItems(finalList_shared,packing_list_shared_id,true,group_id)
                 //create packing list id for each user,generate list and save into packing list
 
                 for(let i = 0; i< user_gender_arrObj.length ; i++) {
                     let finalList = await db.packingList.generateTempList(tripInfo,user_gender_arrObj[i].gender,true);
                     let packing_list_id = await db.packingList.createPackingList(trip_id,user_gender_arrObj[i].id,group_id);
+                    let packing_list_categories = await db.packingList.generatePackingListCategories(packing_list_id,false);
                     let packing_list_items = await db.packingList.createPackingListItems(finalList,packing_list_id,false,group_id);
                 }
                 //send a true response to tell cliend side save ok, need to redirect to group/invidiaul trip page
@@ -72,6 +74,7 @@ module.exports = (db) => {
                 let trip_id = await db.trips.createTrip(tripInfo,user_id);
                 let destination_id = await db.trips.createDestination(tripInfo,trip_id);
                 let packing_list_id = await db.packingList.createPackingList(trip_id,user_id);
+                let packing_list_categories = await db.packingList.generatePackingListCategories(packing_list_id,false);
                 let finalList = await db.packingList.generateTempList(tripInfo,user_gender);
                 let packing_list_items = await db.packingList.createPackingListItems(finalList,packing_list_id,false);
                 console.log(trip_id)
