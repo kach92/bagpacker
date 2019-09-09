@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import List from './list';
 import TripmateList from './tripmate-list';
 import SharedList from './shared-list';
-import {Col,Row,Form} from "react-bootstrap";
+import {Col, Row, Form, DropdownButton, Dropdown} from "react-bootstrap";
 import mainStyles from "../../../style.scss";
 class GroupList extends React.Component {
 	constructor(props){
@@ -13,8 +13,8 @@ class GroupList extends React.Component {
 			changedListToShow: false
 		}
 	}
-	updateCurrentListToShow = (e) =>{
-		let currentUserId = parseInt(e.target.value);
+	updateCurrentListToShow = (e,index) =>{
+		let currentUserId = parseInt(index);
 		if (this.props.list[currentUserId].id === this.props.userId){
 			this.setState({
 				currentUser: currentUserId,
@@ -23,7 +23,7 @@ class GroupList extends React.Component {
 		}
 		else {
 			this.setState({
-				currentUser: parseInt(e.target.value),
+				currentUser: currentUserId,
 				changedListToShow: true
 			})
 		}
@@ -48,6 +48,7 @@ class GroupList extends React.Component {
 	render() {
 		let list = this.props.list;
 		let currentUser = 0;
+		let currentUserName = "View tripmate's list";
 		let tripmatesOptions = [];
 		let listToShow = null;
 		list.map((user,index)=>{
@@ -55,10 +56,13 @@ class GroupList extends React.Component {
 				currentUser = index;
 				listToShow = <List list={list[currentUser].items} tripId={this.props.tripId} updateTripInfo={this.props.updateTripInfo}/>
 			}
-			tripmatesOptions.push(<option key={index} value={index}>{user.firstname} {user.lastname}</option>);
+			tripmatesOptions.push(
+				<Dropdown.Item key={index} href="#" onClick={(e)=>{this.updateCurrentListToShow(e,index)}}>{user.firstname}</Dropdown.Item>
+			);
 		});
 		if (this.state.changedListToShow) {
 			currentUser = this.state.currentUser;
+			currentUserName = list[currentUser].firstname;
 			listToShow = <TripmateList list={list[currentUser].items}/>;
 		}
 
@@ -68,17 +72,14 @@ class GroupList extends React.Component {
 					<SharedList list={this.props.shared} tripmates={this.props.list} tripId={this.props.tripId} updateTripInfo={this.props.updateTripInfo} addItem={this.addItem}/>
 				</Col>
 				<Col xs={12} className="my-5">
-					<Row>
+					<Row className="align-items-center">
 						<Col>
-							<h3>{list[currentUser].firstname}'s List</h3>
+							<h3 className="mb-0">{list[currentUser].firstname}'s List</h3>
 						</Col>
 						<Col>
-							<div className={mainStyles.select}>
-								<Form.Control defaultValue="null" as="select" onChange={this.updateCurrentListToShow}>
-									<option value="null" disabled>View Tripmate's list</option>
-									{tripmatesOptions}
-								</Form.Control>
-							</div>
+							<DropdownButton title={currentUserName} className={mainStyles.tripmateDropdown}>
+								{tripmatesOptions}
+							</DropdownButton>
 						</Col>
 					</Row>
 				</Col>

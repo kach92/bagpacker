@@ -42,7 +42,6 @@ class App extends React.Component {
 	}
 
     checkUser() {
-		console.log("CHECK");
         let cookies = {};
         document.cookie.split("; ").forEach( value => {
             let val = value.split("=");

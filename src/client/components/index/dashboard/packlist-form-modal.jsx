@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 import ActivitiesForm from "../packlist-activities-form";
 import mainStyles from "../../../style.scss";
 import {Col, Form, Row} from 'react-bootstrap';
-import Countries from "../../../countries.js"
+import Countries from "../../../countries.js";
+import DatePicker from "react-datepicker";
+import 'react-datepicker/dist/react-datepicker-cssmodules.css';
 
 
 class PacklistForm extends React.Component {
@@ -12,8 +14,8 @@ class PacklistForm extends React.Component {
 		this.state = {
 			formInputs: {
 				location: "",
-				startDate: "",
-				endDate: "",
+				startDate:new Date(),
+				endDate:new Date(),
 				weather: "1",
 				activities: [],
 				group: []
@@ -50,14 +52,14 @@ class PacklistForm extends React.Component {
 
 	};
 
-	updateStartDate = (e) => {
+	updateStartDate = (date) => {
 		let formInputs = this.state.formInputs;
-		formInputs.startDate = e.target.value;
+		formInputs.startDate = date;
 		this.setState({formInputs: formInputs});
 	};
-	updateEndDate = (e) => {
+	updateEndDate = (date) => {
 		let formInputs = this.state.formInputs;
-		formInputs.endDate = e.target.value;
+		formInputs.endDate = date;
 		this.setState({formInputs: formInputs});
 	};
 
@@ -88,7 +90,6 @@ class PacklistForm extends React.Component {
 	};
 	submit = (e) => {
 		e.preventDefault();
-		this.setState({loading:true});
 		let formInputs = this.state.formInputs;
 		let validated = true;
 		let groupPax = this.state.groupPax;
@@ -113,78 +114,86 @@ class PacklistForm extends React.Component {
 			}
 		});
 		if (validated) {
-            let image_src = null;
-            let url = 'https://api.teleport.org/api/cities/?search='+formInputs.location.toLowerCase();
+			formInputs.duration = this.calcDuration(formInputs.startDate, formInputs.endDate);
+			console.log(formInputs.duration);
+			if (formInputs.duration <=0) {
+				this.setState({errorMessage: "The start date cannot be later than the end date"});
+			}
+			else{
+				this.setState({
+					errorMessage: "",
+					loading: true
+				});
+				let image_src = null;
+				let url = 'https://api.teleport.org/api/cities/?search=' + formInputs.location.toLowerCase();
 
-            fetch(url, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            })
-            .then(res => res.json())
-            .then(res => {
-                fetch(res["_embedded"]["city:search-results"][0]["_links"]["city:item"]["href"], {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                })
-                .then(res => res.json())
-                .then(res => {
-                    fetch(res["_links"]["city:urban_area"]["href"], {
-                        method: 'GET',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        }
-                    })
-                    .then(res => res.json())
-                    .then(res => {
-                        fetch(res["_links"]["ua:images"]["href"], {
-                            method: 'GET',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            }
-                        })
-                        .then(res => res.json())
-                        .then(res => {
-                            image_src = res["photos"][0]["image"]["mobile"];
-                            formInputs["image"] = image_src;
-                            formInputs["duration"] = this.calcDuration(formInputs["startDate"], formInputs["endDate"]);
-                            this.createTrip(formInputs);
-                        })
-                        .catch(error => {
-                            console.error("NO IMAGE");
-                            formInputs["image"] = "#";
-                            formInputs["duration"] = this.calcDuration(formInputs["startDate"], formInputs["endDate"]);
-                            this.createTrip(formInputs);
+				fetch(url, {
+					method: 'GET',
+					headers: {
+						'Content-Type': 'application/json'
+					}
+				})
+					.then(res => res.json())
+					.then(res => {
+						fetch(res["_embedded"]["city:search-results"][0]["_links"]["city:item"]["href"], {
+							method: 'GET',
+							headers: {
+								'Content-Type': 'application/json'
+							}
+						})
+							.then(res => res.json())
+							.then(res => {
+								fetch(res["_links"]["city:urban_area"]["href"], {
+									method: 'GET',
+									headers: {
+										'Content-Type': 'application/json'
+									}
+								})
+									.then(res => res.json())
+									.then(res => {
+										fetch(res["_links"]["ua:images"]["href"], {
+											method: 'GET',
+											headers: {
+												'Content-Type': 'application/json'
+											}
+										})
+											.then(res => res.json())
+											.then(res => {
+												image_src = res["photos"][0]["image"]["mobile"];
+												formInputs["image"] = image_src;
+												this.createTrip(formInputs);
+											})
+											.catch(error => {
+												console.error("NO IMAGE");
+												formInputs["image"] = "#";
+												this.createTrip(formInputs);
 
-                        });
-                    })
-                    .catch(error => {
-                        console.error("NO IMAGE");
-                        formInputs["image"] = "#";
-                        formInputs["duration"] = this.calcDuration(formInputs["startDate"], formInputs["endDate"]);
-                        this.createTrip(formInputs);
+											});
+									})
+									.catch(error => {
+										console.error("NO IMAGE");
+										formInputs["image"] = "#";
+										this.createTrip(formInputs);
 
-                    });
-                })
-                .catch(error => {
-                    console.error("NO IMAGE");
-                    formInputs["image"] = "#";
-                    formInputs["duration"] = this.calcDuration(formInputs["startDate"], formInputs["endDate"]);
-                    this.createTrip(formInputs);
+									});
+							})
+							.catch(error => {
+								console.error("NO IMAGE");
+								formInputs["image"] = "#";
+								this.createTrip(formInputs);
 
-                });
+							});
 
-            })
-            .catch(error => {
-                console.error("NO IMAGE");
-                formInputs["image"] = "#";
-                formInputs["duration"] = this.calcDuration(formInputs["startDate"], formInputs["endDate"]);
-                this.createTrip(formInputs);
+					})
+					.catch(error => {
+						console.error("NO IMAGE");
+						formInputs["image"] = "#";
+						this.createTrip(formInputs);
 
-            });
+					});
+			}
+		}else {
+			this.setState({errorMessage: "Please fill in the details to create trip"})
 		}
 	};
 	createTrip = (data) => {
@@ -203,9 +212,8 @@ class PacklistForm extends React.Component {
 		.catch(error => console.error('Error:', error));
 	};
 	calcDuration = (start, end) => {
-		let duration = (new Date(end).getTime() - new Date(start).getTime());
-		duration = Math.ceil(duration / (1000 * 60 * 60 * 24));
-		return duration + 1;
+		let duration = Math.floor((new Date(end).setHours(0,0,0,0)-new Date(start).setHours(0,0,0,0)) / (1000*60*60*24));
+		return duration+1
 	};
 
 	render() {
@@ -235,6 +243,10 @@ class PacklistForm extends React.Component {
 				</div>
 			)
 		}
+		let errorMessage = null;
+		if (this.state.errorMessage !== ""){
+			errorMessage = (<Col xs={12} className={mainStyles.formError}><p>{this.state.errorMessage}</p></Col>);
+		}
 		return (
 			<Form className={mainStyles.packlistModalForm}>
 				<Row>
@@ -248,15 +260,30 @@ class PacklistForm extends React.Component {
 				</Row>
 				<Row>
 					<Col>
-						<Form.Group>
+						<Form.Group className={mainStyles.datepicker}>
 							<label>Start Date</label>
-							<Form.Control type="date" value={this.state.formInputs.startDate} onChange={this.updateStartDate}/>
+							<DatePicker
+								selectsStart
+								selected={this.state.formInputs.startDate}
+								onChange={date => this.updateStartDate(date)}
+								startDate={this.state.formInputs.startDate}
+								endDate={this.state.formInputs.endDate}
+								dateFormat='d MMM yyyy'
+							/>
 						</Form.Group>
 					</Col>
+
 					<Col>
-						<Form.Group>
+						<Form.Group className={mainStyles.datepicker}>
 							<label>End Date</label>
-							<Form.Control type="date" value={this.state.formInputs.endDate} onChange={this.updateEndDate}/>
+							<DatePicker
+								selectsEnd
+								selected={this.state.formInputs.endDate}
+								onChange={date => this.updateEndDate(date)}
+								endDate={this.state.formInputs.endDate}
+								minDate={this.state.formInputs.startDate}
+								dateFormat='d MMM yyyy'
+							/>
 						</Form.Group>
 					</Col>
 				</Row>
@@ -293,10 +320,12 @@ class PacklistForm extends React.Component {
 						</div>
 					</Col>
 				</Row>
-				<button type="submit" onClick={this.submit} className={mainStyles.btn}>Create Packing List</button>
-				<br/>
-				<div className="error">
-				</div>
+				<Row>
+					<Col xs={12} className="mb-5">
+						<button type="submit" onClick={this.submit} className={mainStyles.btn}>Create Packing List</button>
+					</Col>
+					{errorMessage}
+				</Row>
 				{loadingScreen}
 			</Form>
 		);

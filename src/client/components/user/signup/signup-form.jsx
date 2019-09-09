@@ -12,7 +12,7 @@ class SignupForm extends React.Component {
 			formInputs: {
 				firstName: "",
 				lastName: "",
-				gender: "",
+				gender: "F",
 				email: "",
 				password: "",
 				confirmPassword: ""
@@ -25,17 +25,23 @@ class SignupForm extends React.Component {
 		e.preventDefault();
 		let formInputs = this.state.formInputs;
 		let validated = true;
+		let errorMessage = "";
 		Object.keys(formInputs).forEach(function (item) {
-			if (formInputs[item] === "")
+			if (formInputs[item] === "") {
 				validated = false;
+				errorMessage = "Please fill in all fields"
+			}
 		});
 
-		if (formInputs['password'] != formInputs['confirmPassword'])
+		if (formInputs['password'] != formInputs['confirmPassword']) {
 			validated = false;
-
+			errorMessage = "Passwords does not match"
+		}
 		if (validated) {
 			delete formInputs.confirmPassword;
 			this.signupUser(formInputs);
+		}else {
+			this.setState({errorMessage})
 		}
 	};
 	updateFirstName = (e) => {
@@ -77,12 +83,20 @@ class SignupForm extends React.Component {
 			}
 		}).then(res => res.json())
 			.then(res => {
-				this.props.history.push('/')
+				if (res) {
+					this.props.history.push('/')
+				}else{
+					this.setState({errorMessage: "The email is already in use"})
+				}
 			})
 			.catch(error => console.error('Error:', error));
 	};
 
 	render() {
+		let errorMessage = null;
+		if (this.state.errorMessage !== ""){
+			errorMessage = (<Col xs={12} className={mainStyles.formError}><p>{this.state.errorMessage}</p></Col>);
+		}
 		return (
 			<Form className={mainStyles.signupForm}>
 				<Row>
@@ -134,9 +148,7 @@ class SignupForm extends React.Component {
 					<Col xs={12} className="mb-5">
 						<button type="submit" onClick={this.submit} className={mainStyles.btn}>Sign Up</button>
 					</Col>
-					<Col xs={12}>
-						<div className="error"></div>
-					</Col>
+					{errorMessage}
 					<Col xs={12} className="my-5">
 						<p>Existing user? <Link to="/login/">Log in now!</Link></p>
 					</Col>

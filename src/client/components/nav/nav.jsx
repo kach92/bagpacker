@@ -11,7 +11,8 @@ class Navigation extends React.Component {
 		super();
 		this.state={
 			hideNavBg: true,
-			hoverOverDropDown: false
+			hoverOverDropDown: false,
+			userImage: null
 		}
 	}
 	signOut = () => {
@@ -31,7 +32,21 @@ class Navigation extends React.Component {
 	};
 	componentDidMount() {
 		window.addEventListener('scroll', this.listenToScroll)
-	};
+
+		fetch('/get_user_info', {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		})
+			.then(res => res.json())
+			.then(res => {
+				this.setState({
+					userImage: res.image
+				});
+			})
+			.catch(error => console.error('Error:', error));
+	}
 	listenToScroll = () => {
 		const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
 		(winScroll > 60)
@@ -57,10 +72,14 @@ class Navigation extends React.Component {
 				</li>
 			</React.Fragment>
 		);
+		let userImage = null;
+		if (this.state.userImage) {
+			userImage = {backgroundImage: `url(${this.state.userImage})`};
+		}
 		let title = (
 			<React.Fragment>
 				<div className={mainStyles.navUsername}>{this.props.username}</div>
-				<div className={mainStyles.navUserImage}></div>
+				<div className={mainStyles.navUserImage} style={userImage}></div>
 			</React.Fragment>
 		);
 		if(this.props.authed) {

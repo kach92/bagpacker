@@ -56,7 +56,7 @@ class EditProfileInfo extends React.Component {
 		let validated = true;
 		if (formInputs.firstName.trim() === "" || formInputs.lastName.trim() === "" || formInputs.email.trim() === ""){
 			validated = false;
-			this.setState({errorMessage: "The fields cannot be blank"})
+			this.setState({errorMessage: "The fields cannot be empty"})
 		}
 		if (validated) {
 			this.setState({errorMessage: ""});
@@ -75,7 +75,7 @@ class EditProfileInfo extends React.Component {
 				'Content-Type': 'application/json'
 			}
 		}).then(res => res.json())
-			.then(res =>console.log("update profile ok"))
+			.then(res => window.location.reload())
 			.catch(error => console.error('Error:', error));
 	};
 	render() {

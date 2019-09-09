@@ -14,8 +14,12 @@ function PacklistFormModal(props) {
 			aria-labelledby="contained-modal-title-vcenter"
 		>
 			<Modal.Body>
-				<h4>Create New Trip</h4>
-				<PacklistForm history={props.history}/>
+				<Row>
+					<Col>
+						<h4>Create New Trip</h4>
+						<PacklistForm history={props.history}/>
+					</Col>
+				</Row>
 			</Modal.Body>
 		</Modal>
 	);

@@ -55,6 +55,10 @@ a {
     right: 0;
     display: block;
     background-image: url("./images/profile.svg");
+    background-size: cover;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
     width: 36px;
     height: 36px;
   }
@@ -471,8 +475,19 @@ a {
   }
 }
 .ownerImage {
-  margin-bottom: 0;
-  padding: 0 0 0 0.5rem;
+  margin: 0 0 0.5rem 0.5rem;
+  border-radius: 50%;
+}
+.profileImage {
+  position: relative;
+  border-radius: 50%;
+  overflow: hidden;
+  img {
+    position: absolute;
+    height: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+  }
 }
 
 .profileImageForm {
@@ -519,16 +534,16 @@ a {
   }
   .select {
     &:after {
-      content: "";
-      display: block;
-      position: absolute;
-      top: 0;
-      right: 20px;
-      width: 12px;
-      height: 12px;
-      border-top: 1px solid #2359D9;
-      border-right: 1px solid #2359D9;
-      transform: rotate(135deg);
+      //content: "";
+      //display: block;
+      //position: absolute;
+      //top: 0;
+      //right: 20px;
+      //width: 12px;
+      //height: 12px;
+      //border-top: 1px solid #2359D9;
+      //border-right: 1px solid #2359D9;
+      //transform: rotate(135deg);
     }
   }
   input:focus,
@@ -598,16 +613,18 @@ a {
 }
 
 .formError {
-  border: 1px solid red;
-  padding: 1rem 0;
   margin-bottom: 2rem;
+
   p {
     margin: 0;
+    border: 1px solid red;
+    padding: 1rem 0;
     text-align: center;
   }
 }
 
-.ownerDropdown {
+.ownerDropdown,
+.tripmateDropdown{
   button {
     color: $black!important;
     background: transparent!important;
@@ -626,10 +643,17 @@ a {
     padding: 0;
     letter-spacing: 0.5px;
     &:after {
+      content: "";
+      display: block;
       position: absolute;
-      right: 0;
-      top: 50%;
-      transform: translateY(-50%);
+      top: 0;
+      right: 8px;
+      width: 12px;
+      height: 12px;
+      border-left: none;
+      border-top: 1px solid #2359D9;
+      border-right: 1px solid #2359D9;
+      transform: rotate(135deg);
     }
     &:hover,&:focus,&:active,&:active:focus {
       box-shadow: none!important;
@@ -640,6 +664,7 @@ a {
 
   div {
     margin: 0;
+    width: 100%;
   }
 }
 button.btnSecondary {
@@ -665,5 +690,17 @@ button.btnSecondary {
   text-align: center;
   h4 {
     margin-bottom: 2rem;
+  }
+}
+
+.datepicker {
+  label,
+  > div {
+    display: block;
+  }
+  .datepickerPopper {
+    border-radius: 0;
+    font-family: 'Roboto', "Helvetica Neue", Helvetica, Arial, sans-serif!important;
+
   }
 }
