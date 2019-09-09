@@ -13,7 +13,7 @@ import EditProfile from './components/user/edit-profile/edit-profile';
 import Trip from './components/trip/trip';
 import NonUserList from './components/packlist/non-users/packlist';
 
-import { sha256, sha224 } from 'js-sha256';
+import { sha256 } from 'js-sha256';
 
 const SALT = "Jarpy Bear";
 
@@ -42,6 +42,7 @@ class App extends React.Component {
 	}
 
     checkUser() {
+		console.log("CHECK");
         let cookies = {};
         document.cookie.split("; ").forEach( value => {
             let val = value.split("=");
@@ -53,10 +54,15 @@ class App extends React.Component {
 				userId: parseInt(cookies.user_id),
 				username: cookies.user_name
             });
+        }else {
+			this.setState({
+				authed: false
+			});
         }
     }
 
 	render() {
+		console.log('state',this.state.authed);
 		return (
 			<Router>
 				<Route path="/" render={props => (
@@ -73,7 +79,7 @@ class App extends React.Component {
 					<Route path="/trips/:id" render={props => (
 						this.state.authed
 						? <Trip userId={this.state.userId} {...props}/>
-						: <Home updatePacklist={this.updatePacklist} checkUser={this.checkUser} {...props}/>
+						: <Redirect to='/' />
 					)}/>
 					<Route path="/list/" render={props => (
 						this.state.packlist != null
@@ -81,9 +87,9 @@ class App extends React.Component {
 							: <Redirect to='/' />
 					)}/>
 					<Route path="/user/edit" render={props => (
-						this.state.authed != null
+						this.state.authed
 							? <EditProfile {...props}/>
-							: <Redirect to='/' />
+							: <Home updatePacklist={this.updatePacklist} checkUser={this.checkUser} {...props}/>
 					)}/>
 
 				</Container>

@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import {Link} from "react-router-dom";
 import {Navbar,Nav,NavDropdown} from 'react-bootstrap';
 import mainStyles from '../../style.scss';
+import { sha256 } from 'js-sha256';
+const SALT = "Jarpy Bear";
 
 class Navigation extends React.Component {
 	constructor() {
@@ -13,7 +15,6 @@ class Navigation extends React.Component {
 		}
 	}
 	signOut = () => {
-		console.log("sign out");
 		fetch('/signout', {
 			method: 'GET',
 			headers:{
@@ -21,7 +22,10 @@ class Navigation extends React.Component {
 			}
 		}).then(res => res.json())
 			.then(res => {
-                window.location.reload();
+				document.cookie = 'session='+sha256(SALT)+'; path=/';
+				document.cookie = 'user_id=0 ; path=/';
+				this.props.checkUser();
+				this.props.history.push('/');
             })
 			.catch(error => console.error('Error:', error));
 	};
@@ -35,7 +39,6 @@ class Navigation extends React.Component {
 			: this.setState({ hideNavBg: true });
 	};
 	handleOpen = () => {
-		console.log("HOOVER");
 		this.setState({ hoverOverDropDown: true })
 	};
 

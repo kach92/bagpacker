@@ -41,11 +41,9 @@ a {
     .navLinks a {
       color: #fff!important;
     }
-  }
-  .dropdownMenu div {
-    right: 0;
-    left: auto;
-    margin: 0;
+    .dropdownMenu div a {
+      color: $black!important;
+    }
   }
   .navUsername {
     display: inline-block;
@@ -62,6 +60,11 @@ a {
   }
   a:active {
     background-color: transparent!important;
+  }
+  .dropdownMenu div {
+    right: 0;
+    left: auto;
+    margin: 0;
   }
 }
 
