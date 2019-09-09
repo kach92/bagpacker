@@ -95,7 +95,6 @@ class PacklistForm extends React.Component {
 		});
 		if (validated) {
 			formInputs.duration = this.calcDuration(formInputs.startDate, formInputs.endDate);
-			console.log(formInputs.duration);
 			if (formInputs.duration <=0) {
 				this.setState({errorMessage: "The start date cannot be later than the end date"});
 			}
@@ -205,7 +204,6 @@ class PacklistForm extends React.Component {
 			}
 		}
 		let loadingScreen = null;
-		console.log(this.state.loading);
 		if (this.state.loading) {
 			loadingScreen = (
 				<div className={mainStyles.loadingScreen}>

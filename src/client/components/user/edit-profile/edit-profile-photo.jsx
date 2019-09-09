@@ -8,7 +8,8 @@ class EditProfileInfo extends React.Component {
 		super(props);
 		this.state = {
 			uploaded: false,
-			photo: null
+			photo: null,
+			loading: false
 		}
 
 	}
@@ -29,7 +30,6 @@ class EditProfileInfo extends React.Component {
 	}
 
 	photoUploaded = (e) => {
-		console.log("uploaded");
 		let photo = Array.from(e.target.files)[0];
 		let reader  = new FileReader();
 		let component = this;
@@ -46,8 +46,10 @@ class EditProfileInfo extends React.Component {
 	submit = (e) => {
 		e.preventDefault();
 		if (this.state.uploaded){
-			console.log("uploading to server");
-			console.log(this.state.photo);
+			this.setState({
+				errorMessage: "",
+				loading: true
+			});
 			this.uploadToServer()
 		}
 	};
@@ -66,6 +68,19 @@ class EditProfileInfo extends React.Component {
 	};
 
 	render() {
+		let loadingScreen = null;
+		if (this.state.loading) {
+			loadingScreen = (
+				<div className={mainStyles.loadingScreen}>
+					<div className={mainStyles.loader}>
+						<div className={mainStyles.spinner}>
+							<div className={mainStyles.loaderBubble1}></div>
+							<div className={mainStyles.loaderBubble2}></div>
+						</div>
+					</div>
+				</div>
+			)
+		}
 		return (
 			<Form className={mainStyles.profileInfoForm}>
 				<Row>
@@ -91,6 +106,7 @@ class EditProfileInfo extends React.Component {
 						<button type="submit" onClick={this.submit} className={mainStyles.btn}>Update Photo</button>
 					</Col>
 				</Row>
+				{loadingScreen}
 			</Form>
         )
     }
