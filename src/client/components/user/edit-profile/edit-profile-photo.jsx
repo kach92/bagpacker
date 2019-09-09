@@ -37,6 +37,7 @@ class EditProfileInfo extends React.Component {
 	};
 	uploadToServer = (photo) => {
 		let data={newImage: photo};
+
 		fetch('/change_profile_pic', {
 			method: 'POST',
 			body: JSON.stringify(data),
