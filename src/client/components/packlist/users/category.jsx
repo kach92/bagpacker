@@ -6,6 +6,7 @@ import Item from './item/item';
 import ItemQty from './item/item-qty';
 import ItemChecked from './item/item-checked';
 import ItemAdd from './item/item-add';
+import DeleteCategory from './delete-category';
 
 class Category extends React.Component {
     constructor(){
@@ -62,8 +63,17 @@ class Category extends React.Component {
 					</Row>
 
 					{items}
+                    <Row>
+                        <Col xs={9}>
+                            <ItemAdd category={this.props.category} addItem={this.props.addItem}/>
+                        </Col>
+                        <Col xs={3}>
+                            <DeleteCategory category={this.props.category} updateTripInfo={this.props.updateTripInfo} category_id={this.props.category_id}/>
 
-					<ItemAdd category={this.props.category} addItem={this.props.addItem}/>
+                        </Col>
+                    </Row>
+
+
 				</Card.Body>
 			</Card>
 

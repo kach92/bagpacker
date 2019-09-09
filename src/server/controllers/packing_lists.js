@@ -221,6 +221,16 @@ module.exports = (db) => {
         }
     }
 
+    let deleteCategory = async function (request,response){
+        try{
+            let category_id = request.body.category_id;
+            let deleteCategory = db.packingList.deleteCategory(category_id);
+            response.send(true);
+        }catch (error){
+            console.log("delete category controller "+ error)
+        }
+    }
+
     return {
         nonUserList : nonUserList,
         nonUserListSave : nonUserListSave,
@@ -232,7 +242,8 @@ module.exports = (db) => {
         addCustomItem : addCustomItem,
         deleteItem : deleteItem,
         addNewCategory : addNewCategory,
-        changeCategoryName : changeCategoryName
+        changeCategoryName : changeCategoryName,
+        deleteCategory : deleteCategory
     }
 
 };
