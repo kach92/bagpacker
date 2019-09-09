@@ -51,7 +51,6 @@ module.exports = (db) => {
                 for(let i=0; i<packingList.length;i++){
                     let user = await db.users.getUserDetailsById(packingList[i].user_id);
                     let listItems = await db.packingList.getItemsByPackingListId(packingList[i].id);
-                    console.log(listItems)
                     let finalList = {};
                     let availableCategory = await db.packingList.getAvailableCategory(packingList[i].id);
                     for(let i=0;i<availableCategory.length;i++){

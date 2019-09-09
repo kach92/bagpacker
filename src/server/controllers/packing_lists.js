@@ -157,22 +157,28 @@ module.exports = (db) => {
             let group_id = null;
             let packing_list_id = null;
             let shared = null;
+            let category_id = null;
+            let pure_category_id = null;
             if(category === "Shared"){
-                console.log("ADD CUSTOM ITEM INTO GROUP LIST");
+                console.log("ADD CUSTOM ITEM INTO SHARED LIST");
                 packing_list_details = await db.packingList.getPackingListDetailsByUserIdAndTripId(null,trip_id);
+                pure_category_id = await db.packingList.getPureCategoryIdByName(category);
+                category_id = await db.packingList.getCategoryIdByPackingListId(packing_list_details.id,pure_category_id)
                 shared = true;
 
 
             }else{
                 console.log("ADD CUSTOM ITEM INTO USER LIST");
                 packing_list_details = await db.packingList.getPackingListDetailsByUserIdAndTripId(user_id,trip_id);
+                pure_category_id = await db.packingList.getPureCategoryIdByName(category);
+                category_id = await db.packingList.getCategoryIdByPackingListId(packing_list_details.id,pure_category_id)
                 shared = false;
             }
 
             group_id = packing_list_details.group_id;
             packing_list_id = packing_list_details.id;
 
-            let insertItem = await db.packingList.addCustomItem(packing_list_id,group_id,item_name,quantity,shared,category);
+            let insertItem = await db.packingList.addCustomItem(packing_list_id,group_id,item_name,quantity,shared,category_id);
             response.send(true);
 
 
