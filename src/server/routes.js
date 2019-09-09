@@ -27,5 +27,6 @@ module.exports = (app, db) => {
     app.get('/get_user_info',users.getUserInfo);
     app.post('/add_new_category',packingLists.addNewCategory);
     app.post('/change_category_name',packingLists.changeCategoryName);
-    app.post('/delete_category',packingLists.deleteCategory)
+    app.post('/delete_category',packingLists.deleteCategory);
+    app.post('/edit_trip_name',trips.editTripName);
 };
