@@ -538,6 +538,22 @@ module.exports = (dbPoolInstance) => {
         }
     }
 
+    let addNewCategory = async function (packing_list_id,category){
+        try{
+            let query = 'INSERT INTO packing_list_categories (packing_list_id,category) VALUES ($1,$2) RETURNING *'
+            let arr = [packing_list_id,category];
+            let queryResult = await dbPoolInstance.query(query,arr);
+            if(queryResult.rows.length>0){
+                    console.log("add new category success".toUpperCase());
+                    return queryResult.rows;
+            }else{
+                return Promise.reject(new Error("add new category return null"));
+            }
+        }catch (error){
+            console.log("add new category model "+error)
+        }
+    }
+
     return {
         generateTempList,
         createPackingList,
@@ -560,7 +576,8 @@ module.exports = (dbPoolInstance) => {
         getSharedItemCategoryId,
         getItemsByCategoryId,
         getCategoryIdByPackingListId,
-        getPureCategoryIdByName
+        getPureCategoryIdByName,
+        addNewCategory
 
     };
 };

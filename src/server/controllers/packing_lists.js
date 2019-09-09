@@ -197,6 +197,22 @@ module.exports = (db) => {
         }
     }
 
+    let addNewCategory = async function (request,response){
+        try{
+            let trip_id = request.body.trip_id;
+            let user_id = request.cookies["user_id"];
+            let category = request.body.new_category;
+
+            let packing_list_id = db.packingList.getPackingListDetailsByUserIdAndTripId(user_id,trip_id);
+            let addNewCategory = db.packingList.addNewCategory(packing_list_id,category);
+            response.send(true);
+
+
+        }catch (error){
+            console.log("add new category controller "+error)
+        }
+    }
+
     return {
         nonUserList : nonUserList,
         nonUserListSave : nonUserListSave,
@@ -206,7 +222,8 @@ module.exports = (db) => {
         updateItemPacked : updateItemPacked,
         updateSharedItem : updateSharedItem,
         addCustomItem : addCustomItem,
-        deleteItem : deleteItem
+        deleteItem : deleteItem,
+        addNewCategory : addNewCategory
     }
 
 };
