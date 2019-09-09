@@ -62,7 +62,6 @@ class GroupList extends React.Component {
 		});
 		if (this.state.changedListToShow) {
 			currentUser = this.state.currentUser;
-			console.log(list);
 			currentUserName = list[currentUser].firstname;
 			listToShow = <TripmateList list={list[currentUser].items}/>;
 		}
