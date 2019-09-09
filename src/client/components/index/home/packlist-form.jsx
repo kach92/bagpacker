@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import ActivitiesForm from "../packlist-activities-form";
 import mainStyles from "../../../style.scss";
 import {Form, Row, Col} from 'react-bootstrap';
-import Countries from "../../../countries.js";
 import DatePicker from "react-datepicker";
 import 'react-datepicker/dist/react-datepicker-cssmodules.css';
+import CountriesForm from "../packlist-countries-form";
 
 class PacklistForm extends React.Component {
 	constructor(props) {
@@ -19,33 +19,15 @@ class PacklistForm extends React.Component {
 				weather: "1",
 				activities: []
 			},
-            allCountries:[],
-            filteredCountries:[],
 			errorMessage: ""
 		};
 	}
 
-    componentDidMount(){
-        for (let key in Countries){
-            this.state.allCountries.push(key);
-        }
-        this.setState({allCountries:this.state.allCountries});
-    }
-
-	updateLocation = (e) => {
+	updateLocation = (location) => {
 		let formInputs = this.state.formInputs;
-		formInputs.location = e.target.value;
+		formInputs.location = location;
 
-        if(e.target.value.length>0){
-            this.state.filteredCountries = this.state.allCountries.filter(x=>{
-                return x.toLowerCase().startsWith(e.target.value.toLowerCase())
-            });
-
-        }else{
-            this.state.filteredCountries = [];
-        }
-
-        this.setState({formInputs: formInputs,filteredCountries:this.state.filteredCountries});
+		this.setState({formInputs: formInputs});
 	};
 	updateStartDate = (date) => {
 		let formInputs = this.state.formInputs;
@@ -98,7 +80,6 @@ class PacklistForm extends React.Component {
 		}
 	};
 	getPacklist = (data) => {
-		// console.log(data);
 		fetch('/non_user_list', {
 			method: 'POST',
 			body: JSON.stringify(data),
@@ -124,7 +105,6 @@ class PacklistForm extends React.Component {
 	};
 
 	render() {
-        let datalistOptions = this.state.filteredCountries.map(x=><option>{x}</option>);
 		let errorMessage = null;
 		if (this.state.errorMessage !== ""){
 			errorMessage = (<Col xs={12} className={mainStyles.formError}><p>{this.state.errorMessage}</p></Col>);
@@ -134,12 +114,10 @@ class PacklistForm extends React.Component {
 				<Row>
 					<Col>
 						<Form.Group>
-							<Form.Label>Location</Form.Label>
-							<Form.Control list="country-list" value={this.state.formInputs.location} onChange={this.updateLocation}/>
-
-                            <datalist id="country-list">
-                            {datalistOptions}
-                            </datalist>
+							<label>Location</label>
+							<div className={mainStyles.suggestionWrapper}>
+								<CountriesForm updateLocation={this.updateLocation}/>
+							</div>
 						</Form.Group>
 					</Col>
 				</Row>
