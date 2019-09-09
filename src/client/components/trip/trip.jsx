@@ -122,7 +122,7 @@ class Trip extends React.Component {
 		if (this.state.solo) {
 			let list = this.state.list;
 			if (list) {
-				listDisplay = <List userId={this.props.userId} list={this.state.list} tripId={this.state.trip.id}/>
+				listDisplay = <List userId={this.props.userId} list={this.state.list} tripId={this.state.trip.id} updateTripInfo={this.updateTripInfo}/>
 			}
 		}
 		else {

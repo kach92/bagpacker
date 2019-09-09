@@ -203,13 +203,21 @@ module.exports = (db) => {
             let user_id = request.cookies["user_id"];
             let category = request.body.new_category;
 
-            let packing_list_id = db.packingList.getPackingListDetailsByUserIdAndTripId(user_id,trip_id);
-            let addNewCategory = db.packingList.addNewCategory(packing_list_id,category);
+            let packing_list_id = await db.packingList.getPackingListDetailsByUserIdAndTripId(user_id,trip_id);
+            let addNewCategory = await db.packingList.addNewCategory(packing_list_id,category);
             response.send(true);
 
 
         }catch (error){
             console.log("add new category controller "+error)
+        }
+    }
+
+    let changeCategoryName = async function (request,response){
+        try{
+            console.log("wait")
+        }catch (error){
+            console.log("change categoty name controller "+error)
         }
     }
 
@@ -223,7 +231,8 @@ module.exports = (db) => {
         updateSharedItem : updateSharedItem,
         addCustomItem : addCustomItem,
         deleteItem : deleteItem,
-        addNewCategory : addNewCategory
+        addNewCategory : addNewCategory,
+        changeCategoryName : changeCategoryName
     }
 
 };

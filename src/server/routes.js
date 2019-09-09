@@ -26,4 +26,5 @@ module.exports = (app, db) => {
     app.post('/change_profile_pic',users.changeProfilePic);
     app.get('/get_user_info',users.getUserInfo);
     app.post('/add_new_category',packingLists.addNewCategory);
+    app.post('/change_category_name',packingLists.changeCategoryName);
 };

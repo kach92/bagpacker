@@ -54,7 +54,10 @@ module.exports = (db) => {
                     let finalList = {};
                     let availableCategory = await db.packingList.getAvailableCategory(packingList[i].id);
                     for(let i=0;i<availableCategory.length;i++){
-                        finalList[availableCategory[i]] = listItems.filter(x=>x.category === availableCategory[i])
+                        finalList[availableCategory[i].category] = {
+                            id : availableCategory[i].id,
+                            items : listItems.filter(x=>x.category === availableCategory[i].category)
+                        }
                     }
                     if(listItems.filter(x=>x.category==="Shared").length >0){
                         finalList["Shared"] = listItems.filter(x=>x.category === "Shared")
@@ -80,7 +83,10 @@ module.exports = (db) => {
                 let finalList = {};
                 let availableCategory = await db.packingList.getAvailableCategory(packing_list_id);
                 for(let i=0;i<availableCategory.length;i++){
-                    finalList[availableCategory[i]] = packing_list_items.filter(x=>x.category === availableCategory[i])
+                    finalList[availableCategory[i].category] = {
+                        id:availableCategory[i].id,
+                        items:packing_list_items.filter(x=>x.category === availableCategory[i].category)
+                    }
                 }
                 let result = {
                     trip:trip_details,

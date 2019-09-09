@@ -459,7 +459,7 @@ module.exports = (dbPoolInstance) => {
             let queryResult = await dbPoolInstance.query(query,arr);
             if(queryResult.rows.length>0){
                     console.log("get available category success".toUpperCase());
-                    return queryResult.rows.map(x=>x.category);
+                    return queryResult.rows;
             }else{
                 return Promise.reject(new Error("get available category returns null"));
             }
@@ -540,8 +540,10 @@ module.exports = (dbPoolInstance) => {
 
     let addNewCategory = async function (packing_list_id,category){
         try{
+            console.log(packing_list_id);
+            console.log(category)
             let query = 'INSERT INTO packing_list_categories (packing_list_id,category) VALUES ($1,$2) RETURNING *'
-            let arr = [packing_list_id,category];
+            let arr = [packing_list_id.id,category];
             let queryResult = await dbPoolInstance.query(query,arr);
             if(queryResult.rows.length>0){
                     console.log("add new category success".toUpperCase());
