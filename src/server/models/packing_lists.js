@@ -461,7 +461,8 @@ module.exports = (dbPoolInstance) => {
                     console.log("get available category success".toUpperCase());
                     return queryResult.rows;
             }else{
-                return Promise.reject(new Error("get available category returns null"));
+                console.log("get available is null");
+                return [];
             }
         }catch (error){
             console.log("get available category "+ error)
@@ -540,8 +541,6 @@ module.exports = (dbPoolInstance) => {
 
     let addNewCategory = async function (packing_list_id,category){
         try{
-            console.log(packing_list_id);
-            console.log(category)
             let query = 'INSERT INTO packing_list_categories (packing_list_id,category) VALUES ($1,$2) RETURNING *'
             let arr = [packing_list_id.id,category];
             let queryResult = await dbPoolInstance.query(query,arr);
@@ -553,6 +552,22 @@ module.exports = (dbPoolInstance) => {
             }
         }catch (error){
             console.log("add new category model "+error)
+        }
+    }
+
+    let deleteCategory = async function (category_id){
+        try{
+            let query = 'DELETE FROM packing_list_categories WHERE id = $1 RETURNING *';
+            let arr = [category_id];
+            let queryResult = await dbPoolInstance.query(query,arr);
+            if(queryResult.rows.length>0){
+                    console.log("delete category mode success".toUpperCase());
+                    return queryResult.rows;
+            }else{
+                return Promise.reject(new Error("delete category mode return null"));
+            }
+        }catch (error){
+            console.log("delete category model "+ error)
         }
     }
 
@@ -579,7 +594,8 @@ module.exports = (dbPoolInstance) => {
         getItemsByCategoryId,
         getCategoryIdByPackingListId,
         getPureCategoryIdByName,
-        addNewCategory
+        addNewCategory,
+        deleteCategory
 
     };
 };

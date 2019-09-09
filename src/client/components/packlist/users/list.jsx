@@ -94,6 +94,7 @@ class List extends React.Component {
 
 	render() {
 		let list = this.props.list;
+        let updateTripInfo = this.props.updateTripInfo
 		let ListComponent = this;
 		let categories = Object.keys(list).map(function(category,index) {
             if(category !== "Shared"){
@@ -101,12 +102,14 @@ class List extends React.Component {
                     <Category
                         key={index}
                         category={category}
+                        category_id={list[category].id}
                         items={list[category].items}
                         packItem={ListComponent.packItem}
                         submitNameEdit={ListComponent.submitNameEdit}
                         submitQtyEdit={ListComponent.submitQtyEdit}
                         addItem={ListComponent.addItem}
                         deleteItem={ListComponent.deleteItem}
+                        updateTripInfo={updateTripInfo}
                     />
                 );
             }else{
