@@ -10,7 +10,8 @@ class SharedItemOwner extends React.Component {
         super();
         this.state = {
             editing : false,
-            owner : "No owner"
+            owner : "No owner",
+            ownerImage : null,
         };
 
         this.updateOwner = this.updateOwner.bind(this);
@@ -18,11 +19,12 @@ class SharedItemOwner extends React.Component {
     componentDidMount(){
         this.props.tripmates.forEach(x=>{
             if(x.packing_list_id === this.props.item_packinglist_id){
-                this.setState({owner:x.firstname})
+                this.setState({
+                    owner:x.firstname,
+                    ownerImage:x.image
+                })
             }
-        })
-        console.log("IHWEOFIHW;OIEHFOUHWEFIOUHWE")
-        console.log(this.props)
+        });
     }
 
     checkEdit = (e) => {
@@ -34,11 +36,13 @@ class SharedItemOwner extends React.Component {
 
     };
 
-    async updateOwner (e,userId) {
-        this.setState({owner:e.target.innerText})
+    async updateOwner (e,userId,index) {
+        this.setState({
+            owner:this.props.tripmates[index].firstname,
+            ownerImage:this.props.tripmates[index].image,
+        });
         await this.props.updateSharedItem(userId,this.props.itemId);
 
-        // location.reload();
     };
 
 
@@ -47,7 +51,7 @@ class SharedItemOwner extends React.Component {
         let tripmatesOptions = [];
         this.props.tripmates.map((user,index)=>{
             tripmatesOptions.push(
-                <Dropdown.Item key={index} href="#" onClick={(e)=>{this.updateOwner(e,user.id)}}>{user.firstname}</Dropdown.Item>);
+                <Dropdown.Item key={index} href="#" onClick={(e)=>{this.updateOwner(e,user.id,index)}}>{user.firstname}</Dropdown.Item>);
         });
         if (this.state.editing) {
             itemOwner =(
@@ -58,11 +62,15 @@ class SharedItemOwner extends React.Component {
         }else{
             itemOwner = <div onMouseEnter={this.checkEdit}><p>{this.state.owner}</p></div>;
         }
+        let ownerImageStyle = null;
+        if (this.state.ownerImage !== null) {
+            ownerImageStyle = {backgroundImage: `url(${this.state.ownerImage})`};
+        }
 
         return(
             <Row>
                 <Col xs={3}>
-                    <div className={mainStyles.ownerImage}></div>
+                    <div className={mainStyles.ownerImage} style={ownerImageStyle}></div>
                 </Col>
                 <Col xs={9}>
                     {itemOwner}

@@ -475,8 +475,8 @@ a {
   }
 }
 .ownerImage {
-  margin-bottom: 0;
-  padding: 0 0 0 0.5rem;
+  margin: 0 0 0.5rem 0.5rem;
+  border-radius: 50%;
 }
 .profileImage {
   position: relative;
@@ -534,16 +534,16 @@ a {
   }
   .select {
     &:after {
-      content: "";
-      display: block;
-      position: absolute;
-      top: 0;
-      right: 20px;
-      width: 12px;
-      height: 12px;
-      border-top: 1px solid #2359D9;
-      border-right: 1px solid #2359D9;
-      transform: rotate(135deg);
+      //content: "";
+      //display: block;
+      //position: absolute;
+      //top: 0;
+      //right: 20px;
+      //width: 12px;
+      //height: 12px;
+      //border-top: 1px solid #2359D9;
+      //border-right: 1px solid #2359D9;
+      //transform: rotate(135deg);
     }
   }
   input:focus,
@@ -622,7 +622,8 @@ a {
   }
 }
 
-.ownerDropdown {
+.ownerDropdown,
+.tripmateDropdown{
   button {
     color: $black!important;
     background: transparent!important;
@@ -641,10 +642,17 @@ a {
     padding: 0;
     letter-spacing: 0.5px;
     &:after {
+      content: "";
+      display: block;
       position: absolute;
-      right: 0;
-      top: 50%;
-      transform: translateY(-50%);
+      top: 0;
+      right: 8px;
+      width: 12px;
+      height: 12px;
+      border-left: none;
+      border-top: 1px solid #2359D9;
+      border-right: 1px solid #2359D9;
+      transform: rotate(135deg);
     }
     &:hover,&:focus,&:active,&:active:focus {
       box-shadow: none!important;
@@ -655,6 +663,7 @@ a {
 
   div {
     margin: 0;
+    width: 100%;
   }
 }
 button.btnSecondary {
