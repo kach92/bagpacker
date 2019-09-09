@@ -205,12 +205,10 @@ module.exports = (dbPoolInstance) => {
     let getItemsByPackingListId = async function (packing_list_id){
         try {
             let query = `
-            SELECT packing_list_items.*,categories.name AS category
+            SELECT packing_list_items.*,packing_list_categories.category
             FROM packing_list_items
             INNER JOIN packing_list_categories
             ON (packing_list_items.category_id = packing_list_categories.id)
-            INNER JOIN categories
-            ON (packing_list_categories.category_id = categories.id)
             WHERE packing_list_items.packing_list_id = $1`;
             let arr = [packing_list_id];
             let queryResult = await dbPoolInstance.query(query,arr);
@@ -453,17 +451,15 @@ module.exports = (dbPoolInstance) => {
     let getAvailableCategory = async function(packing_list_id){
         try{
             let query = `
-                SELECT categories.name
+                SELECT *
                 FROM packing_list_categories
-                INNER JOIN categories
-                ON(packing_list_categories.category_id = categories.id)
                 WHERE packing_list_categories.packing_list_id = $1
             `;
             let arr = [packing_list_id];
             let queryResult = await dbPoolInstance.query(query,arr);
             if(queryResult.rows.length>0){
                     console.log("get available category success".toUpperCase());
-                    return queryResult.rows.map(x=>x.name);
+                    return queryResult.rows.map(x=>x.category);
             }else{
                 return Promise.reject(new Error("get available category returns null"));
             }
@@ -491,12 +487,10 @@ module.exports = (dbPoolInstance) => {
     let getItemsByCategoryId = async function(category_id){
         try{
             let query = `
-                SELECT packing_list_items.*,categories.name AS category
+                SELECT packing_list_items.*,packing_list_categories.category
                 FROM packing_list_items
                 INNER JOIN packing_list_categories
                 ON (packing_list_items.category_id = packing_list_categories.id)
-                INNER JOIN categories
-                ON (packing_list_categories.category_id = categories.id)
                 WHERE packing_list_items.category_id = $1
             `
             let arr = [category_id];
@@ -512,10 +506,10 @@ module.exports = (dbPoolInstance) => {
         }
     }
 
-    let getCategoryIdByPackingListId = async function(packing_list_id,pure_id){
+    let getCategoryIdByPackingListId = async function(packing_list_id,category){
         try{
-            let query = 'SELECT * FROM packing_list_categories WHERE packing_list_id = $1 AND category_id = $2'
-            let arr = [packing_list_id,pure_id];
+            let query = 'SELECT * FROM packing_list_categories WHERE packing_list_id = $1 AND category = $2'
+            let arr = [packing_list_id,category];
             let queryResult = await dbPoolInstance.query(query,arr);
             if(queryResult.rows.length>0){
                     console.log("get category id by packing list id success".toUpperCase());

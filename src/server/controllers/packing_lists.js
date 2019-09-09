@@ -162,16 +162,14 @@ module.exports = (db) => {
             if(category === "Shared"){
                 console.log("ADD CUSTOM ITEM INTO SHARED LIST");
                 packing_list_details = await db.packingList.getPackingListDetailsByUserIdAndTripId(null,trip_id);
-                pure_category_id = await db.packingList.getPureCategoryIdByName(category);
-                category_id = await db.packingList.getCategoryIdByPackingListId(packing_list_details.id,pure_category_id)
+                category_id = await db.packingList.getCategoryIdByPackingListId(packing_list_details.id,category)
                 shared = true;
 
 
             }else{
                 console.log("ADD CUSTOM ITEM INTO USER LIST");
                 packing_list_details = await db.packingList.getPackingListDetailsByUserIdAndTripId(user_id,trip_id);
-                pure_category_id = await db.packingList.getPureCategoryIdByName(category);
-                category_id = await db.packingList.getCategoryIdByPackingListId(packing_list_details.id,pure_category_id)
+                category_id = await db.packingList.getCategoryIdByPackingListId(packing_list_details.id,category)
                 shared = false;
             }
 
