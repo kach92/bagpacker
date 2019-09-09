@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import mainStyles from "../../../style.scss";
 
 class CategoryTitle extends React.Component {
     constructor(){
@@ -57,7 +58,7 @@ class CategoryTitle extends React.Component {
         let itemName = null;
         if (this.state.editing) {
             itemName =
-                <input type="text" value={this.state.category} ref={this.setWrapperRef} onChange={this.updateName} onKeyDown={(e)=>this.checkKey(e)}/>
+                <input className={mainStyles.categoryInput} type="text" value={this.state.category} ref={this.setWrapperRef} onChange={this.updateName} onKeyDown={(e)=>this.checkKey(e)}/>
         }else{
             // itemName = <div onClick={this.checkEdit}><p>{this.state.item_name}</p></div>;
             itemName = <h4 onClick={this.checkEdit}>{this.state.category}</h4>;
