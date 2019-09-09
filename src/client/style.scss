@@ -55,6 +55,10 @@ a {
     right: 0;
     display: block;
     background-image: url("./images/profile.svg");
+    background-size: cover;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
     width: 36px;
     height: 36px;
   }
@@ -473,6 +477,17 @@ a {
 .ownerImage {
   margin-bottom: 0;
   padding: 0 0 0 0.5rem;
+}
+.profileImage {
+  position: relative;
+  border-radius: 50%;
+  overflow: hidden;
+  img {
+    position: absolute;
+    height: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+  }
 }
 
 .profileImageForm {
