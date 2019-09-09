@@ -4,6 +4,8 @@ import ActivitiesForm from "../packlist-activities-form";
 import mainStyles from "../../../style.scss";
 import {Form, Row, Col} from 'react-bootstrap';
 import Countries from "../../../countries.js"
+import DatePicker from "react-datepicker";
+import 'react-datepicker/dist/react-datepicker-cssmodules.css';
 
 class PacklistForm extends React.Component {
 	constructor(props) {
@@ -11,8 +13,8 @@ class PacklistForm extends React.Component {
 		this.state = {
 			formInputs: {
 				location: "",
-				startDate: "",
-				endDate: "",
+				startDate:new Date(),
+				endDate:new Date(),
 				gender: "",
 				weather: "1",
 				activities: []
@@ -45,15 +47,14 @@ class PacklistForm extends React.Component {
 
         this.setState({formInputs: formInputs,filteredCountries:this.state.filteredCountries});
 	};
-
-	updateStartDate = (e) => {
+	updateStartDate = (date) => {
 		let formInputs = this.state.formInputs;
-		formInputs.startDate = e.target.value;
+		formInputs.startDate = date;
 		this.setState({formInputs: formInputs});
 	};
-	updateEndDate = (e) => {
+	updateEndDate = (date) => {
 		let formInputs = this.state.formInputs;
-		formInputs.endDate = e.target.value;
+		formInputs.endDate = date;
 		this.setState({formInputs: formInputs});
 	};
 
@@ -85,11 +86,20 @@ class PacklistForm extends React.Component {
 			}
 		});
 		if (validated) {
-			formInputs["duration"] = this.calcDuration(formInputs["startDate"], formInputs["endDate"]);
-			this.getPacklist(formInputs);
+			formInputs.duration = this.calcDuration(formInputs.startDate, formInputs.endDate);
+			console.log(formInputs.duration);
+			if (formInputs.duration <=0) {
+				this.setState({errorMessage: "The start date cannot be later than the end date"})
+			}
+			else {
+				this.getPacklist(formInputs);
+			}
+		}else {
+			this.setState({errorMessage: "Please fill in the details to generate the packing list"})
 		}
 	};
 	getPacklist = (data) => {
+		// console.log(data);
 		fetch('/non_user_list', {
 			method: 'POST',
 			body: JSON.stringify(data),
@@ -110,14 +120,16 @@ class PacklistForm extends React.Component {
 			.catch(error => console.error('Error:', error));
 	};
 	calcDuration = (start, end) => {
-		let duration = (new Date(end).getTime() - new Date(start).getTime());
-		duration = Math.ceil(duration / (1000 * 60 * 60 * 24));
-		return duration + 1;
+		let duration = Math.floor((new Date(end).setHours(0,0,0,0)-new Date(start).setHours(0,0,0,0)) / (1000*60*60*24));
+		return duration+1
 	};
 
 	render() {
-        let datalistOptions = this.state.filteredCountries.map(x=><option>{x}</option>)
-
+        let datalistOptions = this.state.filteredCountries.map(x=><option>{x}</option>);
+		let errorMessage = null;
+		if (this.state.errorMessage !== ""){
+			errorMessage = (<Col xs={12} className={mainStyles.formError}><p>{this.state.errorMessage}</p></Col>);
+		}
 		return (
 			<Form className={mainStyles.packlistForm}>
 				<Row>
@@ -134,16 +146,28 @@ class PacklistForm extends React.Component {
 				</Row>
 				<Row>
 					<Col>
-						<Form.Group>
+						<Form.Group className={mainStyles.datepicker}>
 							<label>Start Date</label>
-							<Form.Control type="date" value={this.state.formInputs.startDate} onChange={this.updateStartDate}/>
+							<DatePicker
+								selectsStart
+								selected={this.state.formInputs.startDate}
+								onChange={date => this.updateStartDate(date)}
+								startDate={this.state.formInputs.startDate}
+								endDate={this.state.formInputs.endDate}
+							/>
 						</Form.Group>
 					</Col>
 
 					<Col>
-						<Form.Group>
+						<Form.Group className={mainStyles.datepicker}>
 							<label>End Date</label>
-							<Form.Control type="date" value={this.state.formInputs.endDate} onChange={this.updateEndDate}/>
+							<DatePicker
+								selectsEnd
+								selected={this.state.formInputs.endDate}
+								onChange={date => this.updateEndDate(date)}
+								endDate={this.state.formInputs.endDate}
+								minDate={this.state.formInputs.startDate}
+							/>
 						</Form.Group>
 					</Col>
 				</Row>
@@ -177,10 +201,12 @@ class PacklistForm extends React.Component {
 						</Form.Group>
 					</Col>
 				</Row>
-				<button type="submit" onClick={this.submit} className={mainStyles.btn}>Create Packing List</button>
-				<br/>
-				<div className="error">
-				</div>
+				<Row>
+					<Col xs={12} className="mb-5">
+						<button type="submit" onClick={this.submit} className={mainStyles.btn}>Create Packing List</button>
+					</Col>
+					{errorMessage}
+				</Row>
 			</Form>
 		);
 	}

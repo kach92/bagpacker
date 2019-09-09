@@ -692,3 +692,10 @@ button.btnSecondary {
     margin-bottom: 2rem;
   }
 }
+
+.datepicker {
+  label,
+  > div{
+    display: block;
+  }
+}
