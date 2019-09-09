@@ -46,6 +46,22 @@ class List extends React.Component {
 		}).then(res => console.log(res))
 			.catch(error => console.error('Error:', error));
 	};
+
+    submitCategoryTitleEdit = (category_id,category) =>{
+        console.log("TESTTTTTTT")
+        let data = {
+            category_id,
+            category
+        };
+        fetch('/change_category_name', {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(res => console.log(res))
+            .catch(error => console.error('Error:', error));
+    }
 	submitQtyEdit = (item_id,quantity) => {
 		let data = {
 			item_id,
@@ -110,6 +126,7 @@ class List extends React.Component {
                         addItem={ListComponent.addItem}
                         deleteItem={ListComponent.deleteItem}
                         updateTripInfo={updateTripInfo}
+                        submitCategoryTitleEdit={ListComponent.submitCategoryTitleEdit}
                     />
                 );
             }else{
@@ -125,20 +142,6 @@ class List extends React.Component {
 		});
 		let newCategory = null;
 
-		if (this.state.adding) {
-			newCategory = (
-				<Card className={mainStyles.listCard}>
-					<Card.Body>
-						<Row>
-							<Col>
-								<h4>New Category</h4>
-							</Col>
-						</Row>
-						<ItemAdd addItem={this.props.addItem}/>
-					</Card.Body>
-				</Card>
-			)
-		}
 		return (
 			<Row className="mb-5">
 				<Col>

@@ -571,6 +571,23 @@ module.exports = (dbPoolInstance) => {
         }
     }
 
+    let changeCategoryName = async function (category_id,category){
+        try{
+            let query = "UPDATE packing_list_categories SET category=$1 WHERE id = $2 RETURNING *";
+            let arr = [category,category_id];
+            let queryResult = await dbPoolInstance.query(query,arr);
+            console.log(queryResult)
+            if(queryResult.rows.length>0){
+                    console.log("change category name model success".toUpperCase());
+                    return queryResult.rows;
+            }else{
+                return Promise.reject(new Error("change category name model return null"));
+            }
+        }catch (error){
+            console.log("change category name model "+error)
+        }
+    }
+
     return {
         generateTempList,
         createPackingList,
@@ -595,7 +612,8 @@ module.exports = (dbPoolInstance) => {
         getCategoryIdByPackingListId,
         getPureCategoryIdByName,
         addNewCategory,
-        deleteCategory
+        deleteCategory,
+        changeCategoryName
 
     };
 };

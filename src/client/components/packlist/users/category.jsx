@@ -7,6 +7,7 @@ import ItemQty from './item/item-qty';
 import ItemChecked from './item/item-checked';
 import ItemAdd from './item/item-add';
 import DeleteCategory from './delete-category';
+import CategoryTitle from './category-title';
 
 class Category extends React.Component {
     constructor(){
@@ -58,7 +59,7 @@ class Category extends React.Component {
 				<Card.Body>
 					<Row>
 						<Col>
-							<h4>{this.props.category}</h4>
+                            <CategoryTitle category={this.props.category} category_id={this.props.category_id} submitCategoryTitleEdit={this.props.submitCategoryTitleEdit}/>
 						</Col>
 					</Row>
 
