@@ -414,9 +414,9 @@ module.exports = (dbPoolInstance) => {
         try{
             if(shared){
                 let query = "SELECT * FROM categories WHERE name = 'Shared'";
-                let category_id = await dbPoolInstance.query(query);
-                let query2 = "INSERT INTO packing_list_categories (packing_list_id,category_id) VALUES ($1,$2) RETURNING *"
-                let arr = [packing_list_id,category_id.rows[0].id];
+                let category = await dbPoolInstance.query(query);
+                let query2 = "INSERT INTO packing_list_categories (packing_list_id,category) VALUES ($1,$2) RETURNING *"
+                let arr = [packing_list_id,category.rows[0].name];
                 let queryResult = await dbPoolInstance.query(query2,arr);
                 if(queryResult.rows.length>0){
                     console.log("generate shared packing list categories success".toUpperCase());
@@ -430,18 +430,15 @@ module.exports = (dbPoolInstance) => {
 
                 let arrOfarr = [];
                 categoryArrObj.rows.forEach(x=>{
-                    arrOfarr.push([packing_list_id,x.id])
+                    arrOfarr.push([packing_list_id,x.name])
                 })
 
-                let query2 = format('INSERT INTO packing_list_categories (packing_list_id,category_id) VALUES %L RETURNING *',arrOfarr);
+                let query2 = format('INSERT INTO packing_list_categories (packing_list_id,category) VALUES %L RETURNING *',arrOfarr);
                 let queryResult = await dbPoolInstance.query(query2);
 
-                let query3 = 'SELECT packing_list_categories.id, categories.name FROM packing_list_categories INNER JOIN categories ON (packing_list_categories.category_id = categories.id) WHERE packing_list_categories.packing_list_id = $1';
-                let arr = [packing_list_id];
-                let queryResult2 = await dbPoolInstance.query(query3,arr);
-                if(queryResult2.rows.length>0){
+                if(queryResult.rows.length>0){
                     console.log("generate packing list categories success".toUpperCase());
-                    return queryResult2.rows;
+                    return queryResult.rows;
                 }else{
                     return Promise.reject(new Error("generate packing list categories returns null"));
                 }

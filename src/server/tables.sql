@@ -49,9 +49,8 @@ CREATE TABLE IF NOT EXISTS categories (
 CREATE TABLE IF NOT EXISTS packing_list_categories(
     id SERIAL PRIMARY KEY,
     packing_list_id INTEGER,
-    category_id INTEGER,
-    FOREIGN KEY (packing_list_id) REFERENCES packing_lists (id) ON DELETE CASCADE,
-    FOREIGN KEY (category_id) REFERENCES categories (id)
+    category TEXT,
+    FOREIGN KEY (packing_list_id) REFERENCES packing_lists (id) ON DELETE CASCADE
 );
 
 

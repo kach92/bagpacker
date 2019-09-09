@@ -64,7 +64,7 @@ module.exports = (db) => {
                     let packing_list_categories = await db.packingList.generatePackingListCategories(packing_list_id,false);
                     let category_id_obj = {}
                     packing_list_categories.forEach(x=>{
-                        category_id_obj[x.name] = x.id
+                        category_id_obj[x.category] = x.id
                     })
                     let packing_list_items = await db.packingList.createPackingListItems(finalList,packing_list_id,false,group_id,category_id_obj);
                 }
@@ -81,7 +81,7 @@ module.exports = (db) => {
                 let packing_list_categories = await db.packingList.generatePackingListCategories(packing_list_id,false);
                 let category_id_obj = {};
                 packing_list_categories.forEach(x=>{
-                    category_id_obj[x.name] = x.id
+                    category_id_obj[x.category] = x.id
                 })
                 let finalList = await db.packingList.generateTempList(tripInfo,user_gender);
                 let packing_list_items = await db.packingList.createPackingListItems(finalList,packing_list_id,false,null,category_id_obj);
