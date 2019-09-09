@@ -106,8 +106,11 @@ module.exports = (db) => {
     let changeProfilePic = async function (request,response){
         try{
             let user_id = request.cookies["user_id"];
-            let result = await cloudinary.uploader.upload(request.file.path)
-            let changePic = await db.user.changeProfilePic(user_id,result.url);
+            let dataURI = request.body.newImage;
+            let uploadStr = dataURI.replace(/(\r\n|\n|\r)/gm, "");
+
+            let result = await cloudinary.uploader.upload(uploadStr,{ eager: [{width: 140, height: 140, crop: "fill"}]})
+            let changePic = await db.user.changeProfilePic(user_id,result.eager[0].secure_url);
             response.send(true);
 
         }catch (error){
