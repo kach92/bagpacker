@@ -28,6 +28,23 @@ class GroupList extends React.Component {
 			})
 		}
 	};
+
+    addItem = (name, quantity,category) => {
+        let data = {
+            trip_id: this.props.tripId,
+            category,
+            item_name: name,
+            quantity: quantity
+        };
+        fetch('/add_custom_item', {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(res => window.location.reload())
+            .catch(error => console.error('Error:', error));
+    };
 	render() {
 		let list = this.props.list;
 		let currentUser = 0;
@@ -48,7 +65,7 @@ class GroupList extends React.Component {
 		return (
 			<Row className={mainStyles.packlist}>
 				<Col xs={12}>
-					<SharedList list={this.props.shared} tripmates={this.props.list} tripId={this.props.tripId} updateTripInfo={this.props.updateTripInfo}/>
+					<SharedList list={this.props.shared} tripmates={this.props.list} tripId={this.props.tripId} updateTripInfo={this.props.updateTripInfo} addItem={this.addItem}/>
 				</Col>
 				<Col xs={12} className="my-5">
 					<Row>
