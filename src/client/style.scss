@@ -534,20 +534,6 @@ a {
   select {
     -webkit-appearance: none;
   }
-  .select {
-    &:after {
-      //content: "";
-      //display: block;
-      //position: absolute;
-      //top: 0;
-      //right: 20px;
-      //width: 12px;
-      //height: 12px;
-      //border-top: 1px solid #2359D9;
-      //border-right: 1px solid #2359D9;
-      //transform: rotate(135deg);
-    }
-  }
   input:focus,
   select:focus{
     outline: none;
@@ -560,6 +546,14 @@ a {
     border-radius: 0;
     margin-bottom: 2rem;
     h4 {
+      margin-bottom: 2rem;
+      line-height: 1.5;
+      border-bottom: 1px solid white;
+      cursor: text;
+    }
+    .categoryInput {
+      font-size: 1.5rem;
+      font-weight: 500;
       margin-bottom: 2rem;
     }
   }
@@ -686,12 +680,39 @@ button.btnSecondary {
   }
 }
 
-.deleteModal {
+.deleteModal,
+.addCategoryModal{
   padding: 1rem;
-
   text-align: center;
   h4 {
     margin-bottom: 2rem;
+  }
+  > div > div {
+    border: 0;
+    border-radius: 0;
+    padding: 1rem;
+  }
+  input:focus {
+    outline: none;
+    box-shadow: none;
+  }
+  input{
+    display:block;
+    position: static;
+    opacity: 1;
+    cursor: default;
+    height: auto;
+    width: 100%;
+    border: none;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+    border-bottom: 1px solid $gray;
+    padding: .375rem 0;
+    margin-bottom: 2rem;
+  }
+  .formError {
+    margin: 2rem 0 1rem;
   }
 }
 
@@ -709,11 +730,16 @@ button.btnSecondary {
 
 
 .trashButton{
-    font-size: 20px;
-    position:absolute;
-    top:50%;
-    left:50%;
-    transform: translate(-50%,-50%);
+  font-size: 20px;
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform: translate(-50%,-50%);
+  cursor: pointer;
+  &:hover {
+    opacity: 0.5;
+    transition: .3s;
+  }
 }
 
 .suggestionWrapper  {

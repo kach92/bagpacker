@@ -1,47 +1,62 @@
 import React, { useState } from 'react';
-import {Button,Modal} from 'react-bootstrap';
+import {Button, Modal, Form, Row, Col} from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import mainStyles from "../../../style.scss";
 
 function AddNewCategoryModal(props) {
 
     const [name, setValue] = useState(0);
+    const [errorMessage, setError] = useState('');
 
     const submitNewCategory = () => {
-        console.log(props)
-        let data = {
-            trip_id: props.tripId,
-            new_category : name
-        };
-        fetch('/add_new_category', {
-            method: 'POST',
-            body: JSON.stringify(data),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-        .then(res => {
-            props.updateTripInfo();
-            props.onHide();
-            // window.location.reload()
-        })
-        .catch(error => console.error('Error:', error));
+        if (name === 0 || name.trim() === "") {
+            setError('Please fill in the category name');
+        }
+        else {
+            console.log("SUBMITING");
+            let data = {
+                trip_id: props.tripId,
+                new_category: name
+            };
+            fetch('/add_new_category', {
+                method: 'POST',
+                body: JSON.stringify(data),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(res => {
+                    props.updateTripInfo();
+                    props.onHide();
+                    // window.location.reload()
+                })
+                .catch(error => console.error('Error:', error));
+        }
+    };
+    console.log(errorMessage);
+    let errorMessageDiv = null;
+    if (errorMessage !== ""){
+        errorMessageDiv = (<Col xs={12} className={mainStyles.formError}><p>{errorMessage}</p></Col>);
     }
-
     return (
         <Modal
             {...props}
             size="md"
             aria-labelledby="contained-modal-title-vcenter"
             centered
-            className={mainStyles.deleteModal}
+            className={mainStyles.addCategoryModal}
         >
             <Modal.Body>
-                <h4>New Category Name</h4>
-                <input type="text" onChange={(e)=>setValue(e.target.value)}/><br/><br/>
-                <Button className={`${mainStyles.btn} ${mainStyles.btnSecondary}`} onClick={submitNewCategory}>
-                    Add Category
-                </Button>
+                <Row>
+                    <Col xs={12}>
+                        <h4>Add new category</h4>
+                        <Form.Control type="text" placeholder="Category name" onChange={(e)=>setValue(e.target.value)}/>
+                        <Button className={`${mainStyles.btn}`} onClick={submitNewCategory}>
+                            Add Category
+                        </Button>
+                    </Col>
+                    {errorMessageDiv}
+                </Row>
             </Modal.Body>
         </Modal>
     );
