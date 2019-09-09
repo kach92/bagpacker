@@ -12,6 +12,8 @@ class SharedItemOwner extends React.Component {
             editing : false,
             owner : "No owner"
         };
+
+        this.updateOwner = this.updateOwner.bind(this);
     }
     componentDidMount(){
         this.props.tripmates.forEach(x=>{
@@ -32,10 +34,10 @@ class SharedItemOwner extends React.Component {
 
     };
 
-    updateOwner = (e,userId) =>{
+    async updateOwner (e,userId) {
         this.setState({owner:e.target.innerText})
-        this.props.updateSharedItem(userId,this.props.itemId);
-        this.props.updateTripInfo();
+        await this.props.updateSharedItem(userId,this.props.itemId);
+
         // location.reload();
     };
 

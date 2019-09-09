@@ -93,7 +93,10 @@ class SharedList extends React.Component {
 				'Content-Type': 'application/json'
 			}
 		}).then(res => res.json())
-			.then(res => console.log(res))
+			.then(res =>{
+                console.log(res)
+                this.props.updateTripInfo();
+            })
 			.catch(error => console.error('Error:', error));
 	};
 	render() {

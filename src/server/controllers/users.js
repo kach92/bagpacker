@@ -110,8 +110,8 @@ module.exports = (db) => {
             let dataURI = request.body.newImage;
             let uploadStr = dataURI.replace(/(\r\n|\n|\r)/gm, "");
 
+
             let result = await cloudinary.v2.uploader.upload(uploadStr,{ eager: [{width: 140, height: 140, crop: "fill"}]})
-            console.log(result);
             let changePic = await db.users.changeProfilePic(user_id,result.eager[0].secure_url);
             response.send(true);
 

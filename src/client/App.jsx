@@ -79,12 +79,12 @@ class App extends React.Component {
 					<Route path="/trips/:id" render={props => (
 						this.state.authed
 						? <Trip userId={this.state.userId} {...props}/>
-						: <Redirect to='/' />
+						: <Home updatePacklist={this.updatePacklist} checkUser={this.checkUser} {...props}/>
 					)}/>
 					<Route path="/list/" render={props => (
 						this.state.packlist != null
 							? <NonUserList packlist={this.state.packlist} {...props}/>
-							: <Redirect to='/' />
+							: <Home updatePacklist={this.updatePacklist} checkUser={this.checkUser} {...props}/>
 					)}/>
 					<Route path="/user/edit" render={props => (
 						this.state.authed
