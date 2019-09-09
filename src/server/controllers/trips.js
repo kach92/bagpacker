@@ -1,4 +1,3 @@
-const availableCategory = ["Essentials","Toiletries","Equipments","Beauty"]
 
 module.exports = (db) => {
 
@@ -51,8 +50,10 @@ module.exports = (db) => {
                 let individualList = [];
                 for(let i=0; i<packingList.length;i++){
                     let user = await db.users.getUserDetailsById(packingList[i].user_id);
-                    let listItems = await db.packingList.getPackingListItemsByPackingListId(packingList[i].id);
+                    let listItems = await db.packingList.getItemsByPackingListId(packingList[i].id);
+                    console.log(listItems)
                     let finalList = {};
+                    let availableCategory = await db.packingList.getAvailableCategory(packingList[i].id);
                     for(let i=0;i<availableCategory.length;i++){
                         finalList[availableCategory[i]] = listItems.filter(x=>x.category === availableCategory[i])
                     }
@@ -64,7 +65,7 @@ module.exports = (db) => {
                     individualList.push(user);
                 }
 
-                let sharedListItems = await db.packingList.getPackingListItemsByPackingListId(shared_packing_list[0].id,trip_details.group_id)
+                let sharedListItems = await db.packingList.getItemsByPackingListId(shared_packing_list[0].id,trip_details.group_id)
                 response.send({
                     trip:trip_details,
                     list:individualList,
@@ -78,6 +79,7 @@ module.exports = (db) => {
                 let packing_list_id = await db.packingList.getPackingListIdByTripId(trip_id);
                 let packing_list_items = await db.packingList.getItemsByPackingListId(packing_list_id);
                 let finalList = {};
+                let availableCategory = await db.packingList.getAvailableCategory(packing_list_id);
                 for(let i=0;i<availableCategory.length;i++){
                     finalList[availableCategory[i]] = packing_list_items.filter(x=>x.category === availableCategory[i])
                 }

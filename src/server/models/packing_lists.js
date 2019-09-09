@@ -204,7 +204,14 @@ module.exports = (dbPoolInstance) => {
 
     let getItemsByPackingListId = async function (packing_list_id){
         try {
-            let query = 'SELECT * FROM packing_list_items WHERE packing_list_id = $1';
+            let query = `
+            SELECT packing_list_items.*,categories.name AS category
+            FROM packing_list_items
+            INNER JOIN packing_list_categories
+            ON (packing_list_items.category_id = packing_list_categories.id)
+            INNER JOIN categories
+            ON (packing_list_categories.category_id = categories.id)
+            WHERE packing_list_items.packing_list_id = $1`;
             let arr = [packing_list_id];
             let queryResult = await dbPoolInstance.query(query,arr);
             if (queryResult.rows.length > 0) {
@@ -448,6 +455,28 @@ module.exports = (dbPoolInstance) => {
         }
     }
 
+    let getAvailableCategory = async function(packing_list_id){
+        try{
+            let query = `
+                SELECT categories.name
+                FROM packing_list_categories
+                INNER JOIN categories
+                ON(packing_list_categories.category_id = categories.id)
+                WHERE packing_list_categories.packing_list_id = $1
+            `;
+            let arr = [packing_list_id];
+            let queryResult = await dbPoolInstance.query(query,arr);
+            if(queryResult.rows.length>0){
+                    console.log("get available category success".toUpperCase());
+                    return queryResult.rows.map(x=>x.name);
+            }else{
+                return Promise.reject(new Error("get available category returns null"));
+            }
+        }catch (error){
+            console.log("get available category "+ error)
+        }
+    }
+
     return {
         generateTempList,
         createPackingList,
@@ -465,7 +494,8 @@ module.exports = (dbPoolInstance) => {
         getPackingListDetailsByUserIdAndTripId,
         addCustomItem,
         deleteItem,
-        generatePackingListCategories
+        generatePackingListCategories,
+        getAvailableCategory
 
     };
 };
