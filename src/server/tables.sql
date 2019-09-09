@@ -41,6 +41,21 @@ CREATE TABLE IF NOT EXISTS packing_lists (
     FOREIGN KEY (trip_id) REFERENCES trips (id) ON DELETE CASCADE
 );
 
+CREATE TABLE IF NOT EXISTS categories (
+    id SERIAL PRIMARY KEY,
+    name TEXT
+);
+
+CREATE TABLE IF NOT EXISTS packing_list_categories(
+    id SERIAL PRIMARY KEY,
+    packing_list_id INTEGER,
+    category TEXT,
+    FOREIGN KEY (packing_list_id) REFERENCES packing_lists (id) ON DELETE CASCADE
+);
+
+
+
+
 CREATE TABLE IF NOT EXISTS packing_list_items (
     id SERIAL PRIMARY KEY,
     packing_list_id INTEGER,
@@ -50,9 +65,10 @@ CREATE TABLE IF NOT EXISTS packing_list_items (
     packed BOOLEAN DEFAULT false,
     private BOOLEAN DEFAULT false,
     shared BOOLEAN,
-    category TEXT,
+    category_id INT,
     FOREIGN KEY (packing_list_id) REFERENCES packing_lists(id) ON DELETE CASCADE,
-    FOREIGN KEY (group_id) REFERENCES groups (id)
+    FOREIGN KEY (group_id) REFERENCES groups (id),
+    FOREIGN KEY (category_id) REFERENCES packing_list_categories (id) ON DELETE CASCADE
 );
 
 
@@ -91,5 +107,4 @@ CREATE TABLE IF NOT EXISTS items (
     FOREIGN KEY (activity_id) REFERENCES activities(id),
     FOREIGN KEY (weather_id) REFERENCES weathers(id)
 );
-
 

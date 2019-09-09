@@ -1,4 +1,3 @@
-const availableCategory = ["Essentials","Toiletries","Equipments","Beauty"]
 
 module.exports = (db) => {
 
@@ -51,10 +50,14 @@ module.exports = (db) => {
                 let individualList = [];
                 for(let i=0; i<packingList.length;i++){
                     let user = await db.users.getUserDetailsById(packingList[i].user_id);
-                    let listItems = await db.packingList.getPackingListItemsByPackingListId(packingList[i].id);
+                    let listItems = await db.packingList.getItemsByPackingListId(packingList[i].id);
                     let finalList = {};
+                    let availableCategory = await db.packingList.getAvailableCategory(packingList[i].id);
                     for(let i=0;i<availableCategory.length;i++){
-                        finalList[availableCategory[i]] = listItems.filter(x=>x.category === availableCategory[i])
+                        finalList[availableCategory[i].category] = {
+                            id : availableCategory[i].id,
+                            items : listItems.filter(x=>x.category === availableCategory[i].category)
+                        }
                     }
                     if(listItems.filter(x=>x.category==="Shared").length >0){
                         finalList["Shared"] = listItems.filter(x=>x.category === "Shared")
@@ -63,8 +66,8 @@ module.exports = (db) => {
                     user["packing_list_id"] = packingList[i].id;
                     individualList.push(user);
                 }
-
-                let sharedListItems = await db.packingList.getPackingListItemsByPackingListId(shared_packing_list[0].id,trip_details.group_id)
+                let sharedItemCategoryId = await db.packingList.getSharedItemCategoryId(shared_packing_list[0].id)
+                let sharedListItems = await db.packingList.getItemsByCategoryId(sharedItemCategoryId)
                 response.send({
                     trip:trip_details,
                     list:individualList,
@@ -78,8 +81,12 @@ module.exports = (db) => {
                 let packing_list_id = await db.packingList.getPackingListIdByTripId(trip_id);
                 let packing_list_items = await db.packingList.getItemsByPackingListId(packing_list_id);
                 let finalList = {};
+                let availableCategory = await db.packingList.getAvailableCategory(packing_list_id);
                 for(let i=0;i<availableCategory.length;i++){
-                    finalList[availableCategory[i]] = packing_list_items.filter(x=>x.category === availableCategory[i])
+                    finalList[availableCategory[i].category] = {
+                        id:availableCategory[i].id,
+                        items:packing_list_items.filter(x=>x.category === availableCategory[i].category)
+                    }
                 }
                 let result = {
                     trip:trip_details,

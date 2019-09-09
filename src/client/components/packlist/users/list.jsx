@@ -5,6 +5,7 @@ import {Card, CardColumns, Col, Row} from "react-bootstrap";
 import mainStyles from "../../../style.scss";
 import ItemAdd from "./item/item-add";
 import TripmateCategory from './tripmate-category';
+import AddCategory from './add-category';
 
 class List extends React.Component {
 	constructor(){
@@ -91,9 +92,6 @@ class List extends React.Component {
             .catch(error => console.error('Error:', error));
     };
 
-    checkAdding = () => {
-		this.setState({adding:true});
-    };
 	render() {
 		let list = this.props.list;
 		let ListComponent = this;
@@ -103,7 +101,7 @@ class List extends React.Component {
                     <Category
                         key={index}
                         category={category}
-                        items={list[category]}
+                        items={list[category].items}
                         packItem={ListComponent.packItem}
                         submitNameEdit={ListComponent.submitNameEdit}
                         submitQtyEdit={ListComponent.submitQtyEdit}
@@ -146,7 +144,8 @@ class List extends React.Component {
 						{newCategory}
 					</CardColumns>
 					<div className="text-center">
-						<div className={`mt-3 ${mainStyles.addButton}`} onClick={this.checkAdding}><i className='bx bx-plus'></i> Add new category</div>
+                        <AddCategory tripId = {this.props.tripId} updateTripInfo={this.props.updateTripInfo}/>
+
 					</div>
 				</Col>
 			</Row>

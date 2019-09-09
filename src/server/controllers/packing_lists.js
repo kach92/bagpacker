@@ -53,14 +53,20 @@ module.exports = (db) => {
                 let destination_id = await db.trips.createDestination(tripInfo,trip_id);
                 //create packing list id for shared items
                 let packing_list_shared_id = await db.packingList.createPackingList(trip_id,null,group_id);
-                let finalList_shared = await db.packingList.generateSharedList(tripInfo)
-                let packing_list_items_shared = await db.packingList.createPackingListItems(finalList_shared,packing_list_shared_id,true,group_id)
+                let finalList_shared = await db.packingList.generateSharedList(tripInfo);
+                let generateCategories = await db.packingList.generatePackingListCategories(packing_list_shared_id,true);
+                let packing_list_items_shared = await db.packingList.createPackingListItems(finalList_shared,packing_list_shared_id,true,group_id,generateCategories)
                 //create packing list id for each user,generate list and save into packing list
 
                 for(let i = 0; i< user_gender_arrObj.length ; i++) {
                     let finalList = await db.packingList.generateTempList(tripInfo,user_gender_arrObj[i].gender,true);
                     let packing_list_id = await db.packingList.createPackingList(trip_id,user_gender_arrObj[i].id,group_id);
-                    let packing_list_items = await db.packingList.createPackingListItems(finalList,packing_list_id,false,group_id);
+                    let packing_list_categories = await db.packingList.generatePackingListCategories(packing_list_id,false);
+                    let category_id_obj = {}
+                    packing_list_categories.forEach(x=>{
+                        category_id_obj[x.category] = x.id
+                    })
+                    let packing_list_items = await db.packingList.createPackingListItems(finalList,packing_list_id,false,group_id,category_id_obj);
                 }
                 //send a true response to tell cliend side save ok, need to redirect to group/invidiaul trip page
                 response.status(200).send(trip_id.toString());
@@ -72,8 +78,13 @@ module.exports = (db) => {
                 let trip_id = await db.trips.createTrip(tripInfo,user_id);
                 let destination_id = await db.trips.createDestination(tripInfo,trip_id);
                 let packing_list_id = await db.packingList.createPackingList(trip_id,user_id);
+                let packing_list_categories = await db.packingList.generatePackingListCategories(packing_list_id,false);
+                let category_id_obj = {};
+                packing_list_categories.forEach(x=>{
+                    category_id_obj[x.category] = x.id
+                })
                 let finalList = await db.packingList.generateTempList(tripInfo,user_gender);
-                let packing_list_items = await db.packingList.createPackingListItems(finalList,packing_list_id,false);
+                let packing_list_items = await db.packingList.createPackingListItems(finalList,packing_list_id,false,null,category_id_obj);
                 console.log(trip_id)
 
                 response.status(200).send(trip_id.toString());
@@ -146,22 +157,26 @@ module.exports = (db) => {
             let group_id = null;
             let packing_list_id = null;
             let shared = null;
+            let category_id = null;
+            let pure_category_id = null;
             if(category === "Shared"){
-                console.log("ADD CUSTOM ITEM INTO GROUP LIST");
+                console.log("ADD CUSTOM ITEM INTO SHARED LIST");
                 packing_list_details = await db.packingList.getPackingListDetailsByUserIdAndTripId(null,trip_id);
+                category_id = await db.packingList.getCategoryIdByPackingListId(packing_list_details.id,category)
                 shared = true;
 
 
             }else{
                 console.log("ADD CUSTOM ITEM INTO USER LIST");
                 packing_list_details = await db.packingList.getPackingListDetailsByUserIdAndTripId(user_id,trip_id);
+                category_id = await db.packingList.getCategoryIdByPackingListId(packing_list_details.id,category)
                 shared = false;
             }
 
             group_id = packing_list_details.group_id;
             packing_list_id = packing_list_details.id;
 
-            let insertItem = await db.packingList.addCustomItem(packing_list_id,group_id,item_name,quantity,shared,category);
+            let insertItem = await db.packingList.addCustomItem(packing_list_id,group_id,item_name,quantity,shared,category_id);
             response.send(true);
 
 
@@ -182,6 +197,30 @@ module.exports = (db) => {
         }
     }
 
+    let addNewCategory = async function (request,response){
+        try{
+            let trip_id = request.body.trip_id;
+            let user_id = request.cookies["user_id"];
+            let category = request.body.new_category;
+
+            let packing_list_id = await db.packingList.getPackingListDetailsByUserIdAndTripId(user_id,trip_id);
+            let addNewCategory = await db.packingList.addNewCategory(packing_list_id,category);
+            response.send(true);
+
+
+        }catch (error){
+            console.log("add new category controller "+error)
+        }
+    }
+
+    let changeCategoryName = async function (request,response){
+        try{
+            console.log("wait")
+        }catch (error){
+            console.log("change categoty name controller "+error)
+        }
+    }
+
     return {
         nonUserList : nonUserList,
         nonUserListSave : nonUserListSave,
@@ -191,7 +230,9 @@ module.exports = (db) => {
         updateItemPacked : updateItemPacked,
         updateSharedItem : updateSharedItem,
         addCustomItem : addCustomItem,
-        deleteItem : deleteItem
+        deleteItem : deleteItem,
+        addNewCategory : addNewCategory,
+        changeCategoryName : changeCategoryName
     }
 
 };

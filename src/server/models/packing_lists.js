@@ -93,7 +93,7 @@ module.exports = (dbPoolInstance) => {
         }
     }
 
-    let createPackingListItems = async function (packList,packing_list_id,shared,group_id=null) {
+    let createPackingListItems = async function (packList,packing_list_id,shared,group_id=null,category_obj) {
 
         try {
             let finalList = [];
@@ -101,12 +101,17 @@ module.exports = (dbPoolInstance) => {
                 finalList = finalList.concat(packList[key]);
             }
             if(shared){
-                finalList = finalList.map(x=>[packing_list_id,x.name,x.quantity,'Shared',shared,group_id]);
+                finalList = finalList.map(x=>[packing_list_id,x.name,x.quantity,category_obj.id,shared,group_id]);
             }else{
-                finalList = finalList.map(x=>[packing_list_id,x.name,x.quantity,x.category,shared,group_id]);
+                finalList = finalList.map(x=>{
+                    x.category = category_obj[x.category]
+                    return [packing_list_id,x.name,x.quantity,x.category,shared,group_id]
+                });
             }
 
-            let query = format('INSERT INTO packing_list_items (packing_list_id,name,quantity,category,shared,group_id) VALUES %L RETURNING *',finalList);
+
+
+            let query = format('INSERT INTO packing_list_items (packing_list_id,name,quantity,category_id,shared,group_id) VALUES %L RETURNING *',finalList);
 
             let queryResult = await dbPoolInstance.query(query);
             if(queryResult.rows.length>0){
@@ -199,7 +204,12 @@ module.exports = (dbPoolInstance) => {
 
     let getItemsByPackingListId = async function (packing_list_id){
         try {
-            let query = 'SELECT * FROM packing_list_items WHERE packing_list_id = $1';
+            let query = `
+            SELECT packing_list_items.*,packing_list_categories.category
+            FROM packing_list_items
+            INNER JOIN packing_list_categories
+            ON (packing_list_items.category_id = packing_list_categories.id)
+            WHERE packing_list_items.packing_list_id = $1`;
             let arr = [packing_list_id];
             let queryResult = await dbPoolInstance.query(query,arr);
             if (queryResult.rows.length > 0) {
@@ -365,11 +375,11 @@ module.exports = (dbPoolInstance) => {
         }
     }
 
-    let addCustomItem = async function(packing_list_id,group_id,item_name,quantity,shared,category){
+    let addCustomItem = async function(packing_list_id,group_id,item_name,quantity,shared,category_id){
 
         try{
-            let query = 'INSERT INTO packing_list_items (packing_list_id,group_id,name,quantity,shared,category) VALUES ($1,$2,$3,$4,$5,$6) RETURNING *';
-            let arr = [packing_list_id,group_id,item_name,quantity,shared,category];
+            let query = 'INSERT INTO packing_list_items (packing_list_id,group_id,name,quantity,shared,category_id) VALUES ($1,$2,$3,$4,$5,$6) RETURNING *';
+            let arr = [packing_list_id,group_id,item_name,quantity,shared,category_id];
             let queryResult = await dbPoolInstance.query(query,arr);
             if(queryResult.rows.length>0){
                 console.log("ADD CUSTOM ITEM SUCCESS");
@@ -398,6 +408,154 @@ module.exports = (dbPoolInstance) => {
         }
     }
 
+    let generatePackingListCategories = async function(packing_list_id,shared){
+        try{
+            if(shared){
+                let query = "SELECT * FROM categories WHERE name = 'Shared'";
+                let category = await dbPoolInstance.query(query);
+                let query2 = "INSERT INTO packing_list_categories (packing_list_id,category) VALUES ($1,$2) RETURNING *"
+                let arr = [packing_list_id,category.rows[0].name];
+                let queryResult = await dbPoolInstance.query(query2,arr);
+                if(queryResult.rows.length>0){
+                    console.log("generate shared packing list categories success".toUpperCase());
+                    return queryResult.rows[0];
+                }else{
+                    return Promise.reject(new Error("generate shared packing list categories returns null"));
+                }
+            }else{
+                let query = "SELECT * FROM categories WHERE NOT name = 'Shared'";
+                let categoryArrObj = await dbPoolInstance.query(query);
+
+                let arrOfarr = [];
+                categoryArrObj.rows.forEach(x=>{
+                    arrOfarr.push([packing_list_id,x.name])
+                })
+
+                let query2 = format('INSERT INTO packing_list_categories (packing_list_id,category) VALUES %L RETURNING *',arrOfarr);
+                let queryResult = await dbPoolInstance.query(query2);
+
+                if(queryResult.rows.length>0){
+                    console.log("generate packing list categories success".toUpperCase());
+                    return queryResult.rows;
+                }else{
+                    return Promise.reject(new Error("generate packing list categories returns null"));
+                }
+
+            }
+
+        } catch (error){
+            console.log("generate packing list categories model "+error)
+        }
+    }
+
+    let getAvailableCategory = async function(packing_list_id){
+        try{
+            let query = `
+                SELECT *
+                FROM packing_list_categories
+                WHERE packing_list_categories.packing_list_id = $1
+            `;
+            let arr = [packing_list_id];
+            let queryResult = await dbPoolInstance.query(query,arr);
+            if(queryResult.rows.length>0){
+                    console.log("get available category success".toUpperCase());
+                    return queryResult.rows;
+            }else{
+                return Promise.reject(new Error("get available category returns null"));
+            }
+        }catch (error){
+            console.log("get available category "+ error)
+        }
+    }
+
+    let getSharedItemCategoryId = async function(packing_list_id){
+        try{
+            let query = 'SELECT * FROM packing_list_categories WHERE packing_list_id = $1';
+            let arr = [packing_list_id];
+            let queryResult = await dbPoolInstance.query(query,arr);
+            if(queryResult.rows.length>0){
+                    console.log("get shared item category id success".toUpperCase());
+                    return queryResult.rows[0].id;
+            }else{
+                return Promise.reject(new Error("get shared item category id return null"));
+            }
+        }catch (error){
+            console.log('get shared item category id model '+error)
+        }
+    }
+
+    let getItemsByCategoryId = async function(category_id){
+        try{
+            let query = `
+                SELECT packing_list_items.*,packing_list_categories.category
+                FROM packing_list_items
+                INNER JOIN packing_list_categories
+                ON (packing_list_items.category_id = packing_list_categories.id)
+                WHERE packing_list_items.category_id = $1
+            `
+            let arr = [category_id];
+            let queryResult = await dbPoolInstance.query(query,arr);
+            if(queryResult.rows.length>0){
+                    console.log("get items by category id success".toUpperCase());
+                    return queryResult.rows;
+            }else{
+                return Promise.reject(new Error("get items by category id"));
+            }
+        }catch (error){
+            console.log("get items by category id ")+error
+        }
+    }
+
+    let getCategoryIdByPackingListId = async function(packing_list_id,category){
+        try{
+            let query = 'SELECT * FROM packing_list_categories WHERE packing_list_id = $1 AND category = $2'
+            let arr = [packing_list_id,category];
+            let queryResult = await dbPoolInstance.query(query,arr);
+            if(queryResult.rows.length>0){
+                    console.log("get category id by packing list id success".toUpperCase());
+                    return queryResult.rows[0].id;
+            }else{
+                return Promise.reject(new Error("get category id by packing list id returns null"));
+            }
+        }catch (error){
+            console.log("get category id by packing list id")
+        }
+    }
+
+    let getPureCategoryIdByName = async function(category){
+        try{
+            let query = 'SELECT * FROM categories WHERE name = $1'
+            let arr = [category];
+            let queryResult = await dbPoolInstance.query(query,arr);
+            if(queryResult.rows.length>0){
+                    console.log("get pure category id by name success".toUpperCase());
+                    return queryResult.rows[0].id;
+            }else{
+                return Promise.reject(new Error("get pure category id by name return snull"));
+            }
+        }catch (error){
+            console.log("get pure category id by name "+error)
+        }
+    }
+
+    let addNewCategory = async function (packing_list_id,category){
+        try{
+            console.log(packing_list_id);
+            console.log(category)
+            let query = 'INSERT INTO packing_list_categories (packing_list_id,category) VALUES ($1,$2) RETURNING *'
+            let arr = [packing_list_id.id,category];
+            let queryResult = await dbPoolInstance.query(query,arr);
+            if(queryResult.rows.length>0){
+                    console.log("add new category success".toUpperCase());
+                    return queryResult.rows;
+            }else{
+                return Promise.reject(new Error("add new category return null"));
+            }
+        }catch (error){
+            console.log("add new category model "+error)
+        }
+    }
+
     return {
         generateTempList,
         createPackingList,
@@ -414,7 +572,14 @@ module.exports = (dbPoolInstance) => {
         updateSharedItemId,
         getPackingListDetailsByUserIdAndTripId,
         addCustomItem,
-        deleteItem
+        deleteItem,
+        generatePackingListCategories,
+        getAvailableCategory,
+        getSharedItemCategoryId,
+        getItemsByCategoryId,
+        getCategoryIdByPackingListId,
+        getPureCategoryIdByName,
+        addNewCategory
 
     };
 };

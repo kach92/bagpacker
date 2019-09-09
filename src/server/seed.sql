@@ -24,6 +24,13 @@ INSERT INTO users (firstname,lastname,email,password,gender) VALUES ('Kenny','An
 INSERT INTO users (firstname,lastname,email,password,gender) VALUES ('Shirley','Tan','shirley@gmail.com','a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3','F');
 INSERT INTO users (firstname,lastname,email,password,gender) VALUES ('Khai','Ri','khai@gmail.com','a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3','M');
 
+INSERT INTO categories (name) VALUES ('Essentials');
+INSERT INTO categories (name) VALUES ('Toiletries');
+INSERT INTO categories (name) VALUES ('Equipments');
+INSERT INTO categories (name) VALUES ('Beauty');
+INSERT INTO categories (name) VALUES ('Shared');
+
+
 
 
 
