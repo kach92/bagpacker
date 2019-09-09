@@ -477,6 +477,46 @@ module.exports = (dbPoolInstance) => {
         }
     }
 
+    let getSharedItemCategoryId = async function(packing_list_id){
+        try{
+            let query = 'SELECT * FROM packing_list_categories WHERE packing_list_id = $1';
+            let arr = [packing_list_id];
+            let queryResult = await dbPoolInstance.query(query,arr);
+            if(queryResult.rows.length>0){
+                    console.log("get shared item category id success".toUpperCase());
+                    return queryResult.rows[0].id;
+            }else{
+                return Promise.reject(new Error("get shared item category id return null"));
+            }
+        }catch (error){
+            console.log('get shared item category id model '+error)
+        }
+    }
+
+    let getItemsByCategoryId = async function(category_id){
+        try{
+            let query = `
+                SELECT packing_list_items.*,categories.name AS category
+                FROM packing_list_items
+                INNER JOIN packing_list_categories
+                ON (packing_list_items.category_id = packing_list_categories.id)
+                INNER JOIN categories
+                ON (packing_list_categories.category_id = categories.id)
+                WHERE packing_list_items.category_id = $1
+            `
+            let arr = [category_id];
+            let queryResult = await dbPoolInstance.query(query,arr);
+            if(queryResult.rows.length>0){
+                    console.log("get items by category id success".toUpperCase());
+                    return queryResult.rows;
+            }else{
+                return Promise.reject(new Error("get items by category id"));
+            }
+        }catch (error){
+            console.log("get items by category id ")+error
+        }
+    }
+
     return {
         generateTempList,
         createPackingList,
@@ -495,7 +535,9 @@ module.exports = (dbPoolInstance) => {
         addCustomItem,
         deleteItem,
         generatePackingListCategories,
-        getAvailableCategory
+        getAvailableCategory,
+        getSharedItemCategoryId,
+        getItemsByCategoryId
 
     };
 };

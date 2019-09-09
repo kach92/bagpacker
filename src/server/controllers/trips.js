@@ -64,8 +64,8 @@ module.exports = (db) => {
                     user["packing_list_id"] = packingList[i].id;
                     individualList.push(user);
                 }
-
-                let sharedListItems = await db.packingList.getItemsByPackingListId(shared_packing_list[0].id,trip_details.group_id)
+                let sharedItemCategoryId = await db.packingList.getSharedItemCategoryId(shared_packing_list[0].id)
+                let sharedListItems = await db.packingList.getItemsByCategoryId(sharedItemCategoryId)
                 response.send({
                     trip:trip_details,
                     list:individualList,
