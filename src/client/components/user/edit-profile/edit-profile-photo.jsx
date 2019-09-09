@@ -39,9 +39,9 @@ class EditProfileInfo extends React.Component {
 		let data={newImage: photo};
 		fetch('/change_profile_pic', {
 			method: 'POST',
-			body: data,
+			body: JSON.stringify(data),
 			headers:{
-				'Content-Type': 'application/json'
+				'Content-Type': 'application/json;charset=UTF-8"'
 			}
 		}).then(res => res.json())
 			.then(res => console.log(res))
