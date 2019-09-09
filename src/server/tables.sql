@@ -66,9 +66,10 @@ CREATE TABLE IF NOT EXISTS packing_list_items (
     packed BOOLEAN DEFAULT false,
     private BOOLEAN DEFAULT false,
     shared BOOLEAN,
-    category TEXT,
+    category_id INT,
     FOREIGN KEY (packing_list_id) REFERENCES packing_lists(id) ON DELETE CASCADE,
-    FOREIGN KEY (group_id) REFERENCES groups (id)
+    FOREIGN KEY (group_id) REFERENCES groups (id),
+    FOREIGN KEY (category_id) REFERENCES packing_list_categories (id) ON DELETE CASCADE
 );
 
 

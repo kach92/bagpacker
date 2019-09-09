@@ -93,7 +93,7 @@ module.exports = (dbPoolInstance) => {
         }
     }
 
-    let createPackingListItems = async function (packList,packing_list_id,shared,group_id=null) {
+    let createPackingListItems = async function (packList,packing_list_id,shared,group_id=null,category_obj) {
 
         try {
             let finalList = [];
@@ -101,12 +101,17 @@ module.exports = (dbPoolInstance) => {
                 finalList = finalList.concat(packList[key]);
             }
             if(shared){
-                finalList = finalList.map(x=>[packing_list_id,x.name,x.quantity,'Shared',shared,group_id]);
+                finalList = finalList.map(x=>[packing_list_id,x.name,x.quantity,category_obj.id,shared,group_id]);
             }else{
-                finalList = finalList.map(x=>[packing_list_id,x.name,x.quantity,x.category,shared,group_id]);
+                finalList = finalList.map(x=>{
+                    x.category = category_obj[x.category]
+                    return [packing_list_id,x.name,x.quantity,x.category,shared,group_id]
+                });
             }
 
-            let query = format('INSERT INTO packing_list_items (packing_list_id,name,quantity,category,shared,group_id) VALUES %L RETURNING *',finalList);
+
+
+            let query = format('INSERT INTO packing_list_items (packing_list_id,name,quantity,category_id,shared,group_id) VALUES %L RETURNING *',finalList);
 
             let queryResult = await dbPoolInstance.query(query);
             if(queryResult.rows.length>0){
@@ -410,7 +415,7 @@ module.exports = (dbPoolInstance) => {
                 let queryResult = await dbPoolInstance.query(query2,arr);
                 if(queryResult.rows.length>0){
                     console.log("generate shared packing list categories success".toUpperCase());
-                    return queryResult.rows;
+                    return queryResult.rows[0];
                 }else{
                     return Promise.reject(new Error("generate shared packing list categories returns null"));
                 }
@@ -426,9 +431,12 @@ module.exports = (dbPoolInstance) => {
                 let query2 = format('INSERT INTO packing_list_categories (packing_list_id,category_id) VALUES %L RETURNING *',arrOfarr);
                 let queryResult = await dbPoolInstance.query(query2);
 
-                if(queryResult.rows.length>0){
+                let query3 = 'SELECT packing_list_categories.id, categories.name FROM packing_list_categories INNER JOIN categories ON (packing_list_categories.category_id = categories.id) WHERE packing_list_categories.packing_list_id = $1';
+                let arr = [packing_list_id];
+                let queryResult2 = await dbPoolInstance.query(query3,arr);
+                if(queryResult2.rows.length>0){
                     console.log("generate packing list categories success".toUpperCase());
-                    return queryResult.rows;
+                    return queryResult2.rows;
                 }else{
                     return Promise.reject(new Error("generate packing list categories returns null"));
                 }
