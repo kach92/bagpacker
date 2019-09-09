@@ -4,6 +4,7 @@ import Category from './category';
 import {Card, CardColumns, Col, Row} from "react-bootstrap";
 import mainStyles from "../../../style.scss";
 import ItemAdd from "./item/item-add";
+import TripmateCategory from './tripmate-category';
 
 class List extends React.Component {
 	constructor(){
@@ -96,19 +97,30 @@ class List extends React.Component {
 	render() {
 		let list = this.props.list;
 		let ListComponent = this;
-		let categories = Object.keys(list).sort((a,b)=> a.toLowerCase()<b.toLowerCase()? -1:1).map(function(category,index) {
-			return (
-				<Category
-					key={index}
-					category={category}
-					items={list[category]}
-					packItem={ListComponent.packItem}
-                    submitNameEdit={ListComponent.submitNameEdit}
-                    submitQtyEdit={ListComponent.submitQtyEdit}
-					addItem={ListComponent.addItem}
-                    deleteItem={ListComponent.deleteItem}
-				/>
-			);
+		let categories = Object.keys(list).map(function(category,index) {
+            if(category !== "Shared"){
+                return (
+                    <Category
+                        key={index}
+                        category={category}
+                        items={list[category]}
+                        packItem={ListComponent.packItem}
+                        submitNameEdit={ListComponent.submitNameEdit}
+                        submitQtyEdit={ListComponent.submitQtyEdit}
+                        addItem={ListComponent.addItem}
+                        deleteItem={ListComponent.deleteItem}
+                    />
+                );
+            }else{
+                return (
+                    <TripmateCategory
+                        key={index}
+                        category={category}
+                        items={list[category]}
+                    />
+                )
+            }
+
 		});
 		let newCategory = null;
 
