@@ -16,25 +16,32 @@ class EditProfileInfo extends React.Component {
 	photoUploaded = (e) => {
 		console.log("uploaded");
 		let photo = Array.from(e.target.files)[0];
-		this.setState({uploaded:true, photo});
+		let reader  = new FileReader();
+		let component = this;
+		reader.addEventListener("load", function () {
+			component.setState({
+				uploaded:true,
+				photo: reader.result
+			});
+		}, false);
+		reader.readAsDataURL(photo);
 	};
 
 	submit = (e) => {
 		e.preventDefault();
 		if (this.state.uploaded){
 			console.log("uploading to server");
+			console.log(this.state.photo);
 			this.uploadToServer(this.state.photo)
 		}
 	};
 	uploadToServer = (photo) => {
-		const formData = new FormData();
-		formData.append('myFile',photo);
-
+		let data={newImage: photo};
 		fetch('/change_profile_pic', {
 			method: 'POST',
-			body: formData,
+			body: data,
 			headers:{
-				'Content-Type': 'multipart/form-data'
+				'Content-Type': 'application/json'
 			}
 		}).then(res => res.json())
 			.then(res => console.log(res))
