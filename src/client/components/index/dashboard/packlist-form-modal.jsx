@@ -15,7 +15,7 @@ class PacklistForm extends React.Component {
 				location: "",
 				startDate:new Date(),
 				endDate:new Date(),
-				weather: 1,
+				weather: "Sunny",
 				activities: [],
 				group: []
 			},
@@ -288,15 +288,15 @@ class PacklistForm extends React.Component {
 						<Form.Group className={`${mainStyles.weatherSelect} ${mainStyles.weatherSelect}`}>
 							<label>Weather</label><br/>
 							<div className={weatherClass}>
-								<div onClick={(e)=>this.updateWeather(e,1)}>
+								<div onClick={(e)=>this.updateWeather(e,"Sunny")}>
 									<i className='bx bx-sun'></i>
 									<p> Sunny</p>
 								</div>
-								<div onClick={(e)=>this.updateWeather(e,2)}>
+								<div onClick={(e)=>this.updateWeather(e,"Snowy")}>
 									<i className='bx bx-cloud-snow'></i>
 									<p>Snowy</p>
 								</div>
-								<div onClick={(e)=>this.updateWeather(e,3)}>
+								<div onClick={(e)=>this.updateWeather(e,"Rainy")}>
 									<i className='bx bx-cloud-rain'></i>
 									<p>Rainy</p>
 								</div>
