@@ -62,6 +62,7 @@ class App extends React.Component {
 
 	render() {
 		console.log('state',this.state.authed);
+
 		return (
 			<Router>
 				<Route path="/" render={props => (

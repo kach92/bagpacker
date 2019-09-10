@@ -74,6 +74,7 @@ class Navigation extends React.Component {
 		);
 		let userImage = null;
 		if (this.state.userImage) {
+            console.log(this.state.userImage)
 			userImage = {backgroundImage: `url(${this.state.userImage})`};
 		}
 		let title = (
