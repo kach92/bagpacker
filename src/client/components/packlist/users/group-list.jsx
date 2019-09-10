@@ -67,6 +67,13 @@ class GroupList extends React.Component {
 			listToShow = <TripmateList list={list[currentUser].items}/>;
 		}
 
+        tripmatesOptions.forEach((x,index)=>{
+            if(x.id === this.props.user_id){
+                let temp = tripmatesOptions.splice(index,1);
+                tripmatesOptions.unshift(temp);
+            }
+        })
+
 		return (
 			<Row className={mainStyles.packlist}>
 				<Col xs={12}>
