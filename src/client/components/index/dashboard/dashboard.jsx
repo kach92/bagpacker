@@ -12,6 +12,7 @@ function PacklistFormModal(props) {
 			{...props}
 			size="lg"
 			aria-labelledby="contained-modal-title-vcenter"
+			className={mainStyles.createModal}
 		>
 			<Modal.Body>
 				<Row>

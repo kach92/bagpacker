@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ActivitiesForm from "../packlist-activities-form";
 import mainStyles from "../../../style.scss";
-import {Col, Form, Row} from 'react-bootstrap';
+import {Col, Dropdown, DropdownButton, Form, Row} from 'react-bootstrap';
 import DatePicker from "react-datepicker";
 import 'react-datepicker/dist/react-datepicker-cssmodules.css';
 import CountriesForm from "../packlist-countries-form";
@@ -15,7 +15,7 @@ class PacklistForm extends React.Component {
 				location: "",
 				startDate:new Date(),
 				endDate:new Date(),
-				weather: "1",
+				weather: 1,
 				activities: [],
 				group: []
 			},
@@ -23,6 +23,7 @@ class PacklistForm extends React.Component {
 			groupPax: 1,
 			loading: false
 		};
+		this.weather = ['Sunny','Snowy','Rainy'];
 	}
 
 	updateLocation = (location) => {
@@ -52,9 +53,9 @@ class PacklistForm extends React.Component {
 			formInputs: formInputs
 		});
 	};
-	updateWeather = (e) => {
+	updateWeather = (e,weather) => {
 		let formInputs = this.state.formInputs;
-		formInputs.weather = e.target.value;
+		formInputs.weather = weather;
 		this.setState({formInputs: formInputs});
 	};
 
@@ -198,7 +199,7 @@ class PacklistForm extends React.Component {
 			for (let i=0;i<this.state.groupPax-1; i++){
 				groupInputs.push(
 					<Form.Group key={i}>
-						<Form.Control type="email" value={this.state.formInputs.group[i]} onChange={(e)=>{this.updateTripmate(e,i)}}/>
+						<Form.Control placeholder={`Name of Tripmate ${i+1}`} type="email" value={this.state.formInputs.group[i]} onChange={(e)=>{this.updateTripmate(e,i)}}/>
 					</Form.Group>
 				)
 			}
@@ -220,7 +221,14 @@ class PacklistForm extends React.Component {
 		if (this.state.errorMessage !== ""){
 			errorMessage = (<Col xs={12} className={mainStyles.formError}><p>{this.state.errorMessage}</p></Col>);
 		}
-
+		let weatherClass = null;
+		if (this.state.formInputs.weather === 1) {
+			weatherClass = mainStyles.weatherSelect1;
+		}else if (this.state.formInputs.weather === 2) {
+			weatherClass = mainStyles.weatherSelect2;
+		}else if (this.state.formInputs.weather === 3){
+			weatherClass = mainStyles.weatherSelect3;
+		}
 		return (
 			<Form className={mainStyles.packlistModalForm}>
 				<Row>
@@ -277,13 +285,22 @@ class PacklistForm extends React.Component {
 				</Row>
 				<Row>
 					<Col>
-						<Form.Group>
+						<Form.Group className={`${mainStyles.weatherSelect} ${mainStyles.weatherSelect}`}>
 							<label>Weather</label><br/>
-							<select value={this.state.formInputs.weather} onChange={this.updateWeather}>
-								<option value="1">Sunny</option>
-								<option value="2">Snowy</option>
-								<option value="3">Rainy</option>
-							</select>
+							<div className={weatherClass}>
+								<div onClick={(e)=>this.updateWeather(e,1)}>
+									<i className='bx bx-sun'></i>
+									<p> Sunny</p>
+								</div>
+								<div onClick={(e)=>this.updateWeather(e,2)}>
+									<i className='bx bx-cloud-snow'></i>
+									<p>Snowy</p>
+								</div>
+								<div onClick={(e)=>this.updateWeather(e,3)}>
+									<i className='bx bx-cloud-rain'></i>
+									<p>Rainy</p>
+								</div>
+							</div>
 						</Form.Group>
 					</Col>
 				</Row>
@@ -296,7 +313,7 @@ class PacklistForm extends React.Component {
 					</Col>
 				</Row>
 				<Row>
-					<Col xs={12} className="mb-5">
+					<Col xs={12} className="my-3">
 						<button type="submit" onClick={this.submit} className={mainStyles.btn}>Create Packing List</button>
 					</Col>
 					{errorMessage}
