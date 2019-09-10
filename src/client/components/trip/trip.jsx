@@ -125,17 +125,20 @@ class Trip extends React.Component {
 		let tripImage = "";
         let tripNameDiv = "";
 		let trip=this.state.trip;
+        let list = this.state.list;
 		let listDisplay = <h4 className="text-center">No such trip</h4>;
+        let tripHeadCount = null;
 
-		if (trip) {
+		if (trip && list) {
 			tripName = trip.name;
 			tripDestination = trip.destinations[0].name;
 			tripImage = trip.destinations[0].image;
 			tripStartDate = trip.destinations[0].start_date;
 			tripEndDate = trip.destinations[0].end_date;
+            tripHeadCount = list.length
 			tripDetails = (
 				<React.Fragment>
-					<TripDetails location={tripDestination} startDate={tripStartDate} endDate={tripEndDate}/>
+					<TripDetails location={tripDestination} startDate={tripStartDate} endDate={tripEndDate} tripHeadCount={tripHeadCount}/>
 					<TripDelete deleteTrip={this.deleteTrip}/>
 				</React.Fragment>
 			);
