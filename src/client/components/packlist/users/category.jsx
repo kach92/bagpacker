@@ -88,7 +88,6 @@ class Category extends React.Component {
                             <CategoryTitle category={this.props.category} category_id={this.props.category_id} submitCategoryTitleEdit={this.props.submitCategoryTitleEdit}/>
 						</Col>
 					</Row>
-
 					{items}
                     <Row>
                         <Col xs={9}>
@@ -96,11 +95,8 @@ class Category extends React.Component {
                         </Col>
                         <Col xs={3} className="text-right">
                             <DeleteCategory category={this.props.category} updateTripInfo={this.props.updateTripInfo} category_id={this.props.category_id}/>
-
                         </Col>
                     </Row>
-
-
 				</Card.Body>
 			</Card>
 
