@@ -117,7 +117,7 @@ class List extends React.Component {
             if(category !== "Shared"){
                 return (
                     <Category
-                        key={index}
+                        key={list[category].id}
                         category={category}
                         category_id={list[category].id}
                         items={list[category].items}
