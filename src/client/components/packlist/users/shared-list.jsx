@@ -104,10 +104,10 @@ class SharedList extends React.Component {
 					<Col xs={1}>
 						{itemChecked}
 					</Col>
-					<Col xs={1}>
+					<Col xs={1} className={mainStyles.itemQty}>
 						{itemQty}
 					</Col>
-					<Col xs={5}>
+					<Col xs={6} className={mainStyles.itemName}>
 						{itemName}
 					</Col>
                     <Col xs={1}>
@@ -124,7 +124,7 @@ class SharedList extends React.Component {
 				<Card.Body>
 					<Row>
 						<Col xs={12}>
-							<h4>Shared Items</h4>
+							<h4 className={mainStyles.sharedListTitle}>Shared Items</h4>
 						</Col>
 					</Row>
 					{items}

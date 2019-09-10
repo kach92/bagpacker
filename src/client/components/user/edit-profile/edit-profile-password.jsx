@@ -74,7 +74,7 @@ class EditProfilePassword extends React.Component {
 			<Form className={mainStyles.profileInfoForm}>
 				<Row>
 					<Col xs={12}>
-						<h4>Update Password</h4>
+						<h4>Change Password</h4>
 					</Col>
 					<Col xs={12}>
 						<Form.Group>
@@ -97,7 +97,7 @@ class EditProfilePassword extends React.Component {
 				</Row>
 				<Row>
 					<Col xs={12} className="mb-5">
-						<button type="submit" onClick={this.submit} className={mainStyles.btn}>Update Password</button>
+						<button type="submit" onClick={this.submit} className={mainStyles.btn}>Change Password</button>
 					</Col>
 					{errorMessage}
 				</Row>

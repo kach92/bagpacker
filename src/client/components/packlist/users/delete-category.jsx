@@ -16,13 +16,13 @@ function DeleteCategoryModal(props) {
                 'Content-Type': 'application/json'
             }
         })
-        .then(res => {
-            props.updateTripInfo();
-            props.onHide();
-            // window.location.reload()
-        })
-        .catch(error => console.error('Error:', error));
-    }
+            .then(res => {
+                props.updateTripInfo();
+                props.onHide();
+                // window.location.reload()
+            })
+            .catch(error => console.error('Error:', error));
+    };
 
     return (
         <Modal
@@ -33,8 +33,9 @@ function DeleteCategoryModal(props) {
             className={mainStyles.deleteModal}
         >
             <Modal.Body>
-                <h4>Confirm delete category "{props.category}" ?</h4>
-                <Button className={`${mainStyles.btn} ${mainStyles.btnSecondary}`} onClick={deleteCategory}>
+                <h4 className="mt-4">Delete <b>{props.category}</b>?</h4>
+                {/*<h3 className="text-center mb-5 "><b>{props.category}</b></h3>*/}
+                <Button className={`${mainStyles.btn}`} onClick={deleteCategory}>
                     Delete
                 </Button>
             </Modal.Body>

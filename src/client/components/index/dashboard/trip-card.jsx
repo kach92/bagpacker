@@ -27,7 +27,10 @@ class TripCard extends React.Component {
 					<Card.Body>
 						<Card.Text>
 							<span className="d-block mb-3">{startDateDisplay} — {endDateDisplay}</span>
-							<span className="d-block"><i className='bx bxs-map'></i>{trip.destinations[0].name}</span>
+							<span className={`d-block ${mainStyles.tripCardDetails}`}>
+								<i className='bx bxs-map'></i>
+								<p>{trip.destinations[0].name}</p>
+							</span>
 						</Card.Text>
 					</Card.Body>
 				</Card>
