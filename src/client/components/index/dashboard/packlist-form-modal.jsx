@@ -222,11 +222,11 @@ class PacklistForm extends React.Component {
 			errorMessage = (<Col xs={12} className={mainStyles.formError}><p>{this.state.errorMessage}</p></Col>);
 		}
 		let weatherClass = null;
-		if (this.state.formInputs.weather === 1) {
+		if (this.state.formInputs.weather === "Sunny") {
 			weatherClass = mainStyles.weatherSelect1;
-		}else if (this.state.formInputs.weather === 2) {
+		}else if (this.state.formInputs.weather === "Snowy") {
 			weatherClass = mainStyles.weatherSelect2;
-		}else if (this.state.formInputs.weather === 3){
+		}else if (this.state.formInputs.weather === "Rainy"){
 			weatherClass = mainStyles.weatherSelect3;
 		}
 		return (
