@@ -147,13 +147,13 @@ class List extends React.Component {
 		return (
 			<Row className="mb-5">
 				<Col>
+					<div className="text-center">
+						<AddCategory tripId = {this.props.tripId} updateTripInfo={this.props.updateTripInfo}/>
+					</div>
 					<CardColumns className={mainStyles.packlist}>
 						{categories}
 						{newCategory}
 					</CardColumns>
-					<div className="text-center">
-                        <AddCategory tripId = {this.props.tripId} updateTripInfo={this.props.updateTripInfo}/>
-					</div>
 				</Col>
 			</Row>
 

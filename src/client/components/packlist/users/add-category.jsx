@@ -64,7 +64,9 @@ function AddCategory(props) {
     return (
 
         <React.Fragment>
-            <div className={`mt-3 ${mainStyles.addCategory}`} onClick={() => setModalShow(true)}><i className='bx bx-plus'></i><p>Add new category</p></div>
+            <div className={mainStyles.addCategory} onClick={() => setModalShow(true)}>
+                <div><p>Add new category</p><i>+</i></div>
+            </div>
             <AddNewCategoryModal
                 show={modalShow}
                 onHide={() => setModalShow(false)}

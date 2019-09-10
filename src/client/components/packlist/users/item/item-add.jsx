@@ -63,11 +63,11 @@ class ItemAdd extends React.Component {
         if (this.state.editing) {
             itemAdd =(
                 <Row className='mt-3' ref={this.setWrapperRef}>
-                    <Col xs={2}>
-                        <input type="number" value={this.state.item_quantity} min="1"  onChange={(e) => this.updateQuantity(e)} />
+                    <Col xs={2} className='pr-0'>
+                        <input className='mb-0' type="number" value={this.state.item_quantity} min="1"  onChange={(e) => this.updateQuantity(e)} />
                     </Col>
                     <Col xs={10}>
-                        <input placeholder='Item name here' type="text" value={this.state.item_name} onChange={this.updateName} onKeyDown={(e)=>this.checkKey(e)}/>
+                        <input className='mb-0'  placeholder='Item name here' type="text" value={this.state.item_name} onChange={this.updateName} onKeyDown={(e)=>this.checkKey(e)}/>
                     </Col>
                 </Row>
                 );

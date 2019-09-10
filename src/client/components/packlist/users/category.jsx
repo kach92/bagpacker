@@ -46,10 +46,10 @@ class Category extends React.Component {
                     <Col xs={1}>
                         {itemChecked}
                     </Col>
-                    <Col xs={2}>
+                    <Col xs={2} className="pr-0">
                         {itemQty}
                     </Col>
-                    <Col xs={8} className="pl-0">
+                    <Col xs={8} className="pr-0">
                         {itemName}
                     </Col>
                     <Col xs={1} className="p-0">
@@ -58,16 +58,16 @@ class Category extends React.Component {
                 </Row>
             }else{
                 wholeRow = <Row key={item.id} className={mainStyles.item}>
-                    <Col xs={1}>
+                    <Col xs={1} className={mainStyles.itemPrivate}>
                         {itemPrivate}
                     </Col>
                     <Col xs={1}>
                         {itemChecked}
                     </Col>
-                    <Col xs={2}>
+                    <Col xs={2} className={`pr-0 ${mainStyles.itemQty}`}>
                         {itemQty}
                     </Col>
-                    <Col xs={7} className="pl-0">
+                    <Col xs={7} className={`pr-0 ${mainStyles.itemName}`}>
                         {itemName}
                     </Col>
                     <Col xs={1} className="p-0">
