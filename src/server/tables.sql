@@ -92,7 +92,7 @@ CREATE TABLE IF NOT EXISTS items (
     weather TEXT,
     gender TEXT,
     daily BOOLEAN,
-    quantity INTEGER,
+    quantity FLOAT(4),
     shared BOOLEAN
 );
 
