@@ -116,6 +116,23 @@ class Trip extends React.Component {
 
     };
 
+    deleteItem = (item_id) =>{
+        let data = {
+            item_id
+        };
+        fetch('/delete_item', {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(res => res.json())
+            .then(res => {
+                this.updateTripInfo();
+            })
+            .catch(error => console.error('Error:', error));
+    };
+
 	render() {
 		let tripName = "";
 		let tripDestination = "";
@@ -151,11 +168,11 @@ class Trip extends React.Component {
 		if (this.state.solo) {
 			let list = this.state.list;
 			if (list) {
-				listDisplay = <List userId={this.props.userId} list={this.state.list} tripId={this.state.trip.id} updateTripInfo={this.updateTripInfo} solo={this.state.solo}/>
+				listDisplay = <List userId={this.props.userId} list={this.state.list} tripId={this.state.trip.id} updateTripInfo={this.updateTripInfo} solo={this.state.solo} deleteItem={this.deleteItem}/>
 			}
 		}
 		else {
-			listDisplay = <GroupList userId={this.props.userId} list={this.state.list} shared={this.state.shared} tripId={this.state.trip.id} updateTripInfo={this.updateTripInfo} solo={this.state.solo}/>
+			listDisplay = <GroupList userId={this.props.userId} list={this.state.list} shared={this.state.shared} tripId={this.state.trip.id} updateTripInfo={this.updateTripInfo} solo={this.state.solo} deleteItem={this.deleteItem}/>
 		}
 		return (
 			<Row>

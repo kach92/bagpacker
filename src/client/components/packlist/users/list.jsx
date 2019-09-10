@@ -93,21 +93,7 @@ class List extends React.Component {
 		}).then(res => window.location.reload())
 			.catch(error => console.error('Error:', error));
 	};
-    deleteItem = (item_id) =>{
-        let data = {
-            item_id
-        };
-        fetch('/delete_item', {
-            method: 'POST',
-            body: JSON.stringify(data),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }).then(res => res.json())
-            .then(res => {
-            })
-            .catch(error => console.error('Error:', error));
-    };
+
 
 	render() {
 		let list = this.props.list;
@@ -129,6 +115,7 @@ class List extends React.Component {
                         updateTripInfo={updateTripInfo}
                         submitCategoryTitleEdit={ListComponent.submitCategoryTitleEdit}
                         solo={ListComponent.props.solo}
+                        deleteItem={ListComponent.props.deleteItem}
                     />
                 );
             }else{

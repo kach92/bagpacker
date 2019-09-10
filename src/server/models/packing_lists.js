@@ -12,8 +12,8 @@ module.exports = (dbPoolInstance) => {
     let generateTempList = async function (tripInfo,gender,shared=false){
 
         try {
-            let weather_id = parseInt(tripInfo.weather);
-            let activity_ids = tripInfo.activities.map(x=>parseInt(x));
+            let weather = tripInfo.weather;
+            let activity = tripInfo.activities.map(x=>x);
             let duration = tripInfo.duration
             let filterList = [];
             let leftOverList_uncommon = [];
@@ -27,17 +27,17 @@ module.exports = (dbPoolInstance) => {
             if(queryResult.rows.length>0){
                 // filter out common items
                 queryResult.rows.forEach(x=>{
-                    x.weather_id === null && x.activity_id === null ? filterList.push(x) : leftOverList_uncommon.push(x);
+                    x.weather === null && x.activity === null ? filterList.push(x) : leftOverList_uncommon.push(x);
                 })
 
                 //add items with same weather
                 leftOverList_uncommon.forEach(x=>{
-                    x.weather_id === weather_id ? filterList.push(x) : leftOverList_weather.push(x);
+                    x.weather === weather ? filterList.push(x) : leftOverList_weather.push(x);
                 })
 
                 //add items with same activities
                 leftOverList_weather.forEach(x=>{
-                    activity_ids.includes(x.activity_id) ? filterList.push(x) : leftOverList_activity.push(x);
+                    activity.includes(x.activity) ? filterList.push(x) : leftOverList_activity.push(x);
                 })
 
 
@@ -51,7 +51,7 @@ module.exports = (dbPoolInstance) => {
                 //for items with daily boolean true, multiply item quantity by duration
                 filterList.forEach(x=>{
                     if(x.daily){
-                        x.quantity *= parseInt(tripInfo.duration)
+                        x.quantity = Math.ceil(x.quantity * parseInt(tripInfo.duration))
                     }
 
                 })
@@ -128,8 +128,8 @@ module.exports = (dbPoolInstance) => {
 
     let generateSharedList = async function (tripInfo) {
         try {
-            let weather_id = parseInt(tripInfo.weather);
-            let activity_ids = tripInfo.activities.map(x=>parseInt(x));
+            let weather = parseInt(tripInfo.weather);
+            let activity = tripInfo.activities.map(x=>x);
             let duration = tripInfo.duration
             let filterList = [];
             let leftOverList_uncommon = [];
@@ -143,17 +143,17 @@ module.exports = (dbPoolInstance) => {
             if(queryResult.rows.length>0){
                 // filter out common items
                 queryResult.rows.forEach(x=>{
-                    x.weather_id === null && x.activity_id === null ? filterList.push(x) : leftOverList_uncommon.push(x);
+                    x.weather === null && x.activity === null ? filterList.push(x) : leftOverList_uncommon.push(x);
                 })
 
                 //add items with same weather
                 leftOverList_uncommon.forEach(x=>{
-                    x.weather_id === weather_id ? filterList.push(x) : leftOverList_weather.push(x);
+                    x.weather === weather ? filterList.push(x) : leftOverList_weather.push(x);
                 })
 
                 //add items with same activities
                 leftOverList_weather.forEach(x=>{
-                    activity_ids.includes(x.activity_id) ? filterList.push(x) : leftOverList_activity.push(x);
+                    activity.includes(x.activity) ? filterList.push(x) : leftOverList_activity.push(x);
                 })
 
 
@@ -166,7 +166,7 @@ module.exports = (dbPoolInstance) => {
 
                 filterList.forEach(x=>{
                     if(x.daily){
-                        x.quantity *= parseInt(tripInfo.duration)
+                        x.quantity = Math.ceil(x.quantity * parseInt(tripInfo.duration))
                     }
 
                 })
@@ -592,7 +592,7 @@ module.exports = (dbPoolInstance) => {
         try{
             let query = "UPDATE packing_list_items SET private = $1 WHERE id = $2 RETURNING *";
             let arr = [privacy,item_id];
-            let queryResult = dbPoolInstance.query(query,arr);
+            let queryResult = await dbPoolInstance.query(query,arr);
             if(queryResult.rows.length>0){
                     console.log("change item privacy model success".toUpperCase());
                     return queryResult.rows;
