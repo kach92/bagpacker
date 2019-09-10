@@ -1,11 +1,11 @@
 
 
-INSERT INTO items (name,category,activity,weather,gender,daily,quantity,shared) VALUES ('Casual Shirts','Essentials',null,null,null,true,1,false);
+INSERT INTO items (name,category,activity,weather,gender,daily,quantity,shared) VALUES ('Casual Shirt','Essentials',null,null,null,true,1,false);
 INSERT INTO items (name,category,activity,weather,gender,daily,quantity,shared) VALUES ('Casual Pants','Essentials',null,null,null,true,1,false);
 INSERT INTO items (name,category,activity,weather,gender,daily,quantity,shared) VALUES ('Tooth Paste','Toiletries',null,null,null,false,1,true);
 INSERT INTO items (name,category,activity,weather,gender,daily,quantity,shared) VALUES ('Winter Jacket','Essentials',null,'Snowy',null,false,1,false);
 INSERT INTO items (name,category,activity,weather,gender,daily,quantity,shared) VALUES ('Skis','Equipments','Snow Sports','Snowy',null,false,1,false);
-INSERT INTO items (name,category,activity,weather,gender,daily,quantity,shared) VALUES ('Swimming Goggles','Equipments','Beach',null,null,false,1,false);
+INSERT INTO items (name,category,activity,weather,gender,daily,quantity,shared) VALUES ('Swimming Goggles','Wearables','Beach',null,null,false,1,false);
 INSERT INTO items (name,category,activity,weather,gender,daily,quantity,shared) VALUES ('Sun Block','Essentials','Beach',null,null,false,1,true);
 INSERT INTO items (name,category,activity,weather,gender,daily,quantity,shared) VALUES ('Eye Liner','Beauty',null,null,'F',false,1,false);
 INSERT INTO items (name,category,activity,weather,gender,daily,quantity,shared) VALUES ('Medications','Essentials',null,null,null,false,1,false);

@@ -51,7 +51,7 @@ module.exports = (dbPoolInstance) => {
                 //for items with daily boolean true, multiply item quantity by duration
                 filterList.forEach(x=>{
                     if(x.daily){
-                        x.quantity *= parseInt(tripInfo.duration)
+                        x.quantity = Math.ceil(x.quantity * parseInt(tripInfo.duration))
                     }
 
                 })
@@ -166,7 +166,7 @@ module.exports = (dbPoolInstance) => {
 
                 filterList.forEach(x=>{
                     if(x.daily){
-                        x.quantity *= parseInt(tripInfo.duration)
+                        x.quantity = Math.ceil(x.quantity * parseInt(tripInfo.duration))
                     }
 
                 })
