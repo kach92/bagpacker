@@ -75,7 +75,7 @@ class GroupList extends React.Component {
 		return (
 			<Row className={mainStyles.packlist}>
 				<Col xs={12}>
-					<SharedList list={this.props.shared} tripmates={this.props.list} tripId={this.props.tripId} updateTripInfo={this.props.updateTripInfo} addItem={this.addItem}/>
+					<SharedList list={this.props.shared} tripmates={this.props.list} tripId={this.props.tripId} updateTripInfo={this.props.updateTripInfo} addItem={this.addItem} deleteItem={this.props.deleteItem}/>
 				</Col>
 				<Col xs={12} className="my-5">
 					<Row className="align-items-center">

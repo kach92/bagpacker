@@ -10,6 +10,18 @@ import SharedItemOwner from "./item/shared-item-owner";
 
 
 class SharedList extends React.Component {
+
+    constructor(){
+        super();
+        this.state ={
+            items:null
+        }
+    }
+
+    componentDidMount(){
+        this.setState({items:this.props.list})
+    }
+
 	packItem = (checked,item_id) => {
 		let data = {
 			item_id,
@@ -74,29 +86,39 @@ class SharedList extends React.Component {
             })
 			.catch(error => console.error('Error:', error));
 	};
+
+    deleteItem = (e,item_id) => {
+        let updatedItems = this.state.items;
+        updatedItems = updatedItems.filter(item => item.id !== item_id);
+        this.setState({items:updatedItems});
+        this.props.deleteItem(item_id);
+    };
+
 	render() {
-		console.log(this.props.tripId);
-		let items = this.props.list.map((item, index)=> {
+		let items = this.state.items? this.state.items.map((item, index)=> {
 			let itemName = <Item item_name={item.name} item_id={item.id} submitNameEdit={this.submitNameEdit}/>
 			let itemQty = <ItemQty item_quantity={item.quantity} item_id={item.id} submitQtyEdit={this.submitQtyEdit}/>
 			let itemChecked = <ItemChecked item_packed={item.packed} packItem={this.packItem} item_id={item.id} />
 			return(
-				<Row key={index}>
+				<Row key={item.id} className={mainStyles.item}>
 					<Col xs={1}>
 						{itemChecked}
 					</Col>
 					<Col xs={1}>
 						{itemQty}
 					</Col>
-					<Col xs={6}>
+					<Col xs={5}>
 						{itemName}
 					</Col>
+                    <Col xs={1}>
+                        <i className={`bx bx-x ${mainStyles.deleteButton}`} onClick={(e)=>{this.deleteItem(e,item.id)}}></i>
+                    </Col>
 					<Col xs={4}>
 						<SharedItemOwner itemId={item.id} item_packinglist_id={item.packing_list_id}tripmates={this.props.tripmates} updateSharedItem={this.updateSharedItem} updateTripInfo={this.props.updateTripInfo}/>
 					</Col>
 				</Row>
 			);
-		});
+		}):null;
 		return (
 			<Card className={mainStyles.listCard}>
 				<Card.Body>
