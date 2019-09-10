@@ -4,22 +4,22 @@ import Multiselect from 'multiselect-dropdown-react';
 
 const data = [{
 	name: 'Hiking',
-	value: '1'
+	value: 'Hiking'
 },{
 	name: 'Leisure',
-	value: '2'
+	value: 'Leisure'
 },{
 	name: 'Business',
-	value: '3'
+	value: 'Business'
 },{
 	name: 'Beach',
-	value: '4'
+	value: 'Beach'
 },{
 	name: 'Snow Sports',
-	value: '5'
+	value: 'Snow Sports'
 },{
 	name: 'Camping',
-	value: '6'
+	value: 'Camping'
 }];
 
 class ActivitiesForm extends React.Component {
