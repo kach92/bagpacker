@@ -40,7 +40,7 @@ class ItemPrivate extends React.Component {
     render(){
         let privacy = null;
         if(this.state.privacy){
-            privacy = <i class='bx bxs-lock-alt' onClick={(e)=>{this.handleChange(e)}}></i>
+            privacy = <i class='bx bxs-lock' onClick={(e)=>{this.handleChange(e)}}></i>
         }else{
             privacy = <i class='bx bx-lock-open-alt' onClick={(e)=>{this.handleChange(e)}}></i>
         }
