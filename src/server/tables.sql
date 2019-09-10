@@ -73,16 +73,6 @@ CREATE TABLE IF NOT EXISTS packing_list_items (
 
 
 
-CREATE TABLE IF NOT EXISTS weathers (
-    id SERIAL PRIMARY KEY,
-    name TEXT
-);
-
-CREATE TABLE IF NOT EXISTS activities (
-    id SERIAL PRIMARY KEY,
-    name TEXT
-);
-
 CREATE TABLE IF NOT EXISTS destinations (
     id SERIAL PRIMARY KEY,
     name Text,
@@ -98,13 +88,11 @@ CREATE TABLE IF NOT EXISTS items (
     id SERIAL PRIMARY KEY,
     name TEXT,
     category TEXT,
-    activity_id INTEGER,
-    weather_id INTEGER,
+    activity TEXT,
+    weather TEXT,
     gender TEXT,
     daily BOOLEAN,
-    quantity INTEGER,
-    shared BOOLEAN,
-    FOREIGN KEY (activity_id) REFERENCES activities(id),
-    FOREIGN KEY (weather_id) REFERENCES weathers(id)
+    quantity FLOAT(4),
+    shared BOOLEAN
 );
 
