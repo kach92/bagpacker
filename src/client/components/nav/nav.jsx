@@ -44,6 +44,7 @@ class Navigation extends React.Component {
 				this.setState({
 					userImage: res.image
 				});
+
 			})
 			.catch(error => console.error('Error:', error));
 	}

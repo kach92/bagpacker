@@ -592,7 +592,7 @@ module.exports = (dbPoolInstance) => {
         try{
             let query = "UPDATE packing_list_items SET private = $1 WHERE id = $2 RETURNING *";
             let arr = [privacy,item_id];
-            let queryResult = dbPoolInstance.query(query,arr);
+            let queryResult = await dbPoolInstance.query(query,arr);
             if(queryResult.rows.length>0){
                     console.log("change item privacy model success".toUpperCase());
                     return queryResult.rows;

@@ -49,10 +49,15 @@ class LoginForm extends React.Component {
 			headers:{
 				'Content-Type': 'application/json'
 			}
-		}).then(res => res.json())
+		}).then(res => {
+            window.location.reload(true);
+            return res.json()
+        })
 			.then(res => {
 				if (res) {
+
 					this.props.history.push('/');
+
 				} else {
 					this.setState({errorMessage: "Incorrect email/password"})
 				}
