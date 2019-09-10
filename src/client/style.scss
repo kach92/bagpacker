@@ -121,9 +121,9 @@ a {
   }
   .sidePanelBg {
     content: "";
-    background-image: url("./images/bg.jpg");
+    background-image: url("images/bg.jpg");
     background-size: cover;
-    background-position: 20% 0%;
+    background-position: 15% 0%;
     display: block;
     width: 33.333333%;
     height: 100vh;
@@ -848,7 +848,7 @@ a {
     width: 100%;
   }
 }
-button.btnSecondary {
+.btnSecondary {
   text-transform: uppercase;
   border: none;
   border-bottom: 1px solid white;
@@ -876,6 +876,53 @@ button.btnSecondary {
   &:hover{
     i {
       color: $blue;
+      right: -0.5rem;
+    }
+  }
+}
+
+.btnCover {
+  text-transform: uppercase;
+  border: none;
+  border-bottom: 1px solid white;
+  color: $white;
+  letter-spacing: 1px;
+  padding: 0 1.5rem 0.5rem 0;
+  border-radius: 0;
+  letter-spacing: 1px;
+  position: relative;
+  margin: 0;
+  &:focus,
+  &:active,
+  &:active:focus{
+    box-shadow: none!important;
+    background-color: transparent!important;
+  }
+  &::after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0.35rem;
+    left: auto;
+    right: 0.35rem;
+    width: 12px;
+    height: 12px;
+    border-top: 1px solid $white;
+    border-right: 1px solid $white;
+    transform: rotate(45deg);
+    transition:.3s;
+  }
+  i {
+    position: absolute;
+    right: -0.25rem;
+    top: 2%;
+    font-size: 1.5rem;
+    transition: 0.3s;
+  }
+  &:hover{
+    color: $white;
+    i {
+      color: $white;
       right: -0.5rem;
     }
   }
@@ -1029,5 +1076,250 @@ input[type="checkbox"]{
       transform: rotate(45deg) translate(-50%,-50%);
 
     }
+  }
+}
+
+.cover {
+  position: static;
+  .coverImage {
+    background-image: url("images/bg.jpg");
+    background-repeat: no-repeat;
+    -webkit-background-size: cover;
+    background-size: cover;
+    background-position: 0 100%;
+    width: 100%;
+    max-width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -3;
+    //animation: shrink 3s linear;
+    animation-fill-mode: forwards;
+  }
+  .coverOverlay {
+    background-image: linear-gradient(to right, rgba(0,0,0,0.5) , rgba(0,0,0,.65));
+    width: 100%;
+    max-width: 100vw;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: -1;
+    //animation: shrink 3s linear;
+    animation-fill-mode: forwards;
+    &:after {
+      content: "";
+      background-color: #fff;
+      display: block;
+      width: 7%;
+      height: 100vh;
+      position: fixed;
+      left: 95%;
+      top: 0;
+      transform: skew(-3deg);
+      z-index: -1;
+      //animation: shift 3s linear;
+      animation-fill-mode: forwards;
+    }
+  }
+  .coverCaption {
+    position: fixed;
+    color: white;
+    width: 100%;
+    max-width: 100vw;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 0;
+    flex-direction: column;
+    h1 {
+      margin-bottom: 2rem;
+      font-size:4rem;
+    }
+  }
+}
+.features {
+  opacity: 0;
+  display: none;
+  .coverFeatureRow {
+    margin-bottom: 4rem;
+    align-items: center;
+    h4 {
+      margin-bottom: 1rem;
+      line-height: 1.5;
+    }
+    ul{
+      margin: 0;
+      padding: 0;
+      li {
+        list-style-type: none;
+        margin-bottom: 1rem;
+      }
+    }
+    .featureImg {
+      -webkit-border-radius: 50%;
+      -moz-border-radius: 50%;
+      border-radius: 50%;
+      transform: skew(-4deg);
+      &:after {
+        content: "";
+        display: block;
+        width: 100%;
+        padding-bottom: 150%;
+        background-size: cover;
+        background-position: center;
+      }
+    }
+    .featureImg1:after {
+      background-image: url("./images/features/features-01.jpg");
+    }
+    .featureImg2:after {
+      background-image: url("./images/features/features-02.jpg");
+    }
+    .featureImg3:after {
+      background-image: url("./images/features/features-03.jpg");
+    }
+  }
+}
+.coverFeaturePanel {
+  opacity: 0;
+  h2 {
+    color: white;
+  }
+}
+.cover.coverFeatures {
+  .coverCaption {
+    animation: fadeOut 0.3s;
+    animation-fill-mode: forwards;
+  }
+
+  .coverImage {
+    animation: shrink 0.8s;
+    animation-delay: 0.2s;
+    animation-fill-mode: forwards;
+  }
+
+  .coverOverlay {
+    animation: shrink 0.8s;
+    animation-delay: 0.2s;
+    animation-fill-mode: forwards;
+
+    &:after {
+      animation: shift 0.8s;
+      animation-delay: 0.2s;
+      animation-fill-mode: forwards;
+    }
+  }
+}
+.coverWrapper{
+  .features {
+    display: block;
+    animation: fadeIn 0.3s;
+    animation-delay: 1s;
+    animation-fill-mode: forwards;
+  }
+  .coverFeaturePanel {
+    cursor: pointer;
+    animation: fadeIn 0.3s;
+    animation-delay: 1s;
+    animation-fill-mode: forwards;
+    h2 {
+      position: fixed;
+    }
+  }
+}
+.cover.coverFeaturesHide {
+  .coverCaption {
+    animation: fadeIn 0.3s;
+    animation-delay: 0.7s;
+    animation-fill-mode: forwards;
+  }
+
+  .coverImage {
+    animation: shrinkR 0.8s;
+    animation-fill-mode: forwards;
+  }
+
+  .coverOverlay {
+    animation: shrinkR 0.8s;
+    animation-fill-mode: forwards;
+
+    &:after {
+      animation: shiftR 0.8s;
+      animation-fill-mode: forwards;
+    }
+  }
+}
+.coverWrapperHide{
+  .features {
+    display: none;
+    animation: fadeOut 0.3s;
+    animation-delay: 1s;
+    animation-fill-mode: forwards;
+  }
+  .coverFeaturePanel {
+    cursor: pointer;
+    animation: fadeOut 0.3s;
+    animation-delay: 1s;
+    animation-fill-mode: forwards;
+  }
+}
+@keyframes fadeOut  {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes fadeIn  {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes shrink  {
+  0% {
+    background-position: 0 100%;
+    width: 100%;
+  }
+  100% {
+    background-position: 15% 0%;
+    width: 33.333333%;
+  }
+}
+@keyframes shift  {
+  0% {
+    left: 98%;
+  }
+  100% {
+    left: 30%;
+  }
+}
+
+@keyframes shrinkR  {
+  0% {
+    background-position: 15% 0%;
+    width: 33.333333%;
+  }
+  100% {
+    background-position: 0 100%;
+    width: 100%;
+  }
+}
+@keyframes shiftR  {
+  0% {
+    left: 30%;
+  }
+  100% {
+    left: 98%;
   }
 }
