@@ -249,6 +249,15 @@ a {
     }
   }
 }
+.createModal {
+  div {
+    border-radius: 0;
+    border: 0;
+  }
+  h4 {
+    margin-bottom: 3rem;
+  }
+}
 
 .packlistModalForm{
   position:relative;
@@ -285,6 +294,9 @@ a {
     display: block;
 
     & > div {
+      margin: 0;
+    }
+    input{
       margin: 0;
     }
   }
@@ -691,7 +703,8 @@ a {
 }
 
 .ownerDropdown,
-.tripmateDropdown{
+.tripmateDropdown,
+.weatherDropdown{
   button {
     color: $black!important;
     background: transparent!important;
@@ -752,7 +765,7 @@ button.btnSecondary {
 }
 
 .deleteModal,
-.addCategoryModal{
+.addCategoryModal,{
   padding: 1rem;
   text-align: center;
   h4 {
@@ -831,3 +844,38 @@ button.btnSecondary {
   }
 }
 
+
+.weatherSelect {
+  div > div {
+    display: inline-flex;
+    margin-right: 2rem;
+    align-items: center;
+    &:hover {
+      opacity: .5;
+      transition: .3s;
+      cursor: pointer;
+    }
+  }
+  i {
+    font-size: 2rem;
+  }
+  p {
+    display: inline;
+    margin: 0 0 0 .5rem;
+  }
+}
+.weatherSelect1 {
+  div:nth-child(1) {
+    color: $blue;
+  }
+}
+.weatherSelect2{
+  div:nth-child(2) {
+    color: $blue;
+  }
+}
+.weatherSelect3 {
+  div:nth-child(3) {
+    color: $blue;
+  }
+}
