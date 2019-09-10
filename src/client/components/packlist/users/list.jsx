@@ -152,7 +152,6 @@ class List extends React.Component {
 					</CardColumns>
 					<div className="text-center">
                         <AddCategory tripId = {this.props.tripId} updateTripInfo={this.props.updateTripInfo}/>
-
 					</div>
 				</Col>
 			</Row>

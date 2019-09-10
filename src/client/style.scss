@@ -511,7 +511,26 @@ a {
     background: transparent;
   }
 }
-
+.tripPanel {
+  h4 {
+    margin-bottom: 2rem;
+    line-height: 1.5;
+    border-bottom: 1px solid transparent;
+    cursor: text;
+  }
+  .tripName {
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin-bottom: 2rem;
+    line-height: 1.5;
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid white;
+    color: white;
+    padding: 0;
+    letter-spacing: 0.5px;
+  }
+}
 .packlist {
   column-count: 2;
   p {
@@ -556,6 +575,71 @@ a {
       font-weight: 500;
       margin-bottom: 2rem;
     }
+    .deleteButton {
+      padding-left: 0.1rem;
+      opacity: 0;
+    }
+    .item:hover {
+      .deleteButton {
+        opacity: 1;
+        transition: .3s;
+      }
+    }
+    .trashButton{
+      font-weight: 300;
+      font-size: 1.25rem;
+      margin-top:1rem;
+      cursor: pointer;
+      opacity: 0;
+      &:hover {
+        opacity: 0.5;
+        transition: .3s;
+      }
+    }
+    &:hover {
+      .trashButton{
+        opacity: 1;
+        transition: .3s;
+      }
+    }
+    .deleteButton {
+      cursor: pointer;
+      font-weight: 300;
+      &:hover {
+        opacity: 0.5;
+        transition: 0.3s;
+      }
+    }
+    .addButton {
+      cursor: pointer;
+      font-weight: 300;
+      opacity: 0.5;
+      &:hover {
+        opacity: 1;
+        transition: 0.3s;
+      }
+    }
+  }
+}
+.addCategory {
+  opacity: 0.5;
+  font-size: 1.5rem;
+  font-weight: 300;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  i,p {
+    display: inline-block;
+    margin: 0;
+    font-weight: 400;
+    cursor: pointer;
+  }
+  &:hover {
+    opacity: 1;
+    transition: 0.3s;
+  }
+  i {
+    font-size: 2rem;
   }
 }
 
@@ -593,19 +677,6 @@ a {
     color: $white;
     border-radius: 0!important;
   }
-}
-
-.deleteButton,
-.addButton{
-    cursor: pointer;
-  &:hover {
-    opacity: 0.5;
-    transition: 0.3s;
-  }
-}
-
-.addButton {
-  font-weight: 300;
 }
 
 .formError {
@@ -728,19 +799,6 @@ button.btnSecondary {
   }
 }
 
-
-.trashButton{
-  font-size: 20px;
-  position:absolute;
-  top:50%;
-  left:50%;
-  transform: translate(-50%,-50%);
-  cursor: pointer;
-  &:hover {
-    opacity: 0.5;
-    transition: .3s;
-  }
-}
 
 .suggestionWrapper  {
   ul {

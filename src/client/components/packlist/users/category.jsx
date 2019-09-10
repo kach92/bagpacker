@@ -38,7 +38,7 @@ class Category extends React.Component {
             let itemQty = <ItemQty item_quantity={item.quantity} item_id={item.id} submitQtyEdit={this.props.submitQtyEdit}/>
             let itemChecked = <ItemChecked item_packed={item.packed} packItem={this.props.packItem} item_id={item.id} />
 			return(
-				<Row key={item.id}>
+				<Row key={item.id} className={mainStyles.item}>
 					<Col xs={1}>
                         {itemChecked}
 					</Col>
@@ -48,7 +48,7 @@ class Category extends React.Component {
 					<Col xs={8} className="pl-0">
 						{itemName}
 					</Col>
-                    <Col xs={1}>
+                    <Col xs={1} className="p-0">
                         <i className={`bx bx-x ${mainStyles.deleteButton}`} onClick={(e)=>{this.deleteItem(e,item.id)}}></i>
                     </Col>
 				</Row>
@@ -68,7 +68,7 @@ class Category extends React.Component {
                         <Col xs={9}>
                             <ItemAdd category={this.props.category} addItem={this.props.addItem}/>
                         </Col>
-                        <Col xs={3}>
+                        <Col xs={3} className="text-right">
                             <DeleteCategory category={this.props.category} updateTripInfo={this.props.updateTripInfo} category_id={this.props.category_id}/>
 
                         </Col>

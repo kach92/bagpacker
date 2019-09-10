@@ -60,7 +60,6 @@ class CategoryTitle extends React.Component {
             itemName =
                 <input className={mainStyles.categoryInput} type="text" value={this.state.category} ref={this.setWrapperRef} onChange={this.updateName} onKeyDown={(e)=>this.checkKey(e)}/>
         }else{
-            // itemName = <div onClick={this.checkEdit}><p>{this.state.item_name}</p></div>;
             itemName = <h4 onClick={this.checkEdit}>{this.state.category}</h4>;
         }
         return(
