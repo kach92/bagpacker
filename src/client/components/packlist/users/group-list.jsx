@@ -28,6 +28,7 @@ class GroupList extends React.Component {
 				changedListToShow: true
 			})
 		}
+        this.props.updateTripInfo();
 	};
 
     addItem = (name, quantity,category) => {
@@ -71,12 +72,9 @@ class GroupList extends React.Component {
 			currentUserName = list[currentUser].firstname;
 			listToShow = <TripmateList list={list[currentUser].items}/>;
 		}
-
-
 		return (
 			<Row className={mainStyles.packlist}>
 				<Col xs={12}>
-
 					<SharedList list={this.props.shared} tripmates={this.props.list} tripId={this.props.tripId} updateTripInfo={this.props.updateTripInfo} addItem={this.addItem}/>
 				</Col>
 				<Col xs={12} className="my-5">

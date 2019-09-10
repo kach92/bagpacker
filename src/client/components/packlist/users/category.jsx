@@ -16,9 +16,7 @@ class Category extends React.Component {
         this.state = {
             items:null
         }
-
     }
-
     componentDidMount(){
         let items = this.props.items.sort((a,b)=> a.name.toLowerCase()<b.name.toLowerCase()? -1:1).sort((x,y)=>x.packed === y.packed? 0 : (x.packed? 1 : -1));
         this.setState({items:items})
