@@ -576,7 +576,6 @@ module.exports = (dbPoolInstance) => {
             let query = "UPDATE packing_list_categories SET category=$1 WHERE id = $2 RETURNING *";
             let arr = [category,category_id];
             let queryResult = await dbPoolInstance.query(query,arr);
-            console.log(queryResult)
             if(queryResult.rows.length>0){
                     console.log("change category name model success".toUpperCase());
                     return queryResult.rows;
@@ -585,6 +584,22 @@ module.exports = (dbPoolInstance) => {
             }
         }catch (error){
             console.log("change category name model "+error)
+        }
+    }
+
+    let changeItemPrivacy = async function(item_id,privacy){
+        try{
+            let query = "UPDATE packing_list_items SET private = $1 WHERE id = $2 RETURNING *";
+            let arr = [privacy,item_id];
+            let queryResult = dbPoolInstance.query(query,arr);
+            if(queryResult.rows.length>0){
+                    console.log("change item privacy model success".toUpperCase());
+                    return queryResult.rows;
+            }else{
+                return Promise.reject(new Error("change item privacy model return null"));
+            }
+        }catch (error){
+            console.log("change item privacy model "+error)
         }
     }
 
@@ -613,7 +628,8 @@ module.exports = (dbPoolInstance) => {
         getPureCategoryIdByName,
         addNewCategory,
         deleteCategory,
-        changeCategoryName
+        changeCategoryName,
+        changeItemPrivacy
 
     };
 };

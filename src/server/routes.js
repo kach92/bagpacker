@@ -29,4 +29,5 @@ module.exports = (app, db) => {
     app.post('/change_category_name',packingLists.changeCategoryName);
     app.post('/delete_category',packingLists.deleteCategory);
     app.post('/edit_trip_name',trips.editTripName);
+    app.post('/private_item',packingLists.privateItem);
 };
