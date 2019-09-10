@@ -587,17 +587,14 @@ module.exports = (dbPoolInstance) => {
         }
     }
 
-    let changeItemPrivacy = async function(item_id){
+    let changeItemPrivacy = async function(item_id,privacy){
         try{
-            let query = "SELECT * FROM packing_list_items WHERE id = $1";
-            let arr = [item_id];
+            let query = "UPDATE packing_list_items SET private = $1 WHERE id = $2 RETURNING *";
+            let arr = [privacy,item_id];
             let queryResult = dbPoolInstance.query(query,arr);
-            let query2 = "UPDATE packing_list_items SET privacy = $1 WHERE id = $2 RETURNING *";
-            let arr2 = [!queryResult.rows[0].privacy,item_id];
-            let queryResult2 = dbPoolInstance.query(query2,arr2);
-            if(queryResult2.rows.length>0){
+            if(queryResult.rows.length>0){
                     console.log("change item privacy model success".toUpperCase());
-                    return queryResult2.rows;
+                    return queryResult.rows;
             }else{
                 return Promise.reject(new Error("change item privacy model return null"));
             }

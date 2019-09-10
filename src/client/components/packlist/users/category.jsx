@@ -8,6 +8,7 @@ import ItemChecked from './item/item-checked';
 import ItemAdd from './item/item-add';
 import DeleteCategory from './delete-category';
 import CategoryTitle from './category-title';
+import ItemPrivate from './item/item-private'
 
 class Category extends React.Component {
     constructor(){
@@ -37,15 +38,20 @@ class Category extends React.Component {
             let itemName = <Item item_name={item.name} item_id={item.id} submitNameEdit={this.props.submitNameEdit}/>
             let itemQty = <ItemQty item_quantity={item.quantity} item_id={item.id} submitQtyEdit={this.props.submitQtyEdit}/>
             let itemChecked = <ItemChecked item_packed={item.packed} packItem={this.props.packItem} item_id={item.id} />
+            let itemPrivate = <ItemPrivate item_id={item.id} privacy={item.private}/>
 			return(
 				<Row key={item.id}>
+                    <Col xs={1}>
+                        {itemPrivate}
+
+                    </Col>
 					<Col xs={1}>
                         {itemChecked}
 					</Col>
 					<Col xs={2}>
 						{itemQty}
 					</Col>
-					<Col xs={8} className="pl-0">
+					<Col xs={7} className="pl-0">
 						{itemName}
 					</Col>
                     <Col xs={1}>

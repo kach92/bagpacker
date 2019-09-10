@@ -237,7 +237,8 @@ module.exports = (db) => {
     let privateItem = async function (request,response){
         try{
             let item_id = request.body.item_id;
-            let changeItemPrivacy = db.packingList.changeItemPrivacy(item_id);
+            let privacy = request.body.privacy;
+            let changeItemPrivacy = db.packingList.changeItemPrivacy(item_id,privacy);
             response.send(true);
         }catch (error){
             console.log("private item controller "+error)
