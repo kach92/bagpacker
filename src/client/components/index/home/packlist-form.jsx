@@ -16,11 +16,12 @@ class PacklistForm extends React.Component {
 				startDate:new Date(),
 				endDate:new Date(),
 				gender: "",
-				weather: "1",
+				weather: 1,
 				activities: []
 			},
 			errorMessage: ""
 		};
+		this.weather = ['Sunny','Snowy','Rainy'];
 	}
 
 	updateLocation = (location) => {
@@ -45,9 +46,9 @@ class PacklistForm extends React.Component {
 		formInputs.gender = e.target.value;
 		this.setState({formInputs: formInputs});
 	};
-	updateWeather = (e) => {
+	updateWeather = (e,weather) => {
 		let formInputs = this.state.formInputs;
-		formInputs.weather = e.target.value;
+		formInputs.weather = weather;
 		this.setState({formInputs: formInputs});
 	};
 
@@ -109,6 +110,14 @@ class PacklistForm extends React.Component {
 		if (this.state.errorMessage !== ""){
 			errorMessage = (<Col xs={12} className={mainStyles.formError}><p>{this.state.errorMessage}</p></Col>);
 		}
+		let weatherClass = null;
+		if (this.state.formInputs.weather === 1) {
+			weatherClass = mainStyles.weatherSelect1;
+		}else if (this.state.formInputs.weather === 2) {
+			weatherClass = mainStyles.weatherSelect2;
+		}else if (this.state.formInputs.weather === 3){
+			weatherClass = mainStyles.weatherSelect3;
+		}
 		return (
 			<Form className={mainStyles.packlistForm}>
 				<Row>
@@ -158,13 +167,22 @@ class PacklistForm extends React.Component {
 						</Form.Group>
 					</Col>
 					<Col>
-						<Form.Group>
+						<Form.Group className={`${mainStyles.weatherSelect} ${mainStyles.weatherSelect}`}>
 							<label>Weather</label><br/>
-							<Form.Control as="select" value={this.state.formInputs.weather} onChange={this.updateWeather}>
-								<option value="1">Sunny</option>
-								<option value="2">Snowy</option>
-								<option value="3">Rainy</option>
-							</Form.Control>
+							<div className={weatherClass}>
+								<div onClick={(e)=>this.updateWeather(e,1)}>
+									<i className='bx bx-sun'></i>
+									<p> Sunny</p>
+								</div>
+								<div onClick={(e)=>this.updateWeather(e,2)}>
+									<i className='bx bx-cloud-snow'></i>
+									<p>Snowy</p>
+								</div>
+								<div onClick={(e)=>this.updateWeather(e,3)}>
+									<i className='bx bx-cloud-rain'></i>
+									<p>Rainy</p>
+								</div>
+							</div>
 						</Form.Group>
 					</Col>
 				</Row>
