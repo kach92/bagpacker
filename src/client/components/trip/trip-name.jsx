@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import mainStyles from "../../style.scss";
+import TripDetails from "./trip-details";
 
 class TripName extends React.Component {
     constructor(props){
@@ -57,9 +59,8 @@ class TripName extends React.Component {
         let itemName = null;
 
         if (this.state.editing) {
-            itemName = <input type="text" value={this.state.name} ref={this.setWrapperRef} onChange={this.updateName} onKeyDown={(e)=>this.checkKey(e)}/>
+            itemName = <input className={mainStyles.tripName} type="text" maxLength={40} value={this.state.name} ref={this.setWrapperRef} onChange={this.updateName} onKeyDown={(e)=>this.checkKey(e)}/>
         }else{
-            // itemName = <div onClick={this.checkEdit}><p>{this.state.item_name}</p></div>;
             itemName = <h4 onClick={this.checkEdit}>{this.state.name}</h4>;
         }
         return(
@@ -68,5 +69,8 @@ class TripName extends React.Component {
 
     }
 }
-
+TripName.propTypes ={
+    tripName: PropTypes.string,
+    tripId: PropTypes.number
+};
 export default TripName;

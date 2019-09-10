@@ -511,7 +511,26 @@ a {
     background: transparent;
   }
 }
-
+.tripPanel {
+  h4 {
+    margin-bottom: 2rem;
+    line-height: 1.5;
+    border-bottom: 1px solid transparent;
+    cursor: text;
+  }
+  .tripName {
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin-bottom: 2rem;
+    line-height: 1.5;
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid white;
+    color: white;
+    padding: 0;
+    letter-spacing: 0.5px;
+  }
+}
 .packlist {
   column-count: 2;
   p {
