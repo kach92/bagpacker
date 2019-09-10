@@ -80,7 +80,7 @@ class Home extends React.Component {
 						<Col xs={{ span: 3, offset: 1 }} className="p-3">
 							<div className={`${mainStyles.featureImg} ${mainStyles.featureImg3}`}></div>
 						</Col>
-						<Col xs={7}>
+						<Col xs={}>
 							<h4>Create group trip<br/>with families and friends</h4>
 							<ul>
 								<li>View packing lists of one another</li>
