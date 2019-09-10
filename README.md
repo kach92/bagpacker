@@ -43,6 +43,11 @@ psql -d DATABASE_NAME -U USERNAME -f seed.sql
 - User can view their tripmate list for reference, and user can also change some items to private so that other users can't see.
 - User can check items that they have already pack like a checklist.
 
+## Unsolved Problems
+- Temporary list generation for non-user
+- Selecting multiple destinations
+- Notification to user for uncheck items when closing to the trip
+- A search bar linking to e-commerce app for items that user will like to purchase
 
 ### Disclaimer
 We did not create the photo, they are borrowed and generated using Teleport Api.
