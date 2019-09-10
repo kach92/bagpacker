@@ -54,8 +54,7 @@ INSERT INTO items (name,category,activity,weather,gender,daily,quantity,shared) 
 INSERT INTO items (name,category,activity,weather,gender,daily,quantity,shared) VALUES ('Visa','Essentials',null,null,null,false,1,false);
 INSERT INTO items (name,category,activity,weather,gender,daily,quantity,shared) VALUES ('Pen','Miscellaneous',null,null,null,false,1,false);
 INSERT INTO items (name,category,activity,weather,gender,daily,quantity,shared) VALUES ('Insurance','Essentials',null,null,null,false,1,false);
-INSERT INTO items (name,category,activity,weather,gender,daily,quantity,shared) VALUES ('Foreign Currency','Essentials',null,null,null,false,1000,false);
-INSERT INTO items (name,category,activity,weather,gender,daily,quantity,shared) VALUES ('Deodorant','Personal Care',null,null,'M',false,1000,false);
+INSERT INTO items (name,category,activity,weather,gender,daily,quantity,shared) VALUES ('Deodorant','Personal Care',null,null,'M',false,1,false);
 INSERT INTO items (name,category,activity,weather,gender,daily,quantity,shared) VALUES ('Toilet Paper','Toiletries','Camping',null,null,false,1,true);
 INSERT INTO items (name,category,activity,weather,gender,daily,quantity,shared) VALUES ('Floss','Toiletries',null,null,null,false,1,false);
 INSERT INTO items (name,category,activity,weather,gender,daily,quantity,shared) VALUES ('Shaver','Toiletries',null,null,null,false,1,false);
