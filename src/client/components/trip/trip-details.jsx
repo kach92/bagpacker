@@ -14,8 +14,9 @@ class TripDetails extends React.Component {
 		let tripDate = this.dateDisplay(this.props.startDate,this.props.endDate);
 		return (
 			<React.Fragment>
-				<p><i className='bx bxs-map'></i> {this.props.location}</p>
 				<p>{tripDate}</p>
+                <p><i className='bx bxs-map'></i> {this.props.location}</p>
+                <p><i class='bx bxs-user'></i> {this.props.tripHeadCount}</p>
 			</React.Fragment>
 
 		);

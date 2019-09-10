@@ -56,10 +56,15 @@ class GroupList extends React.Component {
 			if (user.id === this.props.userId){
 				currentUser = index;
 				listToShow = <List list={list[currentUser].items} tripId={this.props.tripId} updateTripInfo={this.props.updateTripInfo} solo={this.props.solo}/>
-			}
-			tripmatesOptions.push(
-				<Dropdown.Item key={index} href="#" onClick={(e)=>{this.updateCurrentListToShow(e,index)}}>{user.firstname}</Dropdown.Item>
-			);
+                tripmatesOptions.unshift(
+                    <Dropdown.Item key={index} href="#" onClick={(e)=>{this.updateCurrentListToShow(e,index)}}>{user.firstname} (You)</Dropdown.Item>
+                );
+			}else{
+                tripmatesOptions.push(
+                    <Dropdown.Item key={index} href="#" onClick={(e)=>{this.updateCurrentListToShow(e,index)}}>{user.firstname}</Dropdown.Item>
+                );
+            }
+
 		});
 		if (this.state.changedListToShow) {
 			currentUser = this.state.currentUser;
@@ -67,12 +72,6 @@ class GroupList extends React.Component {
 			listToShow = <TripmateList list={list[currentUser].items}/>;
 		}
 
-        tripmatesOptions.forEach((x,index)=>{
-            if(x.id === this.props.user_id){
-                let temp = tripmatesOptions.splice(index,1);
-                tripmatesOptions.unshift(temp);
-            }
-        })
 
 		return (
 			<Row className={mainStyles.packlist}>
