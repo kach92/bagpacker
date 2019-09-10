@@ -128,6 +128,7 @@ class List extends React.Component {
                         deleteItem={ListComponent.deleteItem}
                         updateTripInfo={updateTripInfo}
                         submitCategoryTitleEdit={ListComponent.submitCategoryTitleEdit}
+                        solo={ListComponent.props.solo}
                     />
                 );
             }else{

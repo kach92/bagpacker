@@ -5,7 +5,7 @@ import mainStyles from "../../../style.scss";
 
 class TripmateCategory extends React.Component {
 	render() {
-        let items = this.props.items.items? this.props.items.items.map((item, index)=> {
+        let items = this.props.items.items? this.props.items.items.filter(x=>!x.private).map((item, index)=> {
                     return(
                         <Row key={index}>
                             <Col xs={2}>
