@@ -454,6 +454,7 @@ module.exports = (dbPoolInstance) => {
                 SELECT *
                 FROM packing_list_categories
                 WHERE packing_list_categories.packing_list_id = $1
+                ORDER BY id
             `;
             let arr = [packing_list_id];
             let queryResult = await dbPoolInstance.query(query,arr);
