@@ -6,6 +6,7 @@ import mainStyles from "../../../style.scss";
 import ItemAdd from "./item/item-add";
 import TripmateCategory from './tripmate-category';
 import AddCategory from './add-category';
+import SharedItemCategory from "./shared-item-category";
 
 class List extends React.Component {
 	constructor(){
@@ -131,7 +132,7 @@ class List extends React.Component {
                 );
             }else{
                 return (
-                    <TripmateCategory
+                    <SharedItemCategory
                         key={index}
                         category={category}
                         items={list[category]}
