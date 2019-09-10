@@ -234,6 +234,16 @@ module.exports = (db) => {
         }
     }
 
+    let privateItem = async function (request,response){
+        try{
+            let item_id = request.body.item_id;
+            let changeItemPrivacy = db.packingList.changeItemPrivacy(item_id);
+            response.send(true);
+        }catch (error){
+            console.log("private item controller "+error)
+        }
+    }
+
     return {
         nonUserList : nonUserList,
         nonUserListSave : nonUserListSave,
@@ -246,7 +256,8 @@ module.exports = (db) => {
         deleteItem : deleteItem,
         addNewCategory : addNewCategory,
         changeCategoryName : changeCategoryName,
-        deleteCategory : deleteCategory
+        deleteCategory : deleteCategory,
+        privateItem : privateItem
     }
 
 };
