@@ -5,18 +5,20 @@ import mainStyles from "../../../style.scss";
 
 class TripmateCategory extends React.Component {
 	render() {
-		let items = this.props.items.map((item, index)=> {
-			return(
-				<Row key={index}>
-					<Col xs={2}>
-						<p>{item.quantity}</p>
-					</Col>
-					<Col xs={10} className="pl-0">
-						<p>{item.name}</p>
-					</Col>
-				</Row>
-			);
-		});
+        let items = this.props.items.items? this.props.items.items.map((item, index)=> {
+                    return(
+                        <Row key={index}>
+                            <Col xs={2}>
+                                <p>{item.quantity}</p>
+                            </Col>
+                            <Col xs={10} className="pl-0">
+                                <p>{item.name}</p>
+                            </Col>
+                        </Row>
+                    );
+                }) : "";
+
+
 		return (
 			<Card className={mainStyles.listCard}>
 				<Card.Body>

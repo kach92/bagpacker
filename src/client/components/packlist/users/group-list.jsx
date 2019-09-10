@@ -5,6 +5,7 @@ import TripmateList from './tripmate-list';
 import SharedList from './shared-list';
 import {Col, Row, Form, DropdownButton, Dropdown} from "react-bootstrap";
 import mainStyles from "../../../style.scss";
+
 class GroupList extends React.Component {
 	constructor(props){
 		super(props);
@@ -69,6 +70,7 @@ class GroupList extends React.Component {
 		return (
 			<Row className={mainStyles.packlist}>
 				<Col xs={12}>
+
 					<SharedList list={this.props.shared} tripmates={this.props.list} tripId={this.props.tripId} updateTripInfo={this.props.updateTripInfo} addItem={this.addItem}/>
 				</Col>
 				<Col xs={12} className="my-5">

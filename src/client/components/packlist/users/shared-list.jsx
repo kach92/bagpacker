@@ -8,6 +8,7 @@ import ItemChecked from "./item/item-checked";
 import ItemAdd from "./item/item-add";
 import SharedItemOwner from "./item/shared-item-owner";
 
+
 class SharedList extends React.Component {
 	packItem = (checked,item_id) => {
 		let data = {
