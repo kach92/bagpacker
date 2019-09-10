@@ -10,7 +10,7 @@ class Navigation extends React.Component {
 	constructor() {
 		super();
 		this.state={
-			hideNavBg: true,
+			hideNavBg: false,
 			hoverOverDropDown: false,
 			userImage: null
 		}
@@ -51,7 +51,7 @@ class Navigation extends React.Component {
 		const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
 		(winScroll > 60)
 			? this.setState({ hideNavBg: false })
-			: this.setState({ hideNavBg: true });
+			: this.setState({ hideNavBg: false });
 	};
 	handleOpen = () => {
 		this.setState({ hoverOverDropDown: true })
