@@ -5,8 +5,9 @@ import List from '../packlist/users/list';
 import GroupList from '../packlist/users/group-list';
 import TripDelete from './trip-delete';
 import TripName from './trip-name';
+import mainStyles from "../../style.scss";
 
-import {Col, Row, Button} from 'react-bootstrap';
+import {Col, Row} from 'react-bootstrap';
 import TripDetails from "./trip-details";
 
 class Trip extends React.Component {
@@ -18,13 +19,14 @@ class Trip extends React.Component {
 			solo: true,
 			shared: null,
             trip_id:null
-		}
+		};
         this.updateTripInfo = this.updateTripInfo.bind(this);
 	}
 
 	componentDidMount(){
 		this.getTripInfo(this.props.match.params.id);
-	}
+	};
+
 	getTripInfo(id) {
 		let fetchUrl = '/get_trip/'+id;
 		fetch(fetchUrl, {
@@ -34,9 +36,6 @@ class Trip extends React.Component {
 			}
 		}).then(res => res.json())
 			.then(res => {
-                console.log("///////////////////")
-                console.log(res)
-                console.log("///////////////////")
 				let solo = true;
 				let shared = null;
 				if (res.trip.group_id) {
@@ -65,7 +64,6 @@ class Trip extends React.Component {
         })
         .then(res => res.json())
         .then(res => {
-            console.log(res)
             let solo = true;
             let shared = null;
             if (res.trip.group_id) {
@@ -96,7 +94,7 @@ class Trip extends React.Component {
             }
         }).then(res => console.log(res))
             .catch(error => console.error('Error:', error));
-    }
+    };
 
     deleteTrip = (e) =>{
         let data ={
@@ -112,32 +110,38 @@ class Trip extends React.Component {
         })
         .then(res => res.json())
         .then(res => {
-            console.log("DELETE TRIP OK");
             this.props.history.push('/');
         })
         .catch(error => console.error('Error:', error));
 
-    }
+    };
 
 	render() {
 		let tripName = "";
 		let tripDestination = "";
 		let tripStartDate = "";
 		let tripEndDate = "";
+		let tripDetails = "";
 		let tripImage = "";
-        let tripNameDiv = ""
-        console.log(this.state.trip)
+        let tripNameDiv = "";
 		let trip=this.state.trip;
+		let listDisplay = <h4 className="text-center">No such trip</h4>;
+
 		if (trip) {
 			tripName = trip.name;
 			tripDestination = trip.destinations[0].name;
 			tripImage = trip.destinations[0].image;
 			tripStartDate = trip.destinations[0].start_date;
-			tripEndDate = trip.destinations[0].end_date
-            tripNameDiv = <TripName tripName={tripName} trip_id={this.state.trip_id} updateTripName={this.updateTripName}/>
+			tripEndDate = trip.destinations[0].end_date;
+			tripDetails = (
+				<React.Fragment>
+					<TripDetails location={tripDestination} startDate={tripStartDate} endDate={tripEndDate}/>
+					<TripDelete deleteTrip={this.deleteTrip}/>
+				</React.Fragment>
+			);
+            tripNameDiv = <TripName tripName={tripName} tripId={this.state.trip_id} updateTripName={this.updateTripName}/>
+			listDisplay = <h4 className="text-center">No items found</h4>;
 		}
-
-		let listDisplay = "No items found";
 		if (this.state.solo) {
 			let list = this.state.list;
 			if (list) {
@@ -149,11 +153,10 @@ class Trip extends React.Component {
 		}
 		return (
 			<Row>
-				<Col md={4}>
+				<Col md={4} className={mainStyles.tripPanel}>
 					<SidePanel tripImage={tripImage}>
                         {tripNameDiv}
-						<TripDetails location={tripDestination} startDate={tripStartDate} endDate={tripEndDate}/>
-						<TripDelete deleteTrip={this.deleteTrip}/>
+						{tripDetails}
 					</SidePanel>
 				</Col>
 				<Col md={{span:8}}>

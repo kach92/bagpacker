@@ -13,7 +13,6 @@ function AddNewCategoryModal(props) {
             setError('Please fill in the category name');
         }
         else {
-            console.log("SUBMITING");
             let data = {
                 trip_id: props.tripId,
                 new_category: name
@@ -28,12 +27,10 @@ function AddNewCategoryModal(props) {
                 .then(res => {
                     props.updateTripInfo();
                     props.onHide();
-                    // window.location.reload()
                 })
                 .catch(error => console.error('Error:', error));
         }
     };
-    console.log(errorMessage);
     let errorMessageDiv = null;
     if (errorMessage !== ""){
         errorMessageDiv = (<Col xs={12} className={mainStyles.formError}><p>{errorMessage}</p></Col>);
@@ -67,7 +64,7 @@ function AddCategory(props) {
     return (
 
         <React.Fragment>
-            <div className={`mt-3 ${mainStyles.addButton}`} onClick={() => setModalShow(true)}><i className='bx bx-plus'></i> Add new category</div>
+            <div className={`mt-3 ${mainStyles.addCategory}`} onClick={() => setModalShow(true)}><i className='bx bx-plus'></i><p>Add new category</p></div>
             <AddNewCategoryModal
                 show={modalShow}
                 onHide={() => setModalShow(false)}
