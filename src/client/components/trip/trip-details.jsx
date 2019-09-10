@@ -12,11 +12,12 @@ class TripDetails extends React.Component {
 	}
 	render() {
 		let tripDate = this.dateDisplay(this.props.startDate,this.props.endDate);
+        let groupCount = this.props.tripHeadCount >1 ? <p><i class='bx bxs-user'></i> {this.props.tripHeadCount}</p> : null;
 		return (
 			<React.Fragment>
 				<p>{tripDate}</p>
                 <p><i className='bx bxs-map'></i> {this.props.location}</p>
-                <p><i class='bx bxs-user'></i> {this.props.tripHeadCount}</p>
+                {groupCount}
 			</React.Fragment>
 
 		);
