@@ -29,7 +29,6 @@ class List extends React.Component {
 			}
 		}).then(res => res.json())
 			.then(res => {
-                console.log(res)
                 this.props.updateTripInfo();
 			})
 			.catch(error => console.error('Error:', error));

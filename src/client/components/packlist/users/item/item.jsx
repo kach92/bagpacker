@@ -65,7 +65,7 @@ class Item extends React.Component {
             itemName =
                 <input type="text" value={this.state.item_name} ref={this.setWrapperRef} onChange={this.updateName} onKeyDown={(e)=>this.checkKey(e)}/>
         }else{
-            if(this.state.item_packed){
+            if(this.props.item_packed){
                 itemName = <div onClick={this.checkEdit} className={mainStyles.itemPacked}><p>{this.state.item_name}</p></div>;
             }else{
                 itemName = <div onClick={this.checkEdit}><p>{this.state.item_name}</p></div>;

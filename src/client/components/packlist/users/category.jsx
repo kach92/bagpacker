@@ -18,7 +18,8 @@ class Category extends React.Component {
         }
     }
     componentDidMount(){
-        let items = this.props.items.sort((a,b)=> a.name.toLowerCase()<b.name.toLowerCase()? -1:1).sort((x,y)=>x.packed === y.packed? 0 : (x.packed? 1 : -1));
+        console.log("category did mount")
+        let items = this.props.items;
         this.setState({items:items})
     }
 
@@ -32,7 +33,7 @@ class Category extends React.Component {
     };
 
 	render() {
-        let items = this.state.items? this.state.items.map((item)=> {
+        let items = this.props.items? this.props.items.sort((a,b)=> a.name.toLowerCase()<b.name.toLowerCase()? -1:1).sort((x,y)=>x.packed === y.packed? 0 : (x.packed? 1 : -1)).map((item)=> {
             let wholeRow = ""
             let itemName = <Item item_name={item.name} item_id={item.id} submitNameEdit={this.props.submitNameEdit} item_packed={item.packed}/>
             let itemQty = <ItemQty item_quantity={item.quantity} item_id={item.id} submitQtyEdit={this.props.submitQtyEdit}/>
