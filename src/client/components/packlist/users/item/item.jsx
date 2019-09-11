@@ -41,7 +41,7 @@ class Item extends React.Component {
 
             this.setState({
                 editing:false,
-                item_name:"",
+                item_name:e.target.value,
                 item_id:null
             });
             this.props.submitNameEdit(this.state.item_id,this.state.item_name);
