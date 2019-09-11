@@ -60,7 +60,7 @@ class Home extends React.Component {
 							<h4>Generate a packing list<br/>for travelling</h4>
 							<ul>
 								<li>Dynamic list based on number of travel days, weather and activities</li>
-								<li>Easily customisable</li>
+                                <li>Checklist to record packed items</li>
 							</ul>
 						</Col>
 					</Row>
@@ -83,8 +83,8 @@ class Home extends React.Component {
 						<Col xs={7}>
 							<h4>Create group trip<br/>with families and friends</h4>
 							<ul>
-								<li>View packing lists of one another</li>
-								<li>Indicates items that are for sharing</li>
+								<li>View packing lists of travel buddies</li>
+								<li>Indicate who to bring items that are for sharing</li>
 								<li>Hide certain items for privacy</li>
 							</ul>
 						</Col>
