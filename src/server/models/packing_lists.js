@@ -308,7 +308,7 @@ module.exports = (dbPoolInstance) => {
             let queryResult = await dbPoolInstance.query(query,arr);
             if(queryResult.rows.length>0){
                 console.log("UPDATE ITEM PACKED SUCCESS");
-                return queryResult.rows[0];
+                return queryResult.rows[0].packed;
             }else{
                 return Promise.reject(new Error("update item packed return null"));
             }

@@ -125,7 +125,7 @@ module.exports = (db) => {
             let item_id = parseInt(request.body.item_id);
             let packed = request.body.packed;
             let getResponse = await db.packingList.updateItemPacked(item_id,packed);
-            response.send(true);
+            response.send(getResponse);
         } catch (error) {
             console.log('update item packed controller '+error);
             response.send(false);

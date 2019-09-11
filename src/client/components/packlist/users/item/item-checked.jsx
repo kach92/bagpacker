@@ -23,6 +23,7 @@ class ItemChecked extends React.Component {
     updateChecked = (e) =>{
         this.setState({checked:!this.state.checked});
         this.props.packItem(!this.state.checked,this.state.item_id);
+
     }
 
     render(){

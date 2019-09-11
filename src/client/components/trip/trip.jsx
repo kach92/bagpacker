@@ -55,6 +55,7 @@ class Trip extends React.Component {
 	}
 
     updateTripInfo () {
+        console.log("UPDATEEEEEEEEEEE")
         let fetchUrl = '/get_trip/'+this.state.trip_id;
         fetch(fetchUrl, {
             method: 'GET',

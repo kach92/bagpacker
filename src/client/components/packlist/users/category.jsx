@@ -22,6 +22,7 @@ class Category extends React.Component {
         this.setState({items:items})
     }
 
+
     deleteItem = (e,item_id) => {
         let updatedItems = this.state.items;
         updatedItems = updatedItems.filter(item => item.id !== item_id);
@@ -31,12 +32,11 @@ class Category extends React.Component {
     };
 
 	render() {
-		console.log(this.props);
         let items = this.state.items? this.state.items.map((item)=> {
             let wholeRow = ""
-            let itemName = <Item item_name={item.name} item_id={item.id} submitNameEdit={this.props.submitNameEdit}/>
+            let itemName = <Item item_name={item.name} item_id={item.id} submitNameEdit={this.props.submitNameEdit} item_packed={item.packed}/>
             let itemQty = <ItemQty item_quantity={item.quantity} item_id={item.id} submitQtyEdit={this.props.submitQtyEdit}/>
-            let itemChecked = <ItemChecked item_packed={item.packed} packItem={this.props.packItem} item_id={item.id} />
+            let itemChecked = <ItemChecked item_packed={item.packed} packItem={this.props.packItem} item_id={item.id} updateTripInfo={this.props.updateTripInfo} />
 
             let itemPrivate = <ItemPrivate item_id={item.id} privacy={item.private}/>
             if(this.props.solo){
