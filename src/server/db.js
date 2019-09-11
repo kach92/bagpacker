@@ -3,7 +3,7 @@ const users = require('./models/users');
 const packingList = require('./models/packing_lists');
 const trips = require('./models/trips');
 const url = require('url');
-const dbconfig = require("../../config.json");
+
 
 var configs;
 
@@ -22,7 +22,8 @@ if( process.env.DATABASE_URL ){
   };
 
 }else{
-  configs = dbconfig
+    const dbconfig = require("../../config.json");
+    configs = dbconfig
 
 }
 
