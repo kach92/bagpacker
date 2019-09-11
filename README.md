@@ -1,5 +1,7 @@
 # Bagpacker
 
+![Bagpacker screenshot](https://user-images.githubusercontent.com/50238797/64671208-4178d200-d49a-11e9-8cf2-9ce70fda4834.png)
+
 General Assembly Software Engineering Immersive 19
 Unit 4 Project
 
