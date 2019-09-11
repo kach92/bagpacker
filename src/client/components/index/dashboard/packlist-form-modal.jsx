@@ -199,7 +199,7 @@ class PacklistForm extends React.Component {
 			for (let i=0;i<this.state.groupPax-1; i++){
 				groupInputs.push(
 					<Form.Group key={i}>
-						<Form.Control placeholder={`Name of Tripmate ${i+1}`} type="email" value={this.state.formInputs.group[i]} onChange={(e)=>{this.updateTripmate(e,i)}}/>
+						<Form.Control placeholder={`Email of Tripmate ${i+1}`} type="email" value={this.state.formInputs.group[i]} onChange={(e)=>{this.updateTripmate(e,i)}}/>
 					</Form.Group>
 				)
 			}

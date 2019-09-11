@@ -468,6 +468,10 @@ a {
 }
 
 .loginForm{
+  height: 75vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   input[type="text"],
   input[type="email"],
   input[type="password"]{

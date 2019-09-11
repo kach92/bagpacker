@@ -144,14 +144,14 @@ class SignupForm extends React.Component {
 						</Form.Group>
 					</Col>
 				</Row>
-				<Row>
-					<Col xs={12} className="mb-5">
+				<Row className="mt-5">
+					<Col xs={6}>
+						<p>Existing user? <Link to="/login/">Log in now!</Link></p>
+					</Col>
+					<Col xs={6}>
 						<button type="submit" onClick={this.submit} className={mainStyles.btn}>Sign Up</button>
 					</Col>
 					{errorMessage}
-					<Col xs={12} className="my-5">
-						<p>Existing user? <Link to="/login/">Log in now!</Link></p>
-					</Col>
 				</Row>
 			</Form>
 
