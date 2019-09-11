@@ -18,7 +18,8 @@ class Item extends React.Component {
         this.setState({
             item_id:this.props.item_id,
             item_name:this.props.item_name,
-            item_packed:this.props.item_packed
+            item_packed:this.props.item_packed,
+            editing:null
         })
 
     }
@@ -37,10 +38,13 @@ class Item extends React.Component {
 
     checkKey = (e) => {
         if(e.keyCode === 13){
-            this.props.submitNameEdit(this.state.item_id,this.state.item_name);
+
             this.setState({
-                editing:false
+                editing:false,
+                item_name:"",
+                item_id:null
             });
+            this.props.submitNameEdit(this.state.item_id,this.state.item_name);
             document.removeEventListener('mousedown', this.handleClickOutside);
         }
 

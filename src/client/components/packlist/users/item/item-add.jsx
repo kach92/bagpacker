@@ -53,6 +53,11 @@ class ItemAdd extends React.Component {
             }
             else {
                 this.props.addItem(this.state.item_name,this.state.item_quantity,this.props.category);
+                this.setState({
+                    editing: false,
+                    item_name: "",
+                    item_quantity: 1
+                });
             }
             document.removeEventListener('mousedown', this.handleClickOutside);
         }

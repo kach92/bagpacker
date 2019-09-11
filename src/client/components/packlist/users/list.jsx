@@ -91,7 +91,7 @@ class List extends React.Component {
 			headers: {
 				'Content-Type': 'application/json'
 			}
-		}).then(res => window.location.reload())
+		}).then(res => {this.props.updateTripInfo()})
 			.catch(error => console.error('Error:', error));
 	};
 
