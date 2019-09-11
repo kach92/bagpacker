@@ -25,6 +25,9 @@ module.exports = merge(commonConfig, {
     }),
     new HtmlWebpackHarddiskPlugin({
       outputPath: resolve(__dirname, '..', 'build-dev', 'client')
+    }),
+    new HtmlWebpackPlugin({
+      favicon: "./src/client/images/favicon.ico"
     })
   ]
 });
