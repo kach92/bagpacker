@@ -107,7 +107,7 @@ class SharedList extends React.Component {
 					<Col xs={1} className={mainStyles.itemQty}>
 						{itemQty}
 					</Col>
-					<Col xs={6} className={mainStyles.itemName}>
+					<Col xs={5} className={mainStyles.itemName}>
 						{itemName}
 					</Col>
                     <Col xs={1}>
