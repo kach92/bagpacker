@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Category from './Category';
+import Category from './category';
 import {CardColumns} from "react-bootstrap";
 import mainStyles from "../../../style.scss";
 
