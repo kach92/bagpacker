@@ -82,6 +82,8 @@ class Trip extends React.Component {
     }
 
     updateTripName = (trip_id,name) =>{
+        console.log("TESTTTTTTTT")
+        console.log(trip_id)
         let data = {
             trip_id,
             name

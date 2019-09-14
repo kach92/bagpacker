@@ -33,7 +33,7 @@ class TripName extends React.Component {
 
     checkKey = (e) => {
         if(e.keyCode === 13){
-            this.props.updateTripName(this.props.trip_id,this.state.name);
+            this.props.updateTripName(this.props.tripId,this.state.name);
             this.setState({
                 editing:false
             });
