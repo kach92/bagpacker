@@ -95,7 +95,7 @@ class SharedList extends React.Component {
     };
 
 	render() {
-		let items = this.state.items? this.state.items.map((item, index)=> {
+		let items = this.props.list? this.props.list.map((item, index)=> {
 			let itemName = <Item item_name={item.name} item_id={item.id} submitNameEdit={this.submitNameEdit}/>
 			let itemQty = <ItemQty item_quantity={item.quantity} item_id={item.id} submitQtyEdit={this.submitQtyEdit}/>
 			let itemChecked = <ItemChecked item_packed={item.packed} packItem={this.packItem} item_id={item.id} />

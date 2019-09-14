@@ -56,7 +56,7 @@ class GroupList extends React.Component {
 		list.map((user,index)=>{
 			if (user.id === this.props.userId){
 				currentUser = index;
-				listToShow = <List list={list[currentUser].items} tripId={this.props.tripId} updateTripInfo={this.props.updateTripInfo} solo={this.props.solo}/>
+				listToShow = <List list={list[currentUser].items} tripId={this.props.tripId} updateTripInfo={this.props.updateTripInfo} solo={this.props.solo} deleteItem={this.props.deleteItem}/>
                 tripmatesOptions.unshift(
                     <Dropdown.Item key={index} href="#" onClick={(e)=>{this.updateCurrentListToShow(e,index)}}>{user.firstname} (You)</Dropdown.Item>
                 );

@@ -75,7 +75,9 @@ class List extends React.Component {
 			headers: {
 				'Content-Type': 'application/json'
 			}
-		}).then(res => console.log(res))
+		}).then(res => {
+            this.props,updateTripInfo();
+            console.log(res)})
 			.catch(error => console.error('Error:', error));
 	};
 	addItem = (name, quantity,category) => {
