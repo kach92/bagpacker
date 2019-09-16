@@ -15,9 +15,19 @@ Bagpacker is a Packing List Generator Web App for travellers built using React-E
 - API
   - Teleport API
   - Cloudinary
+- Node Packages
+  - React Router
+  - React Datepicker
+  - React Bootstrap
+  - React Autosuggest
+  - Multiselect Dropdown React
 
 ## Approach Taken
-This project is a team project by two developers, one handles frontend and one handles the backend, with a duration of one week. Before starting the project we do a thorough planning on the functionalities and MVP of the project, and then we proceed to prepare and draft out the wireframes as well as the ERD diagram for the app. Then only we proceed to start coding on the app. The frontend developer handles the UI/UX design and user-app interaction using React/Sass, as well as the routing for the app using React-router, while the backend developer handles models and controllers of the app and prepare endpoint routes for the frontend to query for different types of data, using NodeJs, ExpressJs and postgreSQL. This division of work allowed us to freely write and modify our codes without having any merge conflicts throughout the project. Communication is key in this project.
+The project was a team project by two developers, one handles frontend and one handles the backend, with a duration of one week. 
+
+Before starting the project, we have done a thorough planning on the functionalities and MVP of the project. Afterwards, we proceeded to draft out the wireframes, as well as preparing the ERD diagram. Once these were ready, we moved on to start coding on the app. 
+
+The frontend developer handles the UI/UX design and user-app interaction using React/Sass, as well as the routing for the app using React Router, while the backend developer handles models and controllers of the app and prepare endpoint routes for the frontend to query for different types of data, using NodeJs, ExpressJs and PostgreSQL. This division of work allowed us to freely write and modify our codes without having any merge conflicts throughout the project. Communication is key in this project.
 
 ## Installation Instructions
 1. Installs all the dependencies of the project is using
