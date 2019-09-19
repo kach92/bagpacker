@@ -100,13 +100,13 @@ class SignupForm extends React.Component {
 		return (
 			<Form className={mainStyles.signupForm}>
 				<Row>
-					<Col>
+					<Col xs={12} md={6}>
 						<Form.Group>
 							<label>First Name</label>
 							<Form.Control type="text" value={this.state.formInputs.firstName} onChange={this.updateFirstName}></Form.Control>
 						</Form.Group>
 					</Col>
-					<Col>
+					<Col xs={12} md={6}>
 						<Form.Group>
 							<label>Last Name</label>
 							<Form.Control type="text" value={this.state.formInputs.lastName} onChange={this.updateLastName}></Form.Control>
@@ -114,7 +114,7 @@ class SignupForm extends React.Component {
 					</Col>
 				</Row>
 				<Row>
-					<Col>
+					<Col >
 						<Form.Group>
 							<label>Email</label>
 							<Form.Control type="email" value={this.state.formInputs.email} onChange={this.updateEmail}></Form.Control>
@@ -131,13 +131,13 @@ class SignupForm extends React.Component {
 					</Col>
 				</Row>
 				<Row>
-					<Col>
+					<Col xs={12} md={6}>
 						<Form.Group>
 							<label>Password</label>
 							<Form.Control type="password" value={this.state.formInputs.password} onChange={this.updatePassword}></Form.Control>
 						</Form.Group>
 					</Col>
-					<Col>
+					<Col xs={12} md={6}>
 						<Form.Group>
 							<label>Confirm Password</label>
 							<Form.Control type="password" value={this.state.formInputs.confirmPassword} onChange={this.updateConfirmPassword}></Form.Control>
@@ -145,10 +145,10 @@ class SignupForm extends React.Component {
 					</Col>
 				</Row>
 				<Row className="mt-5">
-					<Col xs={6}>
+					<Col xs={8} lg={6}>
 						<p>Existing user? <Link to="/login/">Log in now!</Link></p>
 					</Col>
-					<Col xs={6}>
+					<Col xs={4} lg={6}>
 						<button type="submit" onClick={this.submit} className={mainStyles.btn}>Sign Up</button>
 					</Col>
 					{errorMessage}

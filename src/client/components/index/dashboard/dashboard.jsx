@@ -17,7 +17,9 @@ function PacklistFormModal(props) {
 			<Modal.Body>
 				<Row>
 					<Col>
-						<h4>Create New Trip</h4>
+						<Modal.Header closeButton className="px-0 pt-0">
+							<Modal.Title>Create New Trip</Modal.Title>
+						</Modal.Header>
 						<PacklistForm history={props.history}/>
 					</Col>
 				</Row>
@@ -30,7 +32,7 @@ function Dashboard(props) {
 	const [modalShow, setModalShow] = React.useState(false);
 	return (
 		<Row>
-			<Col md={4}>
+			<Col lg={4}>
 				<SidePanel>
 					<h2>Trips</h2>
 					<Button onClick={() => setModalShow(true)} className={mainStyles.btn}>
@@ -44,7 +46,7 @@ function Dashboard(props) {
 					/>
 				</SidePanel>
 			</Col>
-			<Col md={{span:8}}>
+			<Col lg={{span:8}}>
 				<Trips/>
 			</Col>
 		</Row>

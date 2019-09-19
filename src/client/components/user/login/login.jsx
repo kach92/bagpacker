@@ -11,10 +11,10 @@ class Login extends React.Component {
 	render() {
 		return (
 			<Row>
-				<Col md={4}>
+				<Col lg={4}>
 					<SidePanel><h2>Login</h2></SidePanel>
 				</Col>
-				<Col md={{span:6, offset:1}}>
+				<Col lg={{span:6, offset:1}}>
 					<LoginForm history={this.props.history}/>
 				</Col>
 			</Row>

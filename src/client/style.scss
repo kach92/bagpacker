@@ -144,7 +144,7 @@ a {
     position: fixed;
     left: 30%;
     top: 0;
-    transform: skew(-3deg);
+    transform: skew(-2deg);
     z-index: -1;
   }
   .sidePanelOverlay {
@@ -1120,12 +1120,12 @@ input[type="checkbox"]{
       content: "";
       background-color: #fff;
       display: block;
-      width: 7%;
+      width: 9%;
       height: 100vh;
       position: fixed;
       left: 95%;
       top: 0;
-      transform: skew(-3deg);
+      transform: skew(-2deg);
       z-index: -1;
       //animation: shift 3s linear;
       animation-fill-mode: forwards;
@@ -1172,7 +1172,7 @@ input[type="checkbox"]{
       -webkit-border-radius: 50%;
       -moz-border-radius: 50%;
       border-radius: 50%;
-      transform: skew(-4deg);
+      transform: skew(-3deg);
       &:after {
         content: "";
         display: block;
@@ -1329,5 +1329,138 @@ input[type="checkbox"]{
   }
   100% {
     left: 98%;
+  }
+}
+
+@media (max-width: 992px) {
+  .wrapper {
+    padding: 56px 3rem 0;
+  }
+  .sidePanel {
+    position: static;
+    color: $white;
+    width: 100%;
+    h2 {
+      margin-top:2rem;
+      width: 100%;
+      text-align: center;
+    }
+    button {
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .sidePanelBg {
+      content: "";
+      background-position: 15% 33.33333333%;
+      display: block;
+      width: 100vw;
+      height: 33.3333333vh;
+      position: absolute;
+      left: calc(15px - 3rem);
+      top: 0;
+      z-index: -1;
+    }
+    .sidePanelImage {
+      background-image: url("./images/default.jpg");
+    }
+    &:after {
+      content: "";
+      background-color: #fff;
+      display: none;
+      width: 5%;
+      height: 100vh;
+      position: static;
+      left: 30%;
+      top: 0;
+      transform: skew(-2deg);
+      z-index: -1;
+    }
+    .sidePanelOverlay {
+      width: 100vw;
+      height: 33.3333333vh;
+      position: absolute;
+      left: calc(15px - 3rem);
+      top: 0;
+      z-index: -1;
+    }
+  }
+
+  .tab {
+    margin-top: calc(10vh + 2rem);
+  }
+  .tripPanel {
+    padding-top: 2rem;
+    h4, p {
+      text-align: center;
+    }
+    .tripDetails {
+      height: auto
+    }
+    button {
+      margin-top: 0;
+    }
+  }
+
+  .addCategory {
+    margin-top: calc(10vh + 2rem);
+  }
+  .editProfileWrapper {
+    margin-top: calc(10vh + 10rem);
+  }
+
+  .loginForm,
+  .signupForm{
+    height: auto;
+    margin-top: calc(10vh + 10rem);
+  }
+}
+
+
+@media (max-width: 576px) {
+  .wrapper {
+    padding: 56px 1rem 0;
+  }
+  .sidePanel {
+    .sidePanelBg,
+    .sidePanelOverlay {
+      left: calc(15px - 1rem);
+    }
+  }
+  .navbar {
+    padding: .5rem 1rem;
+  }
+  .packlist {
+    column-count: 1;
+  }
+  .sidePanel {
+    position: static;
+    color: $white;
+    width: 100%;
+    h2 {
+      margin-top:2rem;
+      width: 100%;
+      text-align: center;
+    }
+    button {
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .sidePanelBg,
+    .sidePanelOverlay {
+      height: 40vh;
+    }
+  }
+  .tab {
+    margin-top: calc(10vh + 4rem);
+  }
+  .cover {
+    .coverCaption {
+      h1 {
+        font-size: 3rem;
+      }
+    }
+    .coverImage {
+      background-position: 25% 100%;
+    }
   }
 }

@@ -101,7 +101,7 @@ class Navigation extends React.Component {
 		}
 
 		return (
-			<Navbar expand="md" fixed="top" className={navbarClass} variant="dark">
+			<Navbar fixed="top" className={navbarClass} variant="dark">
 				<Navbar.Brand href="/">Bagpacker</Navbar.Brand>
 				<Navbar.Toggle aria-controls="responsive-navbar-nav" />
 				<Navbar.Collapse>

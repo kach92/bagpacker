@@ -88,10 +88,10 @@ class LoginForm extends React.Component {
 					</Col>
 				</Row>
 				<Row className="mt-5">
-					<Col xs={6}>
+					<Col xs={8} lg={6}>
 						<p>Don't have an account?  <Link to="/signup/">Create one now!</Link></p>
 					</Col>
-					<Col xs={6}>
+					<Col xs={4} lg={6}>
 						<button type="submit" onClick={this.submit} className={mainStyles.btn}>Login</button>
 					</Col>
 					{errorMessage}
