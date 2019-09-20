@@ -937,7 +937,7 @@ a {
 }
 
 .deleteModal,
-.addCategoryModal,{
+.addCategoryModal{
   padding: 1rem;
   h4 {
     margin-bottom: 2rem;
@@ -1102,7 +1102,6 @@ input[type="checkbox"]{
     top: 0;
     left: 0;
     z-index: -3;
-    //animation: shrink 3s linear;
     animation-fill-mode: forwards;
   }
   .coverOverlay {
@@ -1114,7 +1113,6 @@ input[type="checkbox"]{
     left: 0;
     top: 0;
     z-index: -1;
-    //animation: shrink 3s linear;
     animation-fill-mode: forwards;
     &:after {
       content: "";
@@ -1127,7 +1125,6 @@ input[type="checkbox"]{
       top: 0;
       transform: skew(-2deg);
       z-index: -1;
-      //animation: shift 3s linear;
       animation-fill-mode: forwards;
     }
   }
@@ -1413,6 +1410,101 @@ input[type="checkbox"]{
     height: auto;
     margin-top: calc(10vh + 10rem);
   }
+  .features {
+    opacity: 0;
+    display: none;
+    .coverFeatureRow {
+      margin-bottom: 2rem;
+      align-items: center;
+      h4 {
+        margin-bottom: 1rem;
+        line-height: 1.5;
+      }
+      ul{
+        margin: 0;
+        padding: 0;
+        li {
+          list-style-type: none;
+          margin-bottom: 1rem;
+          font-size: 0.9rem;
+        }
+      }
+      .featureImg {
+        -webkit-border-radius: 50%;
+        -moz-border-radius: 50%;
+        border-radius: 50%;
+        transform: skew(-3deg);
+        &:after {
+          content: "";
+          display: block;
+          width: 100%;
+          padding-bottom: 33.33333%;
+          background-size: cover;
+          background-position: center;
+        }
+      }
+      .featureImg1:after {
+        background-image: url("./images/features/features-01.jpg");
+      }
+      .featureImg2:after {
+        background-image: url("./images/features/features-02.jpg");
+      }
+      .featureImg3:after {
+        background-image: url("./images/features/features-03.jpg");
+      }
+    }
+  }
+  .cover {
+    .coverImage {
+      position: absolute;
+      animation-fill-mode: forwards;
+    }
+    .coverOverlay {;
+      height: 100vh;
+      position: absolute;
+      &:after {
+        display: none;
+      }
+    }
+  }
+  .coverWrapper {
+    .coverFeaturePanel {
+      h2 {
+        position: static;
+        margin-top: 2rem;
+        text-align: center;
+      }
+    }
+  }
+  .cover.coverFeatures {
+    .coverCaption {
+      animation: fadeOut 0.3s;
+      animation-fill-mode: forwards;
+    }
+
+    .coverImage {
+      animation: mobileShrink 0.8s;
+      animation-fill-mode: forwards;
+      background-position: 25% 50%;
+    }
+
+    .coverOverlay {
+      animation: mobileShrink 0.8s;
+      animation-fill-mode: forwards;
+
+      &:after {
+        animation: none;
+      }
+    }
+  }
+  .coverFeatures.features {
+    margin-top: calc(10vh + 8rem);
+    .coverFeatureRow {
+      h4 {
+        font-size: 1.33333333rem;
+      }
+    }
+  }
 }
 
 
@@ -1462,5 +1554,41 @@ input[type="checkbox"]{
     .coverImage {
       background-position: 25% 100%;
     }
+  }
+}
+
+@keyframes mobileShrink  {
+  0% {
+    height: 100vh;
+  }
+  100% {
+    height: 40vh;
+  }
+}
+@keyframes mobileShift  {
+  0% {
+    left: 98%;
+  }
+  100% {
+    left: 30%;
+  }
+}
+
+@keyframes mobileShrinkR  {
+  0% {
+    background-position: 15% 0%;
+    width: 33.333333%;
+  }
+  100% {
+    background-position: 0 100%;
+    width: 100%;
+  }
+}
+@keyframes mobileShiftR  {
+  0% {
+    left: 30%;
+  }
+  100% {
+    left: 98%;
   }
 }
