@@ -48,7 +48,7 @@ class Trips extends React.Component {
 				soloTripsLength = trips.solo.length;
 				soloTrips = trips.solo.map((trip, index) => {
 					return (
-						<Col key={index} md={4} className={mainStyles.tripCard}>
+						<Col key={index} xs={12} sm={6} md={4} className={mainStyles.tripCard}>
 							<TripCard trip={trip}/>
 						</Col>
 					)
@@ -58,7 +58,7 @@ class Trips extends React.Component {
 				groupTripsLength = trips.group.length;
 				groupTrips = trips.group.map((trip, index) => {
 					return (
-						<Col key={index} md={4} className={mainStyles.tripCard}>
+						<Col key={index} xs={12} sm={6} md={4} className={mainStyles.tripCard}>
 							<TripCard trip={trip}/>
 						</Col>
 					)

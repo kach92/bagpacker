@@ -9,7 +9,7 @@ class SidePanel extends React.Component {
 
 	render() {
 		let panelImage = null;
-		let panelClass = null;
+		let panelClass = "";
 		if (this.props.tripImage) {
 			if (this.props.tripImage !== "#") {
 				panelImage = {backgroundImage: `url(${this.props.tripImage})`};

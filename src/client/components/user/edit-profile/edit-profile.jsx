@@ -11,13 +11,15 @@ class editProfile extends React.Component {
 	render() {
 		return (
 			<Row>
-				<Col md={4}>
+				<Col lg={4}>
 					<SidePanel><h2>Edit Profile</h2></SidePanel>
 				</Col>
-				<Col md={{span:6, offset:1}}>
-					<EditProfilePhoto/>
-					<EditProfileInfo/>
-					<EditProfilePassword/>
+				<Col lg={{span:6, offset:1}}>
+					<div className={mainStyles.editProfileWrapper}>
+						<EditProfilePhoto/>
+						<EditProfileInfo/>
+						<EditProfilePassword/>
+					</div>
 				</Col>
 			</Row>
         )

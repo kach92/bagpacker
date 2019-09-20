@@ -144,7 +144,7 @@ a {
     position: fixed;
     left: 30%;
     top: 0;
-    transform: skew(-3deg);
+    transform: skew(-2deg);
     z-index: -1;
   }
   .sidePanelOverlay {
@@ -937,7 +937,7 @@ a {
 }
 
 .deleteModal,
-.addCategoryModal,{
+.addCategoryModal{
   padding: 1rem;
   h4 {
     margin-bottom: 2rem;
@@ -1102,7 +1102,6 @@ input[type="checkbox"]{
     top: 0;
     left: 0;
     z-index: -3;
-    //animation: shrink 3s linear;
     animation-fill-mode: forwards;
   }
   .coverOverlay {
@@ -1114,20 +1113,18 @@ input[type="checkbox"]{
     left: 0;
     top: 0;
     z-index: -1;
-    //animation: shrink 3s linear;
     animation-fill-mode: forwards;
     &:after {
       content: "";
       background-color: #fff;
       display: block;
-      width: 7%;
+      width: 9%;
       height: 100vh;
       position: fixed;
       left: 95%;
       top: 0;
-      transform: skew(-3deg);
+      transform: skew(-2deg);
       z-index: -1;
-      //animation: shift 3s linear;
       animation-fill-mode: forwards;
     }
   }
@@ -1172,7 +1169,7 @@ input[type="checkbox"]{
       -webkit-border-radius: 50%;
       -moz-border-radius: 50%;
       border-radius: 50%;
-      transform: skew(-4deg);
+      transform: skew(-3deg);
       &:after {
         content: "";
         display: block;
@@ -1324,6 +1321,270 @@ input[type="checkbox"]{
   }
 }
 @keyframes shiftR  {
+  0% {
+    left: 30%;
+  }
+  100% {
+    left: 98%;
+  }
+}
+
+@media (max-width: 992px) {
+  .wrapper {
+    padding: 56px 3rem 0;
+  }
+  .sidePanel {
+    position: static;
+    color: $white;
+    width: 100%;
+    h2 {
+      margin-top:2rem;
+      width: 100%;
+      text-align: center;
+    }
+    button {
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .sidePanelBg {
+      content: "";
+      background-position: 15% 33.33333333%;
+      display: block;
+      width: 100vw;
+      height: 33.3333333vh;
+      position: absolute;
+      left: calc(15px - 3rem);
+      top: 0;
+      z-index: -1;
+    }
+    .sidePanelImage {
+      background-image: url("./images/default.jpg");
+    }
+    &:after {
+      content: "";
+      background-color: #fff;
+      display: none;
+      width: 5%;
+      height: 100vh;
+      position: static;
+      left: 30%;
+      top: 0;
+      transform: skew(-2deg);
+      z-index: -1;
+    }
+    .sidePanelOverlay {
+      width: 100vw;
+      height: 33.3333333vh;
+      position: absolute;
+      left: calc(15px - 3rem);
+      top: 0;
+      z-index: -1;
+    }
+  }
+
+  .tab {
+    margin-top: calc(10vh + 2rem);
+  }
+  .tripPanel {
+    padding-top: 2rem;
+    h4, p {
+      text-align: center;
+    }
+    .tripDetails {
+      height: auto
+    }
+    button {
+      margin-top: 0;
+    }
+  }
+
+  .addCategory {
+    margin-top: calc(10vh + 2rem);
+  }
+  .editProfileWrapper {
+    margin-top: calc(10vh + 10rem);
+  }
+
+  .loginForm,
+  .signupForm{
+    height: auto;
+    margin-top: calc(10vh + 10rem);
+  }
+  .features {
+    opacity: 0;
+    display: none;
+    .coverFeatureRow {
+      margin-bottom: 2rem;
+      align-items: center;
+      h4 {
+        margin-bottom: 1rem;
+        line-height: 1.5;
+      }
+      ul{
+        margin: 0;
+        padding: 0;
+        li {
+          list-style-type: none;
+          margin-bottom: 1rem;
+          font-size: 0.9rem;
+        }
+      }
+      .featureImg {
+        -webkit-border-radius: 50%;
+        -moz-border-radius: 50%;
+        border-radius: 50%;
+        transform: skew(-3deg);
+        &:after {
+          content: "";
+          display: block;
+          width: 100%;
+          padding-bottom: 33.33333%;
+          background-size: cover;
+          background-position: center;
+        }
+      }
+      .featureImg1:after {
+        background-image: url("./images/features/features-01.jpg");
+      }
+      .featureImg2:after {
+        background-image: url("./images/features/features-02.jpg");
+      }
+      .featureImg3:after {
+        background-image: url("./images/features/features-03.jpg");
+      }
+    }
+  }
+  .cover {
+    .coverImage {
+      position: absolute;
+      animation-fill-mode: forwards;
+    }
+    .coverOverlay {;
+      height: 100vh;
+      position: absolute;
+      &:after {
+        display: none;
+      }
+    }
+  }
+  .coverWrapper {
+    .coverFeaturePanel {
+      h2 {
+        position: static;
+        margin-top: 2rem;
+        text-align: center;
+      }
+    }
+  }
+  .cover.coverFeatures {
+    .coverCaption {
+      animation: fadeOut 0.3s;
+      animation-fill-mode: forwards;
+    }
+
+    .coverImage {
+      animation: mobileShrink 0.8s;
+      animation-fill-mode: forwards;
+      background-position: 25% 50%;
+    }
+
+    .coverOverlay {
+      animation: mobileShrink 0.8s;
+      animation-fill-mode: forwards;
+
+      &:after {
+        animation: none;
+      }
+    }
+  }
+  .coverFeatures.features {
+    margin-top: calc(10vh + 8rem);
+    .coverFeatureRow {
+      h4 {
+        font-size: 1.33333333rem;
+      }
+    }
+  }
+}
+
+
+@media (max-width: 576px) {
+  .wrapper {
+    padding: 56px 1rem 0;
+  }
+  .sidePanel {
+    .sidePanelBg,
+    .sidePanelOverlay {
+      left: calc(15px - 1rem);
+    }
+  }
+  .navbar {
+    padding: .5rem 1rem;
+  }
+  .packlist {
+    column-count: 1;
+  }
+  .sidePanel {
+    position: static;
+    color: $white;
+    width: 100%;
+    h2 {
+      margin-top:2rem;
+      width: 100%;
+      text-align: center;
+    }
+    button {
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .sidePanelBg,
+    .sidePanelOverlay {
+      height: 40vh;
+    }
+  }
+  .tab {
+    margin-top: calc(10vh + 4rem);
+  }
+  .cover {
+    .coverCaption {
+      h1 {
+        font-size: 3rem;
+      }
+    }
+    .coverImage {
+      background-position: 25% 100%;
+    }
+  }
+}
+
+@keyframes mobileShrink  {
+  0% {
+    height: 100vh;
+  }
+  100% {
+    height: 40vh;
+  }
+}
+@keyframes mobileShift  {
+  0% {
+    left: 98%;
+  }
+  100% {
+    left: 30%;
+  }
+}
+
+@keyframes mobileShrinkR  {
+  0% {
+    background-position: 15% 0%;
+    width: 33.333333%;
+  }
+  100% {
+    background-position: 0 100%;
+    width: 100%;
+  }
+}
+@keyframes mobileShiftR  {
   0% {
     left: 30%;
   }

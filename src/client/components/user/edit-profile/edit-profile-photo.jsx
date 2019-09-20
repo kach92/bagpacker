@@ -89,12 +89,12 @@ class EditProfileInfo extends React.Component {
 					</Col>
 				</Row>
 				<Row>
-					<Col xs={2}>
+					<Col xs={4} sm={2}>
 						<div className={mainStyles.profileImage}>
 							<img src={this.state.photo}/>
 						</div>
 					</Col>
-					<Col xs={10} className={mainStyles.profileImageForm}>
+					<Col xs={8} sm={10} className={mainStyles.profileImageForm}>
 						<label htmlFor="file-upload" className="my-3 custom-file-upload">
 							<i className='bx bx-upload'></i> Upload Photo
 						</label>

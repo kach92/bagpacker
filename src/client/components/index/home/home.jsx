@@ -45,52 +45,49 @@ class Home extends React.Component {
 						<Button onClick={this.showFeatures} className={`mt-5 ${mainStyles.btn} ${mainStyles.btnCover} mx-auto`}>Learn more</Button>
 					</div>
 				</Col>
-				{/*<Col xs={12} className={mainStyles.feature}>*/}
-				{/*	<div></div>*/}
-				{/*</Col>*/}
-				<Col xs={4} className={`${mainStyles.coverFeaturePanel} ${mainStyles.features}`} onClick={this.hideFeatures}>
+				<Col xs={12} lg={4} className={`${mainStyles.coverFeaturePanel} ${mainStyles.features}`} onClick={this.hideFeatures}>
 					<h2>Features</h2>
 				</Col>
-				<Col xs={8} className={`${mainStyles.coverFeatures} ${mainStyles.features}`}>
+				<Col xs={12} lg={8} className={`${mainStyles.coverFeatures} ${mainStyles.features}`}>
 					<Row className={mainStyles.coverFeatureRow}>
-						<Col xs={{ span: 3, offset: 1 }} className="p-3">
+						<Col xs={12} lg={{ span: 3, offset: 1 }} className="p-3">
 							<div className={`${mainStyles.featureImg} ${mainStyles.featureImg1}`}></div>
 						</Col>
-						<Col xs={7}>
+						<Col xs={12} lg={7}>
 							<h4>Generate a packing list<br/>for travelling</h4>
 							<ul>
-								<li>Dynamic list based on number of travel days, weather and activities</li>
-                                <li>Checklist to record packed items</li>
+								<li>Dynamic list based on number of travel days, weather and activities.</li>
+                                <li>Checklist to record packed items.</li>
 							</ul>
 						</Col>
 					</Row>
 					<Row className={mainStyles.coverFeatureRow}>
-						<Col xs={{ span: 3, offset: 1 }} className="p-3">
+						<Col xs={12} lg={{ span: 3, offset: 1 }} className="p-3">
 							<div className={`${mainStyles.featureImg} ${mainStyles.featureImg2}`}></div>
 						</Col>
-						<Col xs={7}>
+						<Col xs={12} lg={7}>
 							<h4>Easily Customisable</h4>
 							<ul>
-								<li>Edit item name and quantity</li>
-								<li>Add custom categories</li>
+								<li>Edit item name and quantity.</li>
+								<li>Add custom categories.</li>
 							</ul>
 						</Col>
 					</Row>
 					<Row className={mainStyles.coverFeatureRow}>
-						<Col xs={{ span: 3, offset: 1 }} className="p-3">
+						<Col xs={12} lg={{ span: 3, offset: 1 }} className="p-3">
 							<div className={`${mainStyles.featureImg} ${mainStyles.featureImg3}`}></div>
 						</Col>
-						<Col xs={7}>
+						<Col xs={12} lg={7}>
 							<h4>Create group trip<br/>with families and friends</h4>
 							<ul>
-								<li>View packing lists of travel buddies</li>
-								<li>Indicate who to bring items that are for sharing</li>
-								<li>Hide certain items for privacy</li>
+								<li>View packing lists of travel buddies.</li>
+								<li>Indicate who to bring items that are for sharing.</li>
+								<li>Hide certain items for privacy.</li>
 							</ul>
 						</Col>
 					</Row>
 					<Row className="mb-5">
-						<Col xs={10} className="text-right mb-5">
+						<Col xs={12} lg={10} className="text-right mb-5">
 							<Link to="/signup/" className={`mt-5 ${mainStyles.btn} d-inline-block`}>Sign up now</Link>
 						</Col>
 					</Row>
