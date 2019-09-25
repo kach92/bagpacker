@@ -1,9 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import mainStyles from "../../../../style.scss";
-import {Col, Row, Dropdown, DropdownButton, Form} from "react-bootstrap";
-import List from "../list";
-import SharedList from "../shared-list";
+import {Col, Row, Dropdown, DropdownButton} from "react-bootstrap";
 
 class SharedItemOwner extends React.Component {
     constructor(){
@@ -13,6 +11,7 @@ class SharedItemOwner extends React.Component {
             owner : "No owner",
             ownerImage : null,
         };
+        this.isMobile = (window.innerWidth <= 500);
 
         this.updateOwner = this.updateOwner.bind(this);
     }
@@ -53,7 +52,7 @@ class SharedItemOwner extends React.Component {
             tripmatesOptions.push(
                 <Dropdown.Item key={index} href="#" onClick={(e)=>{this.updateOwner(e,user.id,index)}}>{user.firstname}</Dropdown.Item>);
         });
-        if (this.state.editing) {
+        if (this.state.editing || window.innerWidth <= 992) {
             itemOwner =(
                 <DropdownButton onMouseLeave={this.checkEdit} title={this.state.owner} className={mainStyles.ownerDropdown}>
                     {tripmatesOptions}
@@ -69,10 +68,10 @@ class SharedItemOwner extends React.Component {
 
         return(
             <Row>
-                <Col xs={3}>
+                <Col xs={3} lg={4} className="pr-0 pr-xl-3">
                     <div className={mainStyles.ownerImage} style={ownerImageStyle}></div>
                 </Col>
-                <Col xs={9}>
+                <Col xs={8} className='pr-0'>
                     {itemOwner}
                 </Col>
             </Row>

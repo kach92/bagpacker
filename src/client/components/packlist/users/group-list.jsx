@@ -73,16 +73,16 @@ class GroupList extends React.Component {
 			listToShow = <TripmateList list={list[currentUser].items}/>;
 		}
 		return (
-			<Row className={mainStyles.packlist}>
+			<Row className={`${mainStyles.packlist} ${mainStyles.packlistGroup}`}>
 				<Col xs={12}>
 					<SharedList list={this.props.shared} tripmates={this.props.list} tripId={this.props.tripId} updateTripInfo={this.props.updateTripInfo} addItem={this.addItem} deleteItem={this.props.deleteItem}/>
 				</Col>
 				<Col xs={12} className="my-5">
 					<Row className="align-items-center">
-						<Col>
-							<h3 className="mb-0">{list[currentUser].firstname}'s List</h3>
+						<Col xs={12} lg={6}>
+							<h3 className="mb-lg-0">{list[currentUser].firstname}'s List</h3>
 						</Col>
-						<Col>
+						<Col xs={12} lg={6}>
 							<DropdownButton title={currentUserName} className={mainStyles.tripmateDropdown}>
 								{tripmatesOptions}
 							</DropdownButton>

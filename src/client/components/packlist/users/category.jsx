@@ -48,7 +48,7 @@ class Category extends React.Component {
                     <Col xs={2} className="pr-0">
                         {itemQty}
                     </Col>
-                    <Col xs={8} className="pr-0">
+                    <Col xs={7} md={8} className="pr-0">
                         {itemName}
                     </Col>
                     <Col xs={1} className="p-0">
@@ -66,7 +66,7 @@ class Category extends React.Component {
                     <Col xs={2} className={`pr-0 ${mainStyles.itemQty}`}>
                         {itemQty}
                     </Col>
-                    <Col xs={7} className={`pr-0 ${mainStyles.itemName}`}>
+                    <Col xs={6} md={7} className={`pr-0 ${mainStyles.itemName}`}>
                         {itemName}
                     </Col>
                     <Col xs={1} className="p-0">
