@@ -178,12 +178,12 @@ class Trip extends React.Component {
 		}
 		return (
 			<Row>
-				<Col md={4} className={mainStyles.tripPanel}>
+				<Col lg={4} className={mainStyles.tripPanel}>
 					<SidePanel tripImage={tripImage}>
 						{tripDetails}
 					</SidePanel>
 				</Col>
-				<Col md={{span:8}}>
+				<Col lg={{span:8}}>
 					{listDisplay}
 				</Col>
 			</Row>

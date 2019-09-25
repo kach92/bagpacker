@@ -1505,6 +1505,10 @@ input[type="checkbox"]{
       }
     }
   }
+  .packlist .listCard .deleteButton,
+  .packlist .listCard .trashButton{
+    opacity: 1;
+  }
 }
 
 
