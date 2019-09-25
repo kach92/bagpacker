@@ -1509,6 +1509,13 @@ input[type="checkbox"]{
   .packlist .listCard .trashButton{
     opacity: 1;
   }
+
+  .packlistGroup {
+    margin-top:4rem;
+    .addCategory {
+      margin-top: 0;
+    }
+  }
 }
 
 

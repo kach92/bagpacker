@@ -15,7 +15,7 @@ class SharedList extends React.Component {
         super();
         this.state ={
             items:null
-        }
+        };
     }
 
     componentDidMount(){
@@ -107,13 +107,13 @@ class SharedList extends React.Component {
 					<Col xs={1} className={mainStyles.itemQty}>
 						{itemQty}
 					</Col>
-					<Col xs={5} className={mainStyles.itemName}>
+					<Col xs={8} sm={5} className={`${mainStyles.itemName} pr-0 pr-lg-2`}>
 						{itemName}
 					</Col>
                     <Col xs={1}>
                         <i className={`bx bx-x ${mainStyles.deleteButton}`} onClick={(e)=>{this.deleteItem(e,item.id)}}></i>
                     </Col>
-					<Col xs={4}>
+					<Col xs={{ span: 9, offset: 3 }} sm={{ span: 3, offset: 0 }} className={`mb-4 mb-lg-0`}>
 						<SharedItemOwner itemId={item.id} item_packinglist_id={item.packing_list_id}tripmates={this.props.tripmates} updateSharedItem={this.updateSharedItem} updateTripInfo={this.props.updateTripInfo}/>
 					</Col>
 				</Row>
