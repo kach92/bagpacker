@@ -5,7 +5,8 @@
 General Assembly Software Engineering Immersive 19
 Unit 4 Project
 
-Built by - [Kenny Ang](https://github.com/kach92), [Shirley Tan](https://github.com/shirleytwl)
+Built by - [Kenny Ang](https://github.com/kach92), [Shirley Tan](https://github.com/shirleytwl)<br/>
+Check out the full app here! https://bagpacker.herokuapp.com
 
 ## Travel Packing List Generator Web App - Bagpacker
 Bagpacker is a Packing List Generator Web App for travellers built using React-ExpressJs-NodeJs-PostgreSql. To set up, fork the project and do an npm install.
